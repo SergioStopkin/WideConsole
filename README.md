@@ -14,12 +14,32 @@ Linux &nbsp;&nbsp;&nbsp;&nbsp; macOS &nbsp;&nbsp;&nbsp;&nbsp; Windows
 
 ## Getting Started
 
+For using charts, graphs and texts include header files, respectively:
+
+```
+#include "wconsole/chart.h"
+#include "wconsole/graph.h"
+#include "wconsole/text.h"
+```
+The project uses `WConsole` namespace.
+
+Create objects:
+
+```
+WConsole::Chart chart;
+WConsole::Graph graph;
+WConsole::Text  text;
+```
+
+See the [INTERFACE.md](INTERFACE.md) file for more details.
+
 ## Compilers
 
 * [GCC](https://gcc.gnu.org/) - Linux, macOS
 * [MinGW](http://www.mingw.org/) - Windows
 
 Don't forget
+
 ```
 -std=c++14
 ```
