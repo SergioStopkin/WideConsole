@@ -9,10 +9,8 @@ C++ 14
 ## Platforms
 
 <img height=48 src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img height=46 src="https://upload.wikimedia.org/wikipedia/commons/d/df/Apple-Apple.svg">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img height=40 src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/1024px-Windows_logo_-_2012.svg.png">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height=46 src="https://upload.wikimedia.org/wikipedia/commons/d/df/Apple-Apple.svg">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height=40 src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/1024px-Windows_logo_-_2012.svg.png">
 
 Linux
 &nbsp;&nbsp;&nbsp;
