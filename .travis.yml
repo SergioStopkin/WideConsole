@@ -17,7 +17,13 @@ env:
   - TARGET_CPU=x86    BUILD_CONFIGURATION=Debug
   - TARGET_CPU=x86    BUILD_CONFIGURATION=Release
 
-#matrix:
+matrix:
+  include:
+    - os: osx
+      osx_image:  xcode8
+      env:
+        - MATRIX_EVAL="brew install gcc5 && CC=gcc-5 && CXX=g++-5"
+
 #  exclude:
 #    - os:       osx
 #      compiler: gcc
@@ -27,6 +33,11 @@ env:
 #
 #    - os:  osx
 #      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+
+install:  true
 
 script:
   - mkdir build

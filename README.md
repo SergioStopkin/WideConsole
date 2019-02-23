@@ -1,6 +1,12 @@
-# WConsole
+<h1 align="center">
+WConsole
+</h1>
+
+<p align="center">
+<img height=27 src="https://travis-ci.org/SergioStopkin/WConsole.svg?branch=master">
 
 WConsole is a simple program for building graphs, charts and text output to the console.
+</p>
 
 ## Standard
 
