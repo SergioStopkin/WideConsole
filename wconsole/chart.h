@@ -18,6 +18,7 @@
 #ifndef WCONSOLE_CHART_H_
 #define WCONSOLE_CHART_H_ 1
 
+#include <cmath>
 #include <utility>
 
 #include "igrid.h"
