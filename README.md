@@ -3,7 +3,8 @@ WConsole
 </h1>
 
 <p align="center">
-<img height=20 src="https://travis-ci.org/SergioStopkin/WConsole.svg?branch=master">
+<img height=21 src="https://travis-ci.org/SergioStopkin/WConsole.svg?branch=master">
+<img height=21 src="https://ci.appveyor.com/api/projects/status/pq9440dgbvd003dj/branch/master?svg=true">
 </p>
 
 <p align="center">
