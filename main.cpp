@@ -68,9 +68,9 @@ int main() {
                 const double y2 = std::sin(4.0 * x + count);
                 const double y3 = std::sin(8.0 * x + count);
 
-                if (!isnan(y1)) coord1.emplace_back(x, y1);
-                if (!isnan(y2)) coord2.emplace_back(x, y2);
-                if (!isnan(y3)) coord3.emplace_back(x, y3);
+                if (!std::isnan(y1)) coord1.emplace_back(x, y1);
+                if (!std::isnan(y2)) coord2.emplace_back(x, y2);
+                if (!std::isnan(y3)) coord3.emplace_back(x, y3);
             }
 
             graph.Clear();
