@@ -80,8 +80,8 @@ public:
     void PrintGraph(const std::vector<std::pair<T, T>> & data) {
         const double h_step        = (h_max_ - h_min_) / (double)(horizontal_size_ - 1);
         const double v_step        = (v_max_ - v_min_) / (double)(vertical_size_   - 1);
-        const auto   v_alignment   = (uint)4;//(uint)(std::max(std::to_string((int)v_min_).size(), std::to_string((int)v_max_).size())
-//                                            + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
+        const auto   v_alignment   = (uint)(std::max(std::to_string((int)v_min_).size(), std::to_string((int)v_max_).size())
+                                            + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
         const bool   is_data_empty = (data.begin() == data.end());
         uint         h_zero        = 2 * horizontal_size_;
         uint         v_zero        = 2 * vertical_size_;

@@ -24,6 +24,7 @@
 
 #if (defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__))
 #define WINDOWS 1
+#define NOMINMAX 1
 #else
 #define UNIX 1
 #endif
