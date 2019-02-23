@@ -4,8 +4,8 @@ language: cpp
 
 os:
 #  - linux
-  - osx
-#  - windows
+#  - osx
+  - windows
 
 compiler:
   - gcc
@@ -17,16 +17,16 @@ env:
   - TARGET_CPU=x86    BUILD_CONFIGURATION=Debug
   - TARGET_CPU=x86    BUILD_CONFIGURATION=Release
 
-matrix:
-  exclude:
+#matrix:
+#  exclude:
 #    - os:       osx
 #      compiler: gcc
-
-    - os:  osx
-      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
-
-    - os:  osx
-      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
+#
+#    - os:  osx
+#      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
+#
+#    - os:  osx
+#      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
 script:
   - mkdir build
