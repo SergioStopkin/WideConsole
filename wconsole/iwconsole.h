@@ -29,6 +29,7 @@
 #endif
 
 #ifdef WINDOWS
+#include <fcntl.h>
 #include <io.h>
 #include <windows.h>
 #else
