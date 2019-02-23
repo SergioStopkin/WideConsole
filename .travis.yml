@@ -18,13 +18,17 @@ env:
   - TARGET_CPU=x86    BUILD_CONFIGURATION=Release
 
 matrix:
-  include:
-    - os: osx
-      osx_image:  xcode8
-      env:
-        - MATRIX_EVAL="brew install gcc5 && CC=gcc-5 && CXX=g++-5"
+#  include:
+#    - os: osx
+#      osx_image:  xcode8
+#      env:
+#        - MATRIX_EVAL="brew install gcc5 && CC=gcc-5 && CXX=g++-5"
 
-#  exclude:
+  exclude:
+    - os: windows
+      compiler:
+        - clang
+
 #    - os:       osx
 #      compiler: gcc
 #
@@ -34,8 +38,8 @@ matrix:
 #    - os:  osx
 #      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
-before_install:
-  - eval "${MATRIX_EVAL}"
+#before_install:
+#  - eval "${MATRIX_EVAL}"
 
 install:  true
 
