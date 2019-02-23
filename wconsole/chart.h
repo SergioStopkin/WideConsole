@@ -20,12 +20,13 @@
 
 #include <cmath>
 #include <utility>
+#include <vector>
 
 #include "igrid.h"
 #include "iheader.h"
+#include "iprecision.h"
 #include "irange.h"
 #include "iwconsole.h"
-#include "iprecision.h"
 
 namespace WConsole {
 

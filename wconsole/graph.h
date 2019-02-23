@@ -19,9 +19,11 @@
 #define WCONSOLE_GRAPH_H_ 1
 
 #include <utility>
+#include <vector>
 
 #include "igrid.h"
 #include "iheader.h"
+#include "iprecision.h"
 #include "irange.h"
 #include "iwconsole.h"
 
