@@ -3,8 +3,8 @@ sudo:     required
 language: cpp
 
 os:
-#  - linux
-#  - osx
+  - linux
+  - osx
   - windows
 
 compiler:
@@ -28,14 +28,14 @@ matrix:
     - os:       windows
       compiler: clang
 
-#    - os:       osx
-#      compiler: gcc
-#
-#    - os:  osx
-#      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
-#
-#    - os:  osx
-#      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
+    - os:       osx
+      compiler: gcc
+
+    - os:  osx
+      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
+
+    - os:  osx
+      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
 #before_install:
 #  - eval "${MATRIX_EVAL}"
