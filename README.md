@@ -3,8 +3,10 @@ WConsole
 </h1>
 
 <p align="center">
-<img height=27 src="https://travis-ci.org/SergioStopkin/WConsole.svg?branch=master">
+<img height=22 src="https://travis-ci.org/SergioStopkin/WConsole.svg?branch=master">
+</p>
 
+<p align="center">
 WConsole is a simple program for building graphs, charts and text output to the console.
 </p>
 
