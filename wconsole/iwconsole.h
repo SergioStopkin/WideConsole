@@ -1,4 +1,4 @@
-// Copyright Â© 2019 Sergio Stopkin.
+// Copyright © 2019 Sergio Stopkin.
 
 /*
  * This file is part of WConsole. WConsole is free software:
@@ -73,7 +73,12 @@ public:
     }
 
     void Clear() noexcept {
+#ifdef WINDOWS
+        COORD pos {0, 0};
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+#else
         wprintf(L"\ec");
+#endif
         v_pos_        = 0;
         h_pos_        = 0;
         v_global_pos_ = 0;
@@ -213,6 +218,7 @@ protected:
 #ifdef WINDOWS
             PrintBuff(buff);
             ChangeColor(color);
+            buff = L"";
 #else
             switch (color) {
                 case Color::Black:         buff += L"\e[0m\e[30m";   break;
@@ -273,6 +279,7 @@ protected:
 #ifdef WINDOWS
             PrintBuff(buff);
             ChangePosition(position, number);
+            buff = L"";
 #else
             switch (position) {
                 case Position::Up    : buff += L"\e[" + std::to_wstring(number) + L'A'; break;

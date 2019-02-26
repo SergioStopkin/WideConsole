@@ -1,4 +1,4 @@
-// Copyright Â© 2019 Sergio Stopkin.
+// Copyright © 2019 Sergio Stopkin.
 
 /*
  * This file is part of WConsole. WConsole is free software:
@@ -24,7 +24,7 @@
 int main() {
     // Global timer
     auto g_start    = std::chrono::steady_clock::now();
-    auto g_duration = std::chrono::milliseconds(3000);
+    auto g_duration = std::chrono::milliseconds(2600);
 
     // Local timer
     auto l_start    = std::chrono::steady_clock::now();
@@ -46,47 +46,49 @@ int main() {
                                           WConsole::Color::BrightRed,
                                           WConsole::Color::Magenta,
                                           WConsole::Color::BrightMagenta };
-
     // CHART
+    const int max = 100;
+
     WConsole::Chart chart;
     chart.SetChartColors(colors);
-    chart.SetHorizontalRange(0, 100);
-    chart.SetVerticalRange(0, 100);
+    chart.SetHorizontalRange(0, max);
+    chart.SetVerticalRange(0, max);
     chart.ShowDataHeader(false);
     chart.ShowGrid(false);
 
-    int count = 0;
+    int count = 1;
     while (std::chrono::steady_clock::now() < g_start + g_duration) {
         if (std::chrono::steady_clock::now() > l_start + l_duration) {
             // Sinus
-            std::vector<std::pair<double, double>> coord1;
-            std::vector<std::pair<double, double>> coord2;
-            std::vector<std::pair<double, double>> coord3;
+            std::vector<std::pair<double, double>> sin1;
+            std::vector<std::pair<double, double>> sin2;
+            std::vector<std::pair<double, double>> sin3;
 
             for (double x = -1.5; x <= 1.5; x += 0.01) {
                 const double y1 = std::sin(2.0 * x + count);
                 const double y2 = std::sin(4.0 * x + count);
                 const double y3 = std::sin(8.0 * x + count);
 
-                if (!std::isnan(y1)) coord1.emplace_back(x, y1);
-                if (!std::isnan(y2)) coord2.emplace_back(x, y2);
-                if (!std::isnan(y3)) coord3.emplace_back(x, y3);
+                if (!std::isnan(y1)) sin1.emplace_back(x, y1);
+                if (!std::isnan(y2)) sin2.emplace_back(x, y2);
+                if (!std::isnan(y3)) sin3.emplace_back(x, y3);
             }
 
             graph.Clear();
+//            graph.ClearLast();
             graph.SetColor(WConsole::Color::BrightBlue);
-            graph.PrintGraph(coord1);
+            graph.PrintGraph(sin1);
 
-            graph.SetColor(WConsole::Color::Green);
-            graph.PrintGraph(coord2);
+            graph.SetColor(WConsole::Color::BrightGreen);
+            graph.PrintGraph(sin2);
 
             graph.SetColor(WConsole::Color::BrightRed);
-            graph.PrintGraph(coord3);
+            graph.PrintGraph(sin3);
 
             // Data for charts
             std::vector<int> data;
             for (int i = 0; i < colors.size(); ++i) {
-                data.emplace_back(10 * i + 5 * count % 50);
+                data.emplace_back((10 * i + 5 * count) % max);
             }
 
             graph.NewLine();
@@ -104,9 +106,8 @@ int main() {
 
             // Pie chart
             chart.SetChartType(WConsole::ChartType::Pie);
-            chart.SetSize(40, 15);
+            chart.SetSize(35, 17);
             chart.PrintChart(data);
-
 
             ++count;
             l_start = std::chrono::steady_clock::now();
