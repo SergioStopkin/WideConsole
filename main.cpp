@@ -1,4 +1,4 @@
-// Copyright © 2019 Sergio Stopkin.
+// Copyright Â© 2019 Sergio Stopkin.
 
 /*
  * This file is part of WConsole. WConsole is free software:
