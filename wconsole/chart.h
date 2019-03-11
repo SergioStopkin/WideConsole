@@ -586,10 +586,9 @@ private:
             }
         }
 
-        std::vector<std::pair<std::pair<  uint,   uint>,
-                              std::pair<double, double>>>::const_iterator coord_iterator  = sort_coord.begin();
-        std::vector<std::pair<std::pair<  uint,   uint>,
-                              std::pair<double, double>>>::const_iterator header_iterator = sort_header.begin();
+        // Const iterators
+        auto coord_iterator  = sort_coord.cbegin();
+        auto header_iterator = sort_header.cbegin();
 
         std::wstring buff;
         buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)

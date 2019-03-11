@@ -129,7 +129,8 @@ public:
             });
         }
 
-        typename std::vector<std::pair<uint, uint>>::const_iterator data_iterator = sort_data.begin();
+        // Const data iterator
+        auto data_iterator = sort_data.cbegin();
 
         std::wstring buff;
         buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
