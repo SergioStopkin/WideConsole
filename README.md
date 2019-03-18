@@ -46,7 +46,7 @@ WConsole::Text  text;
 
 See the example in the file [main.cpp](main.cpp).
 
-See the [INTERFACE.md](INTERFACE.md) file for more details.
+See the [INTERFACE.rst](INTERFACE.rst) file for more details.
 
 ## Authors
 
