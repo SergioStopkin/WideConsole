@@ -31,7 +31,7 @@ Linux &nbsp;&nbsp;&nbsp;&nbsp; macOS &nbsp;&nbsp;&nbsp;&nbsp; Windows
 
 For using charts, graphs and texts, include header files respectively:
 
-```
+```cpp
 #include "wconsole/chart.h"
 #include "wconsole/graph.h"
 #include "wconsole/text.h"
@@ -40,7 +40,7 @@ The project uses `WConsole` namespace.
 
 Create objects:
 
-```
+```cpp
 WConsole::Chart chart;
 WConsole::Graph graph;
 WConsole::Text  text;
