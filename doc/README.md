@@ -15,6 +15,8 @@ WConsole
 WConsole is a simple program for building graphs, charts and text output to the console.
 </p>
 
+![](pic/pic1.png?raw=true)
+
 ## Standard
 
 C++ 14
@@ -44,7 +46,7 @@ WConsole::Graph graph;
 WConsole::Text  text;
 ```
 
-See the example in the file [main.cpp](main.cpp).
+See the example in the file [main.cpp](../src/main.cpp).
 
 See the [INTERFACE.rst](INTERFACE.rst) file for more details.
 
@@ -56,5 +58,5 @@ See the [INTERFACE.rst](INTERFACE.rst) file for more details.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/GPLv3_Logo.svg" height=100></img>
 
-GNU General Public License version 3 or any later version. See the [COPYING](COPYING) file for details.
+GNU General Public License version 3 or any later version. See the [COPYING](../COPYING) file for details.
 

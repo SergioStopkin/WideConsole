@@ -3,4 +3,4 @@ project(WConsole)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(wconsole main.cpp)
+add_executable(wconsole src/main.cpp)
