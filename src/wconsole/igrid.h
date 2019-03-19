@@ -29,15 +29,15 @@ public:
         Small
     };
 
-    void SetAxisColor(Color color) noexcept {
+    void SetAxisColor(const Color color) noexcept {
         axis_color_ = color;
     }
 
-    void SetGridColor(Color color) noexcept {
+    void SetGridColor(const Color color) noexcept {
         grid_color_ = color;
     }
 
-    void SetArrow(Arrow arrow) noexcept {
+    void SetArrow(const Arrow arrow) noexcept {
         arrow_ = arrow;
     }
 
