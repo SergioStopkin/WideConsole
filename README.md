@@ -1,18 +1,30 @@
-<h1 align="center">
-WConsole
-</h1>
+<h1 align="center">WConsole</h1>
 
 <p align="center">
-<a href="https://travis-ci.org/SergioStopkin/WConsole">
-<img height=22 src="https://travis-ci.org/SergioStopkin/WConsole.svg?branch=master">
-</a>
-<a href="https://ci.appveyor.com/project/SergioStopkin/wconsole">
-<img height=22 src="https://ci.appveyor.com/api/projects/status/pq9440dgbvd003dj/branch/master?svg=true">
-</a>
+    <a href="https://travis-ci.org/SergioStopkin/WConsole">
+        <img height=22 src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=GNU/Linux">
+    </a>
+    <a href="https://travis-ci.org/SergioStopkin/WConsole">
+        <img height=22 src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=macOS">
+    </a>
+    <a href="https://travis-ci.org/SergioStopkin/WConsole">
+        <img height=22 src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=Windows">
+    </a>
+    <a href="https://ci.appveyor.com/project/SergioStopkin/wconsole">
+        <img height=22 src="https://img.shields.io/appveyor/ci/SergioStopkin/wconsole.svg?style=flat-square&logo=appveyor&label=Windows">
+    </a>
+    <a href="https://github.com/SergioStopkin/WConsole/blob/master/COPYING">
+        <img height=22 src="https://img.shields.io/github/license/SergioStopkin/Wconsole.svg?style=flat-square"/>
+    </a>
+    <img height=22 src="https://img.shields.io/github/languages/code-size/sergiostopkin/wconsole.svg?style=flat-square"/>
+    <img height=22 src="https://img.shields.io/github/repo-size/sergiostopkin/wconsole.svg?style=flat-square"/>
+    <img height=22 src=""/>
 </p>
 
+
+
 <p align="center">
-WConsole is a simple program for building graphs, charts and text output to the console.
+    WConsole is a simple program for building graphs, charts and text output to the console.
 </p>
 
 ![](./doc/img/img1.png?raw=true)
