@@ -2,16 +2,17 @@
 
 <p align="center">
     <a href="https://travis-ci.org/SergioStopkin/WConsole">
-        <img height=22 src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=gcc/clang">
+        <img src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=gcc/clang">
     </a>
-    <a href="https://ci.appveyor.com/project/SergioStopkin/wconsole">
-        <img height=22 src="https://img.shields.io/appveyor/ci/SergioStopkin/wconsole.svg?style=flat-square&logo=appveyor&label=msvc">
+    <a href="https://ci.appveyor.com/project/SergioStopkin/WConsole">
+        <img src="https://img.shields.io/appveyor/ci/SergioStopkin/WConsole.svg?style=flat-square&logo=appveyor&label=msvc">
     </a>
     <a href="https://github.com/SergioStopkin/WConsole/blob/master/COPYING">
-        <img height=22 src="https://img.shields.io/github/license/SergioStopkin/Wconsole.svg?style=flat-square"/>
+        <img src="https://img.shields.io/github/license/SergioStopkin/Wconsole.svg?style=flat-square"/>
     </a>
-    <!-- <img height=22 src="https://img.shields.io/github/languages/code-size/sergiostopkin/wconsole.svg?style=flat-square"/> -->
-    <img height=22 src="https://img.shields.io/github/repo-size/sergiostopkin/wconsole.svg?style=flat-square"/>
+    <a href="https://github.com/SergioStopkin/WConsole/archive/master.zip">
+        <img src="https://img.shields.io/github/repo-size/sergiostopkin/wconsole.svg?style=flat-square"/>
+    </a>
 </p>
 
 
