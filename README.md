@@ -2,16 +2,10 @@
 
 <p align="center">
     <a href="https://travis-ci.org/SergioStopkin/WConsole">
-        <img height=22 src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=GNU/Linux">
-    </a>
-    <a href="https://travis-ci.org/SergioStopkin/WConsole">
-        <img height=22 src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=macOS">
-    </a>
-    <a href="https://travis-ci.org/SergioStopkin/WConsole">
-        <img height=22 src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=Windows">
+        <img height=22 src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=gcc/clang">
     </a>
     <a href="https://ci.appveyor.com/project/SergioStopkin/wconsole">
-        <img height=22 src="https://img.shields.io/appveyor/ci/SergioStopkin/wconsole.svg?style=flat-square&logo=appveyor&label=Windows">
+        <img height=22 src="https://img.shields.io/appveyor/ci/SergioStopkin/wconsole.svg?style=flat-square&logo=appveyor&label=msvc">
     </a>
     <a href="https://github.com/SergioStopkin/WConsole/blob/master/COPYING">
         <img height=22 src="https://img.shields.io/github/license/SergioStopkin/Wconsole.svg?style=flat-square"/>
