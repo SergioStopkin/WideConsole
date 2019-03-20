@@ -1,4 +1,11 @@
-<h1 align="center">WConsole</h1>
+<p align="center">
+    <a href="https://github.com/SergioStopkin/WConsole">
+        <img height=103 src="./doc/img/img-icon.png"></img>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img height=150 src="./doc/img/img-logo.png"></img>
+    </a>
+</p>
+
 
 <p align="center">
     <a href="https://travis-ci.org/SergioStopkin/WConsole">
@@ -15,13 +22,13 @@
     </a>
 </p>
 
-
+<h1 align="center">WConsole</h1>
 
 <p align="center">
     WConsole is a simple program for building graphs, charts and text output to the console.
 </p>
 
-![](./doc/img/img1.png?raw=true)
+![](./doc/img/img_readme.png?raw=true)
 
 ## Standard
 
@@ -62,7 +69,7 @@ See the [INTERFACE.md](./doc/INTERFACE.md) file for more details.
 
 ## License
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/GPLv3_Logo.svg" height=100></img>
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/GPLv3_Logo.svg" height=80></img>
 
 GNU General Public License version 3 or any later version. See the [COPYING](./COPYING) file for details.
 
