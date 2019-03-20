@@ -16,9 +16,8 @@
     <a href="https://github.com/SergioStopkin/WConsole/blob/master/COPYING">
         <img height=22 src="https://img.shields.io/github/license/SergioStopkin/Wconsole.svg?style=flat-square"/>
     </a>
-    <img height=22 src="https://img.shields.io/github/languages/code-size/sergiostopkin/wconsole.svg?style=flat-square"/>
+    <!-- <img height=22 src="https://img.shields.io/github/languages/code-size/sergiostopkin/wconsole.svg?style=flat-square"/> -->
     <img height=22 src="https://img.shields.io/github/repo-size/sergiostopkin/wconsole.svg?style=flat-square"/>
-    <img height=22 src=""/>
 </p>
 
 
