@@ -1,11 +1,8 @@
 <p align="center">
     <a href="https://github.com/SergioStopkin/WConsole">
-        <img height=103 src="./doc/img/img-icon.png"></img>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <img height=150 src="./doc/img/img-logo.png"></img>
+        <img height=150 src="./doc/img/img-logo.svg"></img>
     </a>
 </p>
-
 
 <p align="center">
     <a href="https://travis-ci.org/SergioStopkin/WConsole">
