@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/SergioStopkin/WConsole">
-        <img height=150 src="./doc/img/img-logo.svg"></img>
+        <img src="./doc/img/img-logo.svg"></img>
     </a>
 </p>
 
