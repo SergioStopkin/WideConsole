@@ -1,7 +1,9 @@
 <p align="center">
+    <br><br><br>
     <a href="https://github.com/SergioStopkin/WConsole">
         <img src="./doc/img/img-logo.svg"></img>
     </a>
+    <br><br><br>
 </p>
 
 <p align="center">
