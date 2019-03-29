@@ -1,8 +1,8 @@
 @startuml
 
-'hide empty members
+hide empty members
 
-package WConsole #EAFAF1 {
+namespace WConsole #EAFAF1 {
 
 abstract class IGrid
 abstract class IHeader
