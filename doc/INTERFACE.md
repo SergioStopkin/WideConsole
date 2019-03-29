@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
 </head>
 
-
+<html>
 <style>
     .func {
         font-family: monospace;
@@ -30,6 +30,7 @@
         /* color: #ad7fa8; */
     } 
 </style>
+</html>
 
 <h1>Main interface</h1>
 
