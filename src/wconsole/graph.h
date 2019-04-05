@@ -64,7 +64,7 @@ enum class Point : wchar_t {
     Beaver        = 0xF800,
 };
 
-class Graph : public IWConsole, public IHeader, public IPrecisionP2, public IRange, public IGrid {
+class Graph final : public IWConsole, public IHeader, public IPrecisionP2, public IRange, public IGrid {
 public:
     explicit Graph(const Point point = Point::Dot)
                  : IHeader(true, DataPosition::Left),

@@ -141,7 +141,7 @@ private:
     bool     is_underline_;
 };
 
-class Text : public IWConsole {
+class Text final : public IWConsole {
 public:
     Font font;
 

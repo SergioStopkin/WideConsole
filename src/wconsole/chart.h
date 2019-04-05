@@ -43,7 +43,7 @@ enum class Opacity {
     OP_25,
 };
 
-class Chart : public IWConsole, public IHeader, public IPrecisionP1, public IRange, public IGrid {
+class Chart final : public IWConsole, public IHeader, public IPrecisionP1, public IRange, public IGrid {
 public:
     explicit Chart(const ChartType type    = ChartType::Column,
                    const Opacity   opacity = Opacity::OP_100)

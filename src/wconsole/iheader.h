@@ -38,7 +38,7 @@ public:
         data_pos_ = pos;
     }
 
-    void ShowDataHeader (const bool show) noexcept {
+    void ShowDataHeader(const bool show) noexcept {
         is_data_header_ = show;
     }
 
