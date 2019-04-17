@@ -2,37 +2,11 @@
     <meta charset="UTF-8">
 </head>
 
-<html>
-<style>
-    .func {
-        font-family: monospace;
-        font-size:   21px;
-        padding:     8px 13px;
-        color:       white;
-        background:  steelblue;
-        /* background:  #3465a4; */
-    } 
-</style>
-<style>
-    .keyw {
-        font-weight: bold;
-        color:       #fce94f;
-    } 
-</style>
-<style>
-    .mark {
-        color: #34e2e2;
-    } 
-</style>
-<style>
-    .term {
-        color: violet;
-        /* color: #ad7fa8; */
-    } 
-</style>
-</html>
+<aside class="warning">
+This document is not finished!
+</aside>
 
-<h1>Main interface</h1>
+<h1>Public interface</h1>
 
 | | Name | File |
 |-| ---- | ---- |
@@ -85,14 +59,11 @@
     <t class="keyw">=</t>
     Opacity<t class="mark">::</t>OP_100<t class="mark">)</t><t class="term">;</t>
 </p>
-<span style="font-family: sans-serif;">Constructs the chart object.<br>
-<b><i>type</i></b> — pointer to the c-style string<br></span>
-<b><i>opacity</i></b> — pointer to the c-style string<br></span>
-
-| | |
-|-|-|
-| ***type*** | the chart type |
-| ***opacity*** | the chart opacity |
+<table class="desc">
+    <th align="left" colspan="2">Constructs the chart object.</th>
+    <tr><td><b>type</b></td><td>the chart type<br></td></tr>
+    <tr><td><b>opacity</b></td><td>the chart opacity</td></tr>
+</table>
 
 <h1 id="graph">Graph</h1>
 
@@ -197,3 +168,38 @@
 <font color="purple">████▌████▌████▌████▌████▌████▌</font>
 <font color="cyan">████▌████▌████▌████▌████▌████▌</font>
 </pre>
+
+<style>
+    .func {
+        font-family: monospace;
+        font-size:   21px;
+        padding:     8px 13px;
+        color:       white;
+        background:  steelblue;
+        /* background:  #3465a4; */
+    } 
+</style>
+<style>
+    .keyw {
+        font-weight: bold;
+        color:       #fce94f;
+    } 
+</style>
+<style>
+    .mark {
+        color: #34e2e2;
+    } 
+</style>
+<style>
+    .term {
+        color: violet;
+        /* color: #ad7fa8; */
+    } 
+</style>
+<style type="text/css">
+    .desc {
+        font-size: 16px;
+        border:    1px solid steelblue;
+        padding:   5px 13px;
+    }
+</style>
