@@ -2,7 +2,6 @@
 @startuml
 
 scale 800 width
-scale 500  height
 
 hide empty members
 
