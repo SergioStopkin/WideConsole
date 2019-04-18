@@ -1,6 +1,9 @@
 ```plantuml
 @startuml
 
+scale max 1920 width
+scale max 1080 height
+
 hide empty members
 
 namespace WConsole #EAFAF1 {

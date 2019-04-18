@@ -2,9 +2,7 @@
     <meta charset="UTF-8">
 </head>
 
-<aside class="warning">
-This document is not finished!
-</aside>
+```This document is not finished!```
 
 <h1>Public interface</h1>
 
@@ -47,6 +45,19 @@ This document is not finished!
 | [ShowArrow](#show-arrow) | Show the arrow | [*IGrid*](#igrid) |
 | [ShowGrid](#show-grid) | Show the grid | [*IGrid*](#igrid) |
 | [SetPrecision](#set-precision) | Sets the precision of ...  | [*IPrecisionP1*](#iprecision-p1) |
+
+
+<html>
+<head>
+    <link href="doc/prism.css" rel="stylesheet" />
+</head>
+<body>
+    <script src="doc/prism.js"></script>
+</body>
+</html>
+
+<pre><code class="language-cpp">int main() {
+}</code></pre>
 
 <p id="chart-constructor" class="func">
     <t class="keyw">explicit</t> <b>Chart</b>
