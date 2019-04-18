@@ -1,7 +1,7 @@
 ```plantuml
 @startuml
 
-scale 1500 width
+scale 1900 width
 
 hide empty members
 
