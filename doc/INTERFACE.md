@@ -2,7 +2,9 @@
     <meta charset="UTF-8">
 </head>
 
-```This document is not finished!```
+```diff
+- This document is not finished!
+```
 
 <h1>Public interface</h1>
 
@@ -46,22 +48,24 @@
 | [ShowGrid](#show-grid) | Show the grid | [*IGrid*](#igrid) |
 | [SetPrecision](#set-precision) | Sets the precision of ...  | [*IPrecisionP1*](#iprecision-p1) |
 
-<p id="chart-constructor" class="func">
-    <t class="keyw">explicit</t> <b>Chart</b>
-    <t class="mark">(</t><t class="keyw">const</t>
-    ChartType <b>type</b>
-    <t class="keyw">=</t>
-    ChartType<t class="mark">::</t>Column<t class="mark">,</t>
-    <t class="keyw">const</t>
-    Opacity <b>opacity</b>
-    <t class="keyw">=</t>
-    Opacity<t class="mark">::</t>OP_100<t class="mark">)</t><t class="term">;</t>
-</p>
-<table class="desc">
-    <th align="left" colspan="2">Constructs the chart object.</th>
-    <tr><td><b>type</b></td><td>the chart type<br></td></tr>
-    <tr><td><b>opacity</b></td><td>the chart opacity</td></tr>
-</table>
+<p id="chart-constructor"></p>
+
+```cpp
+explicit Chart(const ChartType type = ChartType::Column, const Opacity   opacity = Opacity::OP_100);
+```
+|| Constructs the chart object. |
+|-|-|
+| type	| the [ChartType](#chart-type) |
+| opacity | the chart [Opacity](#opacity) |
+
+<p id="set-chart-type"></p>
+
+```cpp
+void SetChartType(const ChartType type) noexcept;
+```
+|| Setting the chart type. |
+|-|-|
+| type	| the [ChartType](#chart-type) |
 
 <h1 id="graph">Graph</h1>
 
@@ -154,50 +158,3 @@
 | -------------- | ----------- |
 | [SetVerticalPrecision](#set-vertical-precision) | Sets the vertical precision of ...  |
 | [SetHorizontalPrecision](#set-horizontal-precision) | Sets the horizontal precision of ...  |
-
-
-
-
-<pre>
-<font color=008000>████▌████▌████▌████▌</font>
-<font color=00FF00>████▌████▌████▌████▌</font>
-<font color=FF0000>████▌████▌████▌████▌</font>
-<font color="blue">████▌████▌████▌████▌████▌</font>
-<font color="purple">████▌████▌████▌████▌████▌████▌</font>
-<font color="cyan">████▌████▌████▌████▌████▌████▌</font>
-</pre>
-
-<style>
-    .func {
-        font-family: monospace;
-        font-size:   21px;
-        padding:     8px 13px;
-        color:       white;
-        background:  steelblue;
-        /* background:  #3465a4; */
-    } 
-</style>
-<style>
-    .keyw {
-        font-weight: bold;
-        color:       #fce94f;
-    } 
-</style>
-<style>
-    .mark {
-        color: #34e2e2;
-    } 
-</style>
-<style>
-    .term {
-        color: violet;
-        /* color: #ad7fa8; */
-    } 
-</style>
-<style type="text/css">
-    .desc {
-        font-size: 16px;
-        border:    1px solid steelblue;
-        padding:   5px 13px;
-    }
-</style>
