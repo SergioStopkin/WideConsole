@@ -62,10 +62,6 @@ See the example in the file [main.cpp](./src/main.cpp).
 
 See the [INTERFACE.md](./doc/INTERFACE.md) file for more details.
 
-<!-- UML Class diagram: -->
-
-<!-- ![uml class](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/SergioStopkin/WConsole/master/doc/UMLClass.md) -->
-
 ## Authors
 
 **Sergio Stopkin** - <sergiistopkin@gmail.com> -  [GitHub](https://github.com/SergioStopkin)

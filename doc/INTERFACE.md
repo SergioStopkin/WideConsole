@@ -20,6 +20,9 @@
 | abstract class | [*IPrecisionP1*](#iprecision-p1) | [iprecision.h](../src/wconsole/iprecision.h) |
 | abstract class | [*IPrecisionP2*](#iprecision-p2) | [iprecision.h](../src/wconsole/iprecision.h) |
 
+### UML Class diagram:
+![uml class](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/SergioStopkin/WConsole/master/doc/UMLClass.md)
+
 <h1 id="chart">Chart</h1>
 
 | Public methods | Description | Derived |
@@ -48,24 +51,44 @@
 | [ShowGrid](#show-grid) | Show the grid | [*IGrid*](#igrid) |
 | [SetPrecision](#set-precision) | Sets the precision of ...  | [*IPrecisionP1*](#iprecision-p1) |
 
-<p id="chart-constructor"></p>
-
-```cpp
-explicit Chart(const ChartType type = ChartType::Column, const Opacity   opacity = Opacity::OP_100);
-```
-|| Constructs the chart object. |
-|-|-|
-| type	| the [ChartType](#chart-type) |
-| opacity | the chart [Opacity](#opacity) |
+<p id="chart-constructor" class="func">
+    <t class="keyw">explicit</t> <b>Chart</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    ChartType <b>type</b>
+    <t class="keyw">=</t>
+    ChartType<t class="mark">::</t>Column<t class="mark">,</t>
+    <t class="keyw">const</t>
+    Opacity <b>opacity</b>
+    <t class="keyw">=</t>
+    Opacity<t class="mark">::</t>OP_100<t class="mark">)</t><t class="term">;</t>
+</p>
+<dev class="desc">Constructs the chart object.
+    <table>
+        <tr><td><b>type</b></td><td><a href="#chart-type">ChartType</a></td></tr>
+        <tr><td><b>opacity</b></td><td>chart <a href="#opacity">Opacity</a></td></tr>
+    </table>
+</dev>
 
 <p id="set-chart-type"></p>
 
 ```cpp
 void SetChartType(const ChartType type) noexcept;
 ```
-|| Setting the chart type. |
-|-|-|
-| type	| the [ChartType](#chart-type) |
+Setting the chart type.<br>
+**type**    - [ChartType](#chart-type)<br>
+
+
+<p id="set-chart-type" class="func">
+    <t class="keyw">void</t> <b>SetChartType</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    ChartType <b>type</b><t class="mark">)</t>
+    <b>noexcept</b><t class="term">;</t>
+</p>
+<dev class="desc">Setting the chart type.
+    <table>
+        <tr><td><b>type</b></td><td><a href="#chart-type">ChartType</a></td></tr>
+    </table>
+</dev>
 
 <h1 id="graph">Graph</h1>
 
@@ -158,3 +181,42 @@ void SetChartType(const ChartType type) noexcept;
 | -------------- | ----------- |
 | [SetVerticalPrecision](#set-vertical-precision) | Sets the vertical precision of ...  |
 | [SetHorizontalPrecision](#set-horizontal-precision) | Sets the horizontal precision of ...  |
+
+<style>
+    .func {
+        font-family:    monospace;
+        font-size:      21px;
+        padding:        8px 13px;
+        color:          white;
+        background:     steelblue;
+        /* background:     #3465a4; */
+    } 
+</style>
+<style>
+    .keyw {
+        font-weight:    bold;
+        color:          #fce94f;
+    } 
+</style>
+<style>
+    .mark {
+        color:          #34e2e2;
+    } 
+</style>
+<style>
+    .term {
+        color:          violet;
+    } 
+</style>
+<style type="text/css">
+    .desc {
+        font-size:      16px;
+        padding:        5px 13px;
+        /* color:          ; */
+        /* background:     ; */
+    }
+    table.desc {
+        /* border:         1px solid steelblue; */
+        border:         0px;
+    }
+</style>
