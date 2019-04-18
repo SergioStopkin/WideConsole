@@ -47,14 +47,8 @@
 | [SetPrecision](#set-precision) | Sets the precision of ...  | [*IPrecisionP1*](#iprecision-p1) |
 
 
-<html>
-<head>
-    <link href="doc/prism.css" rel="stylesheet" />
-</head>
-<body>
-    <script src="doc/prism.js"></script>
-</body>
-</html>
+<link href="./prism.css" rel="stylesheet" />
+<script src="./prism.js"></script>
 
 <pre><code class="language-cpp">int main() {
 }</code></pre>
