@@ -1,7 +1,7 @@
 ```plantuml
 @startuml
 
-scale 3
+scale 30
 
 hide empty members
 
