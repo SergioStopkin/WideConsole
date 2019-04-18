@@ -46,13 +46,6 @@
 | [ShowGrid](#show-grid) | Show the grid | [*IGrid*](#igrid) |
 | [SetPrecision](#set-precision) | Sets the precision of ...  | [*IPrecisionP1*](#iprecision-p1) |
 
-
-<link href="/doc/prism.css" rel="stylesheet" />
-<script src="/doc/prism.js"></script>
-
-<pre><code class="language-cpp">int main() {
-}</code></pre>
-
 <p id="chart-constructor" class="func">
     <t class="keyw">explicit</t> <b>Chart</b>
     <t class="mark">(</t><t class="keyw">const</t>
