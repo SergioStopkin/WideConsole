@@ -152,7 +152,7 @@ public:
             }
 
             if (is_data_header_) {
-                WriteSpacesToBuff(buff, v_alignment);
+                buff.append(v_alignment, ' ');
             }
 
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
@@ -235,7 +235,7 @@ public:
             }
 
             WriteColorToBuff(buff, Color::Default);
-            WriteSpacesToBuff(buff, v_alignment);
+            buff.append(v_alignment, ' ');
             h_pos_header += v_alignment;
 
             int count = 0;

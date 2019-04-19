@@ -272,7 +272,7 @@ private:
                     WriteColorToBuff(buff, Color::Default);
                     WriteDataToBuff(buff, grid_value, grid_alignment, precision_);
                 } else {
-                    WriteSpacesToBuff(buff, grid_alignment);
+                    buff.append(grid_alignment, ' ');
                 }
             }
 
@@ -333,13 +333,13 @@ private:
                         WriteColorToBuff(buff, grid_color_);
                     }
 
-                    WriteNToBuff(buff, grid_, horizontal_size_);
+                    buff.append(horizontal_size_, grid_);
                     WriteColorToBuff(buff, v_color);
                 } else {
                     if (space_diff > horizontal_size_) {
                         space_diff -= horizontal_size_;
                     } else {
-                        WriteSpacesToBuff(buff, horizontal_size_ - space_diff);
+                        buff.append(horizontal_size_ - space_diff, ' ');
                         space_diff = 0;
                     }
                 }

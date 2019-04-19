@@ -22,8 +22,6 @@
 #include <sstream>
 #include <typeinfo>
 
-#include "iprint.h"
-
 namespace WConsole {
 
 enum class DataPosition {
@@ -32,7 +30,7 @@ enum class DataPosition {
     Center
 };
 
-class IHeader : virtual public IPrint {
+class IHeader {
 public:
     void SetDataPosition(const DataPosition pos) noexcept {
         data_pos_ = pos;
@@ -80,11 +78,11 @@ protected:
                     break;
                 case DataPosition::Right:
                     diff = 0;//alignment - str_len - (alignment - str_len);
-                    WriteSpacesToBuff(buff, alignment - str_len);
+                    buff.append(alignment - str_len, ' ');
                     break;
                 case DataPosition::Center:
                     diff = alignment - str_len - ((alignment - str_len) / 2);
-                    WriteSpacesToBuff(buff, ((alignment - str_len) / 2));
+                    buff.append(((alignment - str_len) / 2), ' ');
                     break;
             }
         }
@@ -92,7 +90,7 @@ protected:
         buff += wvalue;
 
         if (alignment > str_len) {
-            WriteSpacesToBuff(buff, diff);
+            buff.append(diff, ' ');
         }
     }
 

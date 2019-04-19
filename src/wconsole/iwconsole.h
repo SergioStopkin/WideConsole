@@ -38,11 +38,10 @@
 #endif
 
 #include "types.h"
-#include "iprint.h"
 
 namespace WConsole {
 
-class IWConsole : virtual public IPrint {
+class IWConsole {
 public:
     void SetColor(const Color color) noexcept {
         color_ = color;
@@ -304,6 +303,14 @@ private:
 #else
         wprintf(L"\33[?25%c", ((show) ? 'h' : 'l'));
 #endif
+    }
+
+    void Print(const char * str) const noexcept {
+        wprintf(L"%s", str);
+    }
+
+    void Print(const std::string & str) const noexcept {
+        wprintf(L"%s", str.c_str());
     }
 };
 
