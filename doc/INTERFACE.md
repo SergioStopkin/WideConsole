@@ -20,7 +20,7 @@
 | abstract class | [*IPrecisionP1*](#iprecision-p1) | [iprecision.h](../src/wconsole/iprecision.h) |
 | abstract class | [*IPrecisionP2*](#iprecision-p2) | [iprecision.h](../src/wconsole/iprecision.h) |
 
-### UML Class diagram:
+#### UML Class diagram:
 ![uml class](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/SergioStopkin/WConsole/master/doc/UMLClass.md)
 
 <h1 id="chart">Chart</h1>
@@ -69,20 +69,11 @@
     </table>
 </dev>
 
-<p id="set-chart-type"></p>
-
-```cpp
-void SetChartType(const ChartType type) noexcept;
-```
-Setting the chart type.<br>
-**type**    - [ChartType](#chart-type)<br>
-
-
 <p id="set-chart-type" class="func">
     <t class="keyw">void</t> <b>SetChartType</b>
     <t class="mark">(</t><t class="keyw">const</t>
     ChartType <b>type</b><t class="mark">)</t>
-    <b>noexcept</b><t class="term">;</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
 </p>
 <dev class="desc">Setting the chart type.
     <table>
