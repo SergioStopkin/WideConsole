@@ -269,7 +269,7 @@ public:
 
         WriteColorToBuff(buff, Color::Default);
         buff += L'\n';
-        PrintBuff(buff);
+        Print(buff);
     }
 
 private:

@@ -18,10 +18,6 @@
 #ifndef WCONSOLE_IWCONSOLE_H_
 #define WCONSOLE_IWCONSOLE_H_ 1
 
-#if (defined(__STDC_LIB_EXT1__))
-#define wprintf wprintf_s
-#endif
-
 #if (defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__))
 #define WINDOWS 1
 #define NOMINMAX 1
@@ -58,14 +54,14 @@ public:
     }
 
     void NewLine() noexcept {
-        wprintf(L"\n");
+        Print("\n");
         v_global_pos_ += (v_pos_ + 1);
         v_pos_ = 0;
         h_pos_ = 0;
     }
 
     void NewLineInBlock() noexcept {
-        wprintf(L"\n");
+        Print("\n");
         v_global_pos_ += (v_pos_ + 1);
         v_pos_ = 0;
         h_pos_ = h_global_pos_;
@@ -76,7 +72,7 @@ public:
         COORD pos {0, 0};
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 #else
-        wprintf(L"\ec");
+        Print("\ec");
 #endif
         v_pos_        = 0;
         h_pos_        = 0;
@@ -190,24 +186,24 @@ protected:
         }
 #else
         switch (color) {
-            case Color::Black:         wprintf(L"\e[0;30m"); break;
-            case Color::Red:           wprintf(L"\e[0;31m"); break;
-            case Color::Green:         wprintf(L"\e[0;32m"); break;
-            case Color::Yellow:        wprintf(L"\e[0;33m"); break;
-            case Color::Blue:          wprintf(L"\e[0;34m"); break;
-            case Color::Magenta:       wprintf(L"\e[0;35m"); break;
-            case Color::Cyan:          wprintf(L"\e[0;36m"); break;
-            case Color::White:         wprintf(L"\e[0;37m"); break;
-            case Color::BrightBlack:   wprintf(L"\e[1;30m"); break;
-            case Color::BrightRed:     wprintf(L"\e[1;31m"); break;
-            case Color::BrightGreen:   wprintf(L"\e[1;32m"); break;
-            case Color::BrightYellow:  wprintf(L"\e[1;33m"); break;
-            case Color::BrightBlue:    wprintf(L"\e[1;34m"); break;
-            case Color::BrightMagenta: wprintf(L"\e[1;35m"); break;
-            case Color::BrightCyan:    wprintf(L"\e[1;36m"); break;
-            case Color::BrightWhite:   wprintf(L"\e[1;37m"); break;
-            case Color::Default:       wprintf(L"\e[0m");    break;
-            case Color::BrightDefault: wprintf(L"\e[;1m");   break;
+            case Color::Black:         Print("\e[0;30m"); break;
+            case Color::Red:           Print("\e[0;31m"); break;
+            case Color::Green:         Print("\e[0;32m"); break;
+            case Color::Yellow:        Print("\e[0;33m"); break;
+            case Color::Blue:          Print("\e[0;34m"); break;
+            case Color::Magenta:       Print("\e[0;35m"); break;
+            case Color::Cyan:          Print("\e[0;36m"); break;
+            case Color::White:         Print("\e[0;37m"); break;
+            case Color::BrightBlack:   Print("\e[1;30m"); break;
+            case Color::BrightRed:     Print("\e[1;31m"); break;
+            case Color::BrightGreen:   Print("\e[1;32m"); break;
+            case Color::BrightYellow:  Print("\e[1;33m"); break;
+            case Color::BrightBlue:    Print("\e[1;34m"); break;
+            case Color::BrightMagenta: Print("\e[1;35m"); break;
+            case Color::BrightCyan:    Print("\e[1;36m"); break;
+            case Color::BrightWhite:   Print("\e[1;37m"); break;
+            case Color::Default:       Print("\e[0m");    break;
+            case Color::BrightDefault: Print("\e[;1m");   break;
         }
 #endif
     }
@@ -290,8 +286,36 @@ protected:
         }
     }
 
-    void PrintBuff(std::wstring & buff) const noexcept {
-        wprintf(L"%ls", buff.c_str());
+    void Print(const char * s) const noexcept {
+#if (defined(__STDC_LIB_EXT1__))
+        wprintf_s(L"%s", s);
+#else
+        wprintf(L"%s", s);
+#endif
+    }
+
+    void Print(const std::string & str) const noexcept {
+#if (defined(__STDC_LIB_EXT1__))
+        wprintf_s(L"%s", str.c_str());
+#else
+        wprintf(L"%s", str.c_str());
+#endif
+    }
+
+    void Print(const wchar_t * ws) const noexcept {
+#if (defined(__STDC_LIB_EXT1__))
+        wprintf_s(L"%ls", ws);
+#else
+        wprintf(L"%ls", ws);
+#endif
+    }
+
+    void Print(const std::wstring & wstr) const noexcept {
+#if (defined(__STDC_LIB_EXT1__))
+        wprintf_s(L"%ls", wstr.c_str());
+#else
+        wprintf(L"%ls", wstr.c_str());
+#endif
     }
 
 private:
@@ -301,16 +325,8 @@ private:
         info.bVisible = (BOOL)show;
         SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 #else
-        wprintf(L"\33[?25%c", ((show) ? 'h' : 'l'));
+        Print(std::string("\33[?25") + ((show) ? "h" : "l"));
 #endif
-    }
-
-    void Print(const char * str) const noexcept {
-        wprintf(L"%s", str);
-    }
-
-    void Print(const std::string & str) const noexcept {
-        wprintf(L"%s", str.c_str());
     }
 };
 

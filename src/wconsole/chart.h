@@ -358,7 +358,7 @@ private:
                    + ((data_alignment > horizontal_size_) ? (data_alignment - horizontal_size_) : 0));
 
         WriteColorToBuff(buff, Color::Default);
-        PrintBuff(buff);
+        Print(buff);
     }
 
     template <typename T>
@@ -452,7 +452,7 @@ private:
         h_pos_ += (horizontal_size_ + over);
 
         WriteColorToBuff(buff, Color::Default);
-        PrintBuff(buff);
+        Print(buff);
     }
 
     template <typename T>
@@ -704,7 +704,7 @@ private:
 
         WriteColorToBuff(buff, Color::Default);
         buff += L'\n';
-        PrintBuff(buff);
+        Print(buff);
     }
 
 }; // class Chart

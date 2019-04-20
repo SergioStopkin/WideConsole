@@ -159,7 +159,7 @@ public:
         }
 
         ChangeColor(color_);
-        wprintf(L"%s", str);
+        Print(str);
         h_pos_ = 0;
         h_global_pos_ += std::strlen(str);
     }
@@ -235,7 +235,7 @@ public:
             }
         }
 
-        PrintBuff(buff);
+        Print(buff);
 
         v_pos_ = 0;
         h_pos_ = 0;
