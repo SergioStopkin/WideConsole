@@ -173,6 +173,7 @@
 | [SetVerticalPrecision](#set-vertical-precision) | Sets the vertical precision of ...  |
 | [SetHorizontalPrecision](#set-horizontal-precision) | Sets the horizontal precision of ...  |
 
+--------------------------------------------------------
 <style>
     .func {
         font-family:    monospace;
