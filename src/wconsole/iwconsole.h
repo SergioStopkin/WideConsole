@@ -211,7 +211,7 @@ protected:
     void WriteColorToBuff(std::wstring & buff, const Color color) noexcept {
         if (color != color_prev_) {
 #ifdef WINDOWS
-            PrintBuff(buff);
+            Print(buff);
             ChangeColor(color);
             buff = L"";
 #else
@@ -272,7 +272,7 @@ protected:
     void WritePositionToBuff(std::wstring & buff, const Position position, const int number) const noexcept {
         if (number > 0) {
 #ifdef WINDOWS
-            PrintBuff(buff);
+            Print(buff);
             ChangePosition(position, number);
             buff = L"";
 #else
