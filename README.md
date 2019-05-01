@@ -27,7 +27,7 @@
     WConsole is a simple program for building graphs, charts and text output to the console.
 </p>
 
-![](./doc/img/img_readme.png?raw=true)
+![](./doc/img/img-readme.png?raw=true)
 
 ## Standard
 
