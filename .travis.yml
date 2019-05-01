@@ -17,6 +17,12 @@ env:
   - TARGET_CPU=x86    BUILD_CONFIGURATION=Debug
   - TARGET_CPU=x86    BUILD_CONFIGURATION=Release
 
+addons:
+  sonarcloud:
+    organization: "sergiostopkin-github"
+    token:
+      secure:     22e00f96cffd41b3ae80fed4d234ec26b80f3518
+
 matrix:
 #  include:
 #    - os: osx
@@ -48,3 +54,4 @@ script:
   - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
   - cmake --build .
 #  - ctest --output-on-failure
+  - sonar-scanner
