@@ -5,7 +5,7 @@ language: cpp
 os:
   - linux
   - osx
-  - windows
+#  - windows
 
 compiler:
   - gcc
@@ -18,15 +18,9 @@ env:
   - TARGET_CPU=x86    BUILD_CONFIGURATION=Release
 
 matrix:
-#  include:
-#    - os: osx
-#      osx_image:  xcode8
-#      env:
-#        - MATRIX_EVAL="brew install gcc5 && CC=gcc-5 && CXX=g++-5"
-
   exclude:
-    - os:       windows
-      compiler: clang
+#    - os:       windows
+#      compiler: clang
 
     - os:       osx
       compiler: gcc
@@ -37,14 +31,8 @@ matrix:
     - os:  osx
       env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
-#before_install:
-#  - eval "${MATRIX_EVAL}"
-
-install:  true
-
 script:
   - mkdir build
   - cd build
   - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
   - cmake --build .
-#  - ctest --output-on-failure
