@@ -1,4 +1,4 @@
-dist:     xenial
+dist:     trusty
 sudo:     required
 language: cpp
 
@@ -21,7 +21,7 @@ addons:
   sonarcloud:
     organization: "sergiostopkin-github"
     token:
-      secure:     22e00f96cffd41b3ae80fed4d234ec26b80f3518
+      secure:     "22e00f96cffd41b3ae80fed4d234ec26b80f3518"
 
 matrix:
 #  include:
@@ -54,4 +54,4 @@ script:
   - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
   - cmake --build .
 #  - ctest --output-on-failure
-  - sonar-scanner -Dsonar.verbose=true -X
+#  - sonar-scanner -Dsonar.verbose=true -X
