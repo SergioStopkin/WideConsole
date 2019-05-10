@@ -18,6 +18,8 @@
 #ifndef WCONSOLE_IWCONSOLE_H_
 #define WCONSOLE_IWCONSOLE_H_ 1
 
+#define __STDC_WANT_LIB_EXT1__ 1
+
 #if (defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__))
 #define WINDOWS 1
 #define NOMINMAX 1
