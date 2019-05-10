@@ -87,7 +87,7 @@ int main() {
 
             // Data for charts
             std::vector<int> data;
-            for (int i = 0; i < colors.size(); ++i) {
+            for (size_t i = 0; i < colors.size(); ++i) {
                 data.emplace_back((10 * i + 5 * count) % max);
             }
 

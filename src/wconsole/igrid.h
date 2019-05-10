@@ -76,10 +76,10 @@ protected:
 
     Color   axis_color_;
     Color   grid_color_;
-    bool    is_grid_;
-    bool    is_arrow_;
     Arrow   arrow_;
     wchar_t grid_;
+    bool    is_arrow_;
+    bool    is_grid_;
 
     explicit IGrid(const Color axis_color = Color::Default,
                    const Color grid_color = Color::White,

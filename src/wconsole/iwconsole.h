@@ -128,10 +128,10 @@ protected:
                        vertical_size_  (vertical_size),
                        color_          (color),
                        color_prev_     (Color::Default),
-                       v_global_pos_   (0),
                        h_global_pos_   (0),
-                       v_pos_          (0),
-                       h_pos_          (0) {
+                       v_global_pos_   (0),
+                       h_pos_          (0),
+                       v_pos_          (0) {
 #ifdef WINDOWS
         _setmode(_fileno(stdout), _O_WTEXT);
 

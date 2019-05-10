@@ -180,7 +180,7 @@ private:
         const double error   = 0.0000005;
         const double alpha_e = alpha - error;
 
-        for (int i = 0; i < angles.size(); ++i) {
+        for (size_t i = 0; i < angles.size(); ++i) {
             if (alpha_e <= angles[i]) {
 //                wprintf(L"[% 2d]%.10f <= %.10f\n", i, alpha_e, angles[i]);
                 return (i);
@@ -232,11 +232,11 @@ private:
     template <typename T>
     void PrintColumnChart(const std::vector<T> & data) {
         const T      data_max      = * std::max_element(std::begin(data), std::end(data));
-        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
+//        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
         const double step          = (v_max_ - v_min_) / (double)vertical_size_; //(data_max - data_min) / static_cast<T>(vertical_size_);
         const uint   over          = ((is_data_header_ && (data_max > v_max_)) ? 1 : 0);
-        const uint   clst          = vertical_size_ / static_cast<uint>(colors_.size());
-        const bool   is_data_empty = (data.begin() == data.end());
+//        const uint   clst          = vertical_size_ / static_cast<uint>(colors_.size());
+//        const bool   is_data_empty = (data.begin() == data.end());
 
         std::wstring      buff;
 
@@ -246,7 +246,7 @@ private:
 
         std::vector<bool> print_data_once(data.size(), false);
 
-        size_t cs             = colors_.size();
+//        size_t cs             = colors_.size();
         bool   write_over     = (over == 0);
         T      grid_value     = v_max_;
         uint   grid_alignment = (uint)(std::max(std::to_string((int)v_max_).size(), std::to_string((int)v_min_).size()));
@@ -363,12 +363,12 @@ private:
 
     template <typename T>
     void PrintBarChart(const std::vector<T> & data) {
-        const T      data_max      = * std::max_element(std::begin(data), std::end(data));
-        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
+//        const T      data_max      = * std::max_element(std::begin(data), std::end(data));
+//        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
         const double step          = (h_max_ - h_min_) / (double)horizontal_size_; //(data_max - data_min) / static_cast<T>(horizontal_size_);
         const uint   over          = ((is_data_header_  ? (uint)(std::max(std::to_string((int)v_max_).size(), std::to_string((int)v_min_).size())) : 0)
                                                                + ((precision_ > 0) ? (precision_ + 1) : 0));
-        const bool is_data_empty = (data.begin() == data.end());
+//        const bool is_data_empty = (data.begin() == data.end());
 
         std::wstring buff;
 
@@ -389,7 +389,7 @@ private:
                 num_bricks = horizontal_size_;
             }
 
-            for (int i = 0; i < vertical_size_ - 1; ++i) {
+            for (uint i = 0; i < vertical_size_ - 1; ++i) {
                 if (h_pos_ > 0) {
                     WritePositionToBuff(buff, Position::Right, h_pos_);
                 }

@@ -97,6 +97,7 @@ public:
             case Color::BrightCyan:    buff += L"1;36"; break;
             case Color::BrightWhite:   buff += L"1;37"; break;
             case Color::BrightDefault: buff += L";1";   break;
+            default: break;
         }
 
         switch (background_) {
@@ -116,6 +117,7 @@ public:
             case Color::BrightMagenta: buff += L";45"; break;
             case Color::BrightCyan:    buff += L";46"; break;
             case Color::BrightWhite:   buff += L";47"; break;
+            default: break;
         }
 
         if (is_underline_) {
@@ -168,7 +170,7 @@ public:
         PrintText(str, font);
     }
 
-    void PrintText(const std::string & str, Font font) noexcept {
+    void PrintText(const std::string & str, const Font font) noexcept {
         std::wstring buff;
 
         if (v_pos_ > 0) {
@@ -201,6 +203,7 @@ public:
                     case FontType::Monospace:         buff += (wc + 0x1D670 - 'A'); break;
                     case FontType::ScriptBold:        buff += (wc + 0x1D4D0 - 'A'); break;
                     case FontType::FrakturBold:       buff += (wc + 0x1D56C - 'A'); break;
+                    default: break;
                 }
             } else if (wc >= 'a' && wc <= 'z') {
                 switch (font.GetFontType()) {
@@ -215,6 +218,7 @@ public:
                     case FontType::Monospace:         buff += (wc + 0x1D68A - 'a'); break;
                     case FontType::ScriptBold:        buff += (wc + 0x1D4EA - 'a'); break;
                     case FontType::FrakturBold:       buff += (wc + 0x1D586 - 'a'); break;
+                    default: break;
                 }
             } else if (wc >= '0' && wc <= '9') {
                 switch (font.GetFontType()) {
@@ -229,6 +233,7 @@ public:
                     case FontType::SansSerif:         buff += (wc + 0x1D7E2 - '0'); break;
                     case FontType::SansSerifBold:     buff += (wc + 0x1D7EC - '0'); break;
                     case FontType::Monospace:         buff += (wc + 0x1D7F6 - '0'); break;
+                    default: break;
                 }
             } else {
                 buff += wc;

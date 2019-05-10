@@ -167,7 +167,7 @@ public:
         }
 
         // Vertical loop
-        for (int vi = vertical_size_ - 1; vi >= 0; --vi) {
+        for (uint vi = vertical_size_ - 1; (int)vi >= 0; --vi) {
             const double vs = vi * v_step + v_min_;
 
             if (h_pos_ > 0) {
@@ -225,7 +225,7 @@ public:
             buff += L'\n';
         }
 
-        uint h_pos        = (horizontal_size_ + ((is_data_header_) ? v_alignment : 0) + ((is_arrow_) ? 1 : 0));
+//        uint h_pos        = (horizontal_size_ + ((is_data_header_) ? v_alignment : 0) + ((is_arrow_) ? 1 : 0));
         uint h_pos_header = 0;
 
         // Horizontal data header
