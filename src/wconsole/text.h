@@ -170,7 +170,7 @@ public:
         PrintText(str, font);
     }
 
-    void PrintText(const std::string & str, const Font font) noexcept {
+    void PrintText(const std::string & str, const Font & font) noexcept {
         std::wstring buff;
 
         if (v_pos_ > 0) {
