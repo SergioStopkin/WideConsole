@@ -48,15 +48,15 @@ public:
                   is_inverse_  (false),
                   is_underline_(false) {}
 
-    void SetFontType(const FontType font_type) noexcept {
+    void SetFontType(const FontType & font_type) noexcept {
         font_type_ = font_type;
     }
 
-    void SetForegroundColor(const Color color) noexcept {
+    void SetForegroundColor(const Color & color) noexcept {
         foreground_ = color;
     }
 
-    void SetBackgroundColor(const Color color) noexcept {
+    void SetBackgroundColor(const Color & color) noexcept {
         background_ = color;
     }
 
