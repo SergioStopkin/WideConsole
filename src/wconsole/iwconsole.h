@@ -332,6 +332,9 @@ private:
     }
 };
 
+namespace Global {
+} // namespace Global
+
 } // namespace WConsole
 
 #endif // WCONSOLE_IWCONSOLE_H_
