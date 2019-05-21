@@ -39,7 +39,7 @@ enum class FontType {
     FullWidth,
 };
 
-class Font {
+class Font final {
 public:
     explicit Font(const FontType & font_type = FontType::Monospace)
                 : font_type_   (font_type),
