@@ -41,8 +41,8 @@ enum class FontType {
 
 class Font {
 public:
-    explicit Font()
-                : font_type_   (FontType::Monospace),
+    explicit Font(const FontType & font_type = FontType::Monospace)
+                : font_type_   (font_type),
                   foreground_  (Color::Default),
                   background_  (Color::Default),
                   is_inverse_  (false),
@@ -145,9 +145,8 @@ private:
 
 class Text final : public IWConsole {
 public:
-    Font font;
-
-    explicit Text() {
+    explicit Text(const FontType & font_type = FontType::Monospace)
+                : font_(font_type) {
     }
 
     void PrintText(const char * str) noexcept {
@@ -167,7 +166,7 @@ public:
     }
 
     void PrintText(const std::string & str) noexcept {
-        PrintText(str, font);
+        PrintText(str, font_);
     }
 
     void PrintText(const std::string & str, const Font & font) noexcept {
@@ -246,6 +245,9 @@ public:
         h_pos_ = 0;
 //        h_global_pos_ += str.length();
     }
+
+private:
+    Font font_;
 };
 
 } // namespace WConsole
