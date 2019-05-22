@@ -13,9 +13,10 @@ abstract class IPrecisionP1
 abstract class IPrecisionP2
 abstract class IRange
 abstract class IWConsole
-class Chart
-class Graph
-class Text
+class Chart <<final>>
+class Graph <<final>>
+class Text <<final>>
+class Font <<final>>
 
 IWConsole    <|--- Chart
 IHeader      <|--- Chart
@@ -30,6 +31,7 @@ IRange       <|--- Graph
 IGrid        <|--- Graph
 
 IWConsole    <|--- Text
+Font         <-* Text
 
 }
 
