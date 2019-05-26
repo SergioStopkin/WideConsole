@@ -41,6 +41,17 @@ namespace WConsole {
 
 class IWConsole {
 public:
+    class Global {
+    public:
+        static void SetLocale() {
+            is_locale_set_ = true;
+        }
+
+        static void SyncStdIO() {
+            is_sync_stdio_ = true;
+        }
+    };
+
     void SetColor(const Color color) noexcept {
         color_ = color;
     }
@@ -321,6 +332,9 @@ protected:
     }
 
 private:
+    static bool is_locale_set_;
+    static bool is_sync_stdio_;
+
     void ShowCursor(const bool show) const noexcept {
 #ifdef WINDOWS
         CONSOLE_CURSOR_INFO info;
@@ -331,9 +345,6 @@ private:
 #endif
     }
 };
-
-namespace Global {
-} // namespace Global
 
 } // namespace WConsole
 
