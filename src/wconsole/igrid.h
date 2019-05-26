@@ -96,6 +96,6 @@ protected:
     virtual ~IGrid() = default;
 };
 
-}; // namespace WConsole
+} // namespace WConsole
 
 #endif // WCONSOLE_IGRID_H_
