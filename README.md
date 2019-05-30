@@ -58,6 +58,8 @@ WConsole::Graph graph;
 WConsole::Text  text;
 ```
 
+## Usage details
+
 See the example in the file [main.cpp](./src/main.cpp).
 
 See the [INTERFACE.md](./doc/INTERFACE.md) file for more details.
