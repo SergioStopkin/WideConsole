@@ -18,11 +18,10 @@
 #ifndef WCONSOLE_IWCONSOLE_H_
 #define WCONSOLE_IWCONSOLE_H_ 1
 
-#define __STDC_WANT_LIB_EXT1__ 1
-
 #if (defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__))
 #define WINDOWS 1
 #define NOMINMAX 1
+#define __STDC_WANT_LIB_EXT1__ 1
 #else
 #define UNIX 1
 #endif
@@ -32,7 +31,7 @@
 #include <io.h>
 #include <windows.h>
 #else
-#include <clocale>
+#include <locale>
 #endif
 
 #include "types.h"
@@ -41,17 +40,6 @@ namespace WConsole {
 
 class IWConsole {
 public:
-    class Global {
-    public:
-        static void SetLocale() {
-            is_locale_set_ = true;
-        }
-
-        static void SyncStdIO() {
-            is_sync_stdio_ = true;
-        }
-    };
-
     void SetColor(const Color color) noexcept {
         color_ = color;
     }
@@ -154,7 +142,8 @@ protected:
         default_color_      = 0x0F & info.wAttributes;
         default_back_color_ = 0xF0 & info.wAttributes;
 #else
-        setlocale(LC_CTYPE, "");
+        std::locale::global(std::locale(""));
+        std::ios_base::sync_with_stdio(false);
 #endif
         ShowCursor(false);
     }
@@ -332,9 +321,6 @@ protected:
     }
 
 private:
-    static bool is_locale_set_;
-    static bool is_sync_stdio_;
-
     void ShowCursor(const bool show) const noexcept {
 #ifdef WINDOWS
         CONSOLE_CURSOR_INFO info;
