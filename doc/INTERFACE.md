@@ -62,12 +62,11 @@
     <t class="keyw">=</t>
     Opacity<t class="mark">::</t>OP_100<t class="mark">)</t><t class="term">;</t>
 </p>
-<dev class="desc">Constructs the chart object.
-    <table>
-        <tr><td><b>type</b></td><td><a href="#chart-type">ChartType</a></td></tr>
-        <tr><td><b>opacity</b></td><td>chart <a href="#opacity">Opacity</a></td></tr>
-    </table>
-</dev>
+
+Constructs the chart object.</br>
+`type` [ChartType](#chart-type)</br>
+`opacity` chart [Opacity](#opacity)</br>
+</br>
 
 <p id="set-chart-type" class="func">
     <t class="keyw">void</t> <b>SetChartType</b>
@@ -75,11 +74,10 @@
     ChartType <b>type</b><t class="mark">)</t>
     <t class="keyw">noexcept</t><t class="term">;</t>
 </p>
-<dev class="desc">Setting the chart type.
-    <table>
-        <tr><td><b>type</b></td><td><a href="#chart-type">ChartType</a></td></tr>
-    </table>
-</dev>
+
+Setting the chart type.</br>
+`type` [ChartType](#chart-type)</br>
+</br>
 
 <h1 id="graph">Graph</h1>
 
@@ -183,32 +181,14 @@
         background:     steelblue;
         /* background:     #3465a4; */
     } 
-</style>
-<style>
     .keyw {
         font-weight:    bold;
         color:          #fce94f;
     } 
-</style>
-<style>
     .mark {
         color:          #34e2e2;
     } 
-</style>
-<style>
     .term {
         color:          violet;
     } 
-</style>
-<style type="text/css">
-    .desc {
-        font-size:      16px;
-        padding:        5px 13px;
-        /* color:          ; */
-        /* background:     ; */
-    }
-    table.desc {
-        /* border:         1px solid steelblue; */
-        border:         0px;
-    }
 </style>
