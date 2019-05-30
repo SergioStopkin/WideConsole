@@ -18,10 +18,11 @@
 #ifndef WCONSOLE_IWCONSOLE_H_
 #define WCONSOLE_IWCONSOLE_H_ 1
 
+#define __STDC_WANT_LIB_EXT1__ 1
+
 #if (defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__))
 #define WINDOWS 1
 #define NOMINMAX 1
-#define __STDC_WANT_LIB_EXT1__ 1
 #else
 #define UNIX 1
 #endif
@@ -33,6 +34,8 @@
 #else
 #include <locale>
 #endif
+
+#include <iostream>
 
 #include "types.h"
 
@@ -292,7 +295,7 @@ protected:
 #if (defined(__STDC_LIB_EXT1__))
         wprintf_s(L"%s", s);
 #else
-        wprintf(L"%s", s);
+        std::wcout << s << std::flush;
 #endif
     }
 
@@ -300,7 +303,7 @@ protected:
 #if (defined(__STDC_LIB_EXT1__))
         wprintf_s(L"%s", str.c_str());
 #else
-        wprintf(L"%s", str.c_str());
+        std::wcout << str.c_str() << std::flush;
 #endif
     }
 
@@ -308,7 +311,7 @@ protected:
 #if (defined(__STDC_LIB_EXT1__))
         wprintf_s(L"%ls", ws);
 #else
-        wprintf(L"%ls", ws);
+        std::wcout << ws << std::flush;
 #endif
     }
 
@@ -316,7 +319,7 @@ protected:
 #if (defined(__STDC_LIB_EXT1__))
         wprintf_s(L"%ls", wstr.c_str());
 #else
-        wprintf(L"%ls", wstr.c_str());
+        std::wcout << wstr << std::flush;
 #endif
     }
 
