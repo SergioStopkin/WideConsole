@@ -266,10 +266,10 @@ protected:
 #else
 //        printf( "%s%d;%dH", CSI, fila + 1, columna + 1 );
         switch (position) {
-            case Position::Up    : Print("\033[" + std::to_string(number) + "A"); break;
-            case Position::Down  : Print("\033[" + std::to_string(number) + "B"); break;
-            case Position::Right : Print("\033[" + std::to_string(number) + "C"); break;
-            case Position::Left  : Print("\033[" + std::to_string(number) + "D"); break;
+            case Position::Up    : Print("\e[" + std::to_string(number) + "A"); break;
+            case Position::Down  : Print("\e[" + std::to_string(number) + "B"); break;
+            case Position::Right : Print("\e[" + std::to_string(number) + "C"); break;
+            case Position::Left  : Print("\e[" + std::to_string(number) + "D"); break;
         }
 #endif
     }
@@ -330,7 +330,7 @@ private:
         info.bVisible = (BOOL)show;
         SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 #else
-        Print(std::string("\33[?25") + ((show) ? "h" : "l"));
+        Print(std::string("\e[?25") + ((show) ? "h" : "l"));
 #endif
     }
 };
