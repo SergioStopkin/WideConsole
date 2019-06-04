@@ -175,7 +175,7 @@ Setting the chart type.</br>
 <style>
     .func {
         font-family:    monospace;
-        font-size:      21px;
+        font-size:      16px;
         padding:        8px 13px;
         color:          white;
         background:     steelblue;
