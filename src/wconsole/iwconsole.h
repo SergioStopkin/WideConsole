@@ -18,8 +18,6 @@
 #ifndef WCONSOLE_IWCONSOLE_H_
 #define WCONSOLE_IWCONSOLE_H_ 1
 
-#define __STDC_WANT_LIB_EXT1__ 1
-
 #if (defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__))
 #define WINDOWS 1
 #define NOMINMAX 1
@@ -28,14 +26,14 @@
 #endif
 
 #ifdef WINDOWS
+#include <cwchar>
 #include <fcntl.h>
 #include <io.h>
 #include <windows.h>
 #else
+#include <iostream>
 #include <locale>
 #endif
-
-#include <iostream>
 
 #include "types.h"
 
@@ -292,32 +290,32 @@ protected:
     }
 
     void Print(const char * s) const noexcept {
-#if (defined(__STDC_LIB_EXT1__))
-        wprintf_s(L"%s", s);
+#ifdef WINDOWS
+        std::wprintf(L"%s", s);
 #else
         std::wcout << s << std::flush;
 #endif
     }
 
     void Print(const std::string & str) const noexcept {
-#if (defined(__STDC_LIB_EXT1__))
-        wprintf_s(L"%s", str.c_str());
+#ifdef WINDOWS
+        std::wprintf(L"%s", str.c_str());
 #else
         std::wcout << str.c_str() << std::flush;
 #endif
     }
 
     void Print(const wchar_t * ws) const noexcept {
-#if (defined(__STDC_LIB_EXT1__))
-        wprintf_s(L"%ls", ws);
+#ifdef WINDOWS
+        std::wprintf(L"%ls", ws);
 #else
         std::wcout << ws << std::flush;
 #endif
     }
 
     void Print(const std::wstring & wstr) const noexcept {
-#if (defined(__STDC_LIB_EXT1__))
-        wprintf_s(L"%ls", wstr.c_str());
+#ifdef WINDOWS
+        std::wprintf(L"%ls", wstr.c_str());
 #else
         std::wcout << wstr << std::flush;
 #endif
