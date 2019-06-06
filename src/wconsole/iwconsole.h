@@ -143,8 +143,8 @@ protected:
         default_color_      = 0x0F & info.wAttributes;
         default_back_color_ = 0xF0 & info.wAttributes;
 #else
-        std::locale::global(std::locale(""));
         std::ios_base::sync_with_stdio(false);
+        std::wcout.imbue(std::locale(""));
 #endif
         ShowCursor(false);
     }
