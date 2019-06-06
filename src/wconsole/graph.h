@@ -191,7 +191,7 @@ public:
                     WriteColorToBuff(buff, color_);
                     buff += point_;
 
-                    while (hi == data_iterator->first && vi == data_iterator->second && data_iterator != sort_data.end()) {
+                    while (data_iterator != sort_data.end() && hi == data_iterator->first && vi == data_iterator->second) {
                         ++data_iterator;
                     }
                 } else if (hi == h_zero) {
