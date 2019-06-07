@@ -157,8 +157,10 @@ protected:
         if (counter_ == 1) {
             ChangeColor(Color::Default);
             ShowCursor(true);
+#ifdef UNIX
             std::ios_base::sync_with_stdio(true);
             std::wcout.imbue(std::locale());
+#endif
         }
 
         --counter_;
