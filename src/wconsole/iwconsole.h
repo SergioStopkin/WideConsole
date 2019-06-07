@@ -132,26 +132,36 @@ protected:
                        v_global_pos_   (0),
                        h_pos_          (0),
                        v_pos_          (0) {
+        if (counter_ == 0) {
 #ifdef WINDOWS
-        _setmode(_fileno(stdout), _O_WTEXT);
+            _setmode(_fileno(stdout), _O_WTEXT);
 
-        CONSOLE_SCREEN_BUFFER_INFO info;
-        if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info)) {
-            default_color_      = 0x0A;
-            default_back_color_ = 0x00;
-        }
-        default_color_      = 0x0F & info.wAttributes;
-        default_back_color_ = 0xF0 & info.wAttributes;
+            CONSOLE_SCREEN_BUFFER_INFO info;
+            if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info)) {
+                default_color_      = 0x0A;
+                default_back_color_ = 0x00;
+            }
+            default_color_      = 0x0F & info.wAttributes;
+            default_back_color_ = 0xF0 & info.wAttributes;
 #else
-        std::ios_base::sync_with_stdio(false);
-        std::wcout.imbue(std::locale(""));
+            std::ios_base::sync_with_stdio(false);
+            std::wcout.imbue(std::locale(""));
 #endif
-        ShowCursor(false);
+            ShowCursor(false);
+        }
+
+        ++counter_;
     }
 
     virtual ~IWConsole() {
-        ChangeColor(Color::Default);
-        ShowCursor(true);
+        if (counter_ == 1) {
+            ChangeColor(Color::Default);
+            ShowCursor(true);
+            std::ios_base::sync_with_stdio(true);
+            std::wcout.imbue(std::locale());
+        }
+
+        --counter_;
     }
 
     void ChangeColor(const Color color) noexcept {
@@ -322,6 +332,8 @@ protected:
     }
 
 private:
+    static int counter_;
+
     void ShowCursor(const bool show) const noexcept {
 #ifdef WINDOWS
         CONSOLE_CURSOR_INFO info;
@@ -332,6 +344,8 @@ private:
 #endif
     }
 };
+
+int IWConsole::counter_ = 0;
 
 } // namespace WConsole
 
