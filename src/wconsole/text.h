@@ -149,7 +149,7 @@ public:
                 : font_(font_type) {
     }
 
-    void PrintText(const char * str) noexcept {
+    void PrintText(const char * s) noexcept {
         if (v_pos_ > 0) {
             ChangePosition(Position::Up, v_pos_);
         }
@@ -160,9 +160,9 @@ public:
         }
 
         ChangeColor(color_);
-        Print(str);
+        Print(s);
         h_pos_ = 0;
-        h_global_pos_ += std::strlen(str);
+        h_global_pos_ += std::strlen(s);
     }
 
     void PrintText(const std::string & str) noexcept {
