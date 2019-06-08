@@ -79,6 +79,41 @@ Setting the chart type.</br>
 `type` [ChartType](#chart-type)</br>
 </br>
 
+<p id="set-opacity" class="func">
+    <t class="keyw">void</t> <b>SetOpacity</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    Opacity <b>opacity</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Setting the opacity of the bricks.</br>
+`opacity` [Opacity](#opacity)</br>
+</br>
+
+<p id="set-chart-colors" class="func">
+    <t class="keyw">void</t> <b>SetChartColors</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    std<t class="mark">::</t>vector<t class="keyw"><</t>Color<t class="keyw">></t>
+    & <b>colors</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Setting the chart colors. If the colors are less than the data, the colors are repeated.</br>
+`colors` [Color](#color)s</br>
+</br>
+
+<p id="print-chart" class="func">
+    <t class="keyw">template</t> <t class="keyw"><</t><t class="keyw">typename</t> T<t class="keyw">></t></br>
+    <t class="keyw">void</t> <b>PrintChart</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    std<t class="mark">::</t>vector<t class="keyw"><</t>T<t class="keyw">></t>
+    & <b>data</b><t class="mark">)</t><t class="term">;</t>
+</p>
+
+Print chart.</br>
+`data` data vector</br>
+</br>
+
 <h1 id="graph">Graph</h1>
 
 | Public methods | Description | Derived |
@@ -106,6 +141,43 @@ Setting the chart type.</br>
 | [SetVerticalPrecision](#set-vertical-precision) | Sets the vertical precision of ...  | [*IPrecisionP2*](#iprecision-p2) |
 | [SetHorizontalPrecision](#set-horizontal-precision) | Sets the horizontal precision of ...  | [*IPrecisionP2*](#iprecision-p2) |
 
+<p id="graph-constructor" class="func">
+    <t class="keyw">explicit</t> <b>Graph</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    Point <b>point</b>
+    <t class="keyw">=</t>
+    Point<t class="mark">::</t>Dot<t class="mark">)</t><t class="term">;</t>
+</p>
+
+Constructs the graph object.</br>
+`point` [Point](#point)</br>
+</br>
+
+<p id="set-point" class="func">
+    <t class="keyw">void</t> <b>SetPoint</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    Point <b>point</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Setting the point.</br>
+`point` [Point](#point)</br>
+</br>
+
+<p id="print-graph" class="func">
+    <t class="keyw">template</t> <t class="keyw"><</t><t class="keyw">typename</t> T<t class="keyw">></t></br>
+    <t class="keyw">void</t> <b>PrintGraph</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    std<t class="mark">::</t>vector<t class="keyw"><</t>std<t class="mark">::</t>pair<t class="keyw"><</t>T,
+    T<t class="keyw">></t><t class="keyw">></t>
+    & <b>data</b><t class="mark">)</t><t class="term">;</t>
+</p>
+
+Print garph.</br>
+`data` coordinate pairs vector</br>
+</br>
+
+
 <h1 id="text">Text</h1>
 
 | Public methods | Description | Derived |
@@ -120,6 +192,45 @@ Setting the chart type.</br>
 | [Clear](#clear) | Clear console output | [*IWConsole*](#iwconsole) |
 | [ClearLast](#clear-last) | Clear the last chart  | [*IWConsole*](#iwconsole) |
 | [ClearFirst](#clear-first) | Go to the position of the first printing chart | [*IWConsole*](#iwconsole) |
+
+<p id="text-constructor" class="func">
+    <t class="keyw">explicit</t> <b>Text</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    FontType & <b>font_type</b>
+    <t class="keyw">=</t>
+    FontType<t class="mark">::</t>Monospace<t class="mark">)</t><t class="term">;</t>
+</p>
+
+Constructs the text object.</br>
+`font_type` [FontType](#font-type)</br>
+</br>
+
+<p id="print-text" class="func">
+    <t class="keyw">void</t> <b>PrintText</b>
+    <t class="mark">(</t><t class="keyw">const char *</t>
+    <b>s</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+    </br>
+    <t class="keyw">void</t> <b>PrintText</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    std<t class="mark">::</t>string
+    & <b>str</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+    </br>
+    <t class="keyw">void</t> <b>PrintText</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    std<t class="mark">::</t>string
+    & <b>str</b>,
+    <t class="keyw">const</t> Font
+    & <b>font</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Print text.</br>
+`s` pointer to C-string</br>
+`str` string</br>
+`font` [Font](font) object</br>
+</br>
 
 <h1 id="iwconsole"><i>IWConsole</i></h1>
 
