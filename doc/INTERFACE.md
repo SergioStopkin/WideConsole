@@ -34,13 +34,13 @@
 | [PrintChart](#print-chart) | Print the chart to the console |
 | [SetColor](#set-color) | Sets the chart [Color](#color) | [*IWConsole*](#iwconsole) |
 | [SetSize](#set-size) | Sets the size ...  | [*IWConsole*](#iwconsole) |
-| [SetPosition](#set-position) | Sets the [Position](#position) | [*IWConsole*](#iwconsole) |
+| [SetPosition](#set-position) | Sets the position | [*IWConsole*](#iwconsole) |
 | [NewLine](#new-line) | Print the new line and ...  | [*IWConsole*](#iwconsole) |
 | [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  | [*IWConsole*](#iwconsole) |
 | [Clear](#clear) | Clear console output | [*IWConsole*](#iwconsole) |
 | [ClearLast](#clear-last) | Clear the last chart  | [*IWConsole*](#iwconsole) |
 | [ClearFirst](#clear-first) | Go to the position of the first printing chart | [*IWConsole*](#iwconsole) |
-| [SetDataPosition](#set-data-position) | Sets the [DataPosition](data-position) | [*IHeader*](#iheader) |
+| [SetDataPosition](#set-data-position) | Sets the [DataPosition](#data-position) | [*IHeader*](#iheader) |
 | [ShowDataHeader](#show-data-header) | Show the data header  | [*IHeader*](#iheader) |
 | [SetVerticalRange](#set-vertical-range) | Sets the vertical range value (Y) | [*IRange*](#irange) |
 | [SetHorizontalRange](#set-horizontal-range) | Sets the horizontal range value (X) | [*IRange*](#irange) |
@@ -88,13 +88,13 @@ Setting the chart type.</br>
 | [PrintGraph](#print-graph) | Print the graph to the console |
 | [SetColor](#set-color) | Sets the chart [Color](#color) | [*IWConsole*](#iwconsole) |
 | [SetSize](#set-size) | Sets the size ...  | [*IWConsole*](#iwconsole) |
-| [SetPosition](#set-position) | Sets the [Position](#position) | [*IWConsole*](#iwconsole) |
+| [SetPosition](#set-position) | Sets the position | [*IWConsole*](#iwconsole) |
 | [NewLine](#new-line) | Print the new line and ...  | [*IWConsole*](#iwconsole) |
 | [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  | [*IWConsole*](#iwconsole) |
 | [Clear](#clear) | Clear console output | [*IWConsole*](#iwconsole) |
 | [ClearLast](#clear-last) | Clear the last chart  | [*IWConsole*](#iwconsole) |
 | [ClearFirst](#clear-first) | Go to the position of the first printing chart | [*IWConsole*](#iwconsole) |
-| [SetDataPosition](#set-data-position) | Sets the [DataPosition](data-position) | [*IHeader*](#iheader) |
+| [SetDataPosition](#set-data-position) | Sets the [DataPosition](#data-position) | [*IHeader*](#iheader) |
 | [ShowDataHeader](#show-data-header) | Show the data header  | [*IHeader*](#iheader) |
 | [SetVerticalRange](#set-vertical-range) | Sets the vertical range value (Y) | [*IRange*](#irange) |
 | [SetHorizontalRange](#set-horizontal-range) | Sets the horizontal range value (X) | [*IRange*](#irange) |
@@ -114,7 +114,7 @@ Setting the chart type.</br>
 | [PrintText](#print-text) | Print the text to the console |
 | [SetColor](#set-color) | Sets the chart [Color](#color) | [*IWConsole*](#iwconsole) |
 | [SetSize](#set-size) | Sets the size ...  | [*IWConsole*](#iwconsole) |
-| [SetPosition](#set-position) | Sets the [Position](#position) | [*IWConsole*](#iwconsole) |
+| [SetPosition](#set-position) | Sets the position | [*IWConsole*](#iwconsole) |
 | [NewLine](#new-line) | Print the new line and ...  | [*IWConsole*](#iwconsole) |
 | [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  | [*IWConsole*](#iwconsole) |
 | [Clear](#clear) | Clear console output | [*IWConsole*](#iwconsole) |
@@ -127,7 +127,7 @@ Setting the chart type.</br>
 | -------------- | ----------- |
 | [SetColor](#set-color) | Sets the chart [Color](#color) |
 | [SetSize](#set-size) | Sets the size ...  |
-| [SetPosition](#set-position) | Sets the [Position](#position) |
+| [SetPosition](#set-position) | Sets the position |
 | [NewLine](#new-line) | Print the new line and ...  |
 | [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  |
 | [Clear](#clear) | Clear console output |
@@ -138,7 +138,7 @@ Setting the chart type.</br>
 
 | Public methods | Description |
 | -------------- | ----------- |
-| [SetDataPosition](#set-data-position) | Sets the [DataPosition](data-position) |
+| [SetDataPosition](#set-data-position) | Sets the [DataPosition](#data-position) |
 | [ShowDataHeader](#show-data-header) | Show the data header  |
 
 <h1 id="irange"><i>IRange</i></h1>
@@ -170,6 +170,130 @@ Setting the chart type.</br>
 | -------------- | ----------- |
 | [SetVerticalPrecision](#set-vertical-precision) | Sets the vertical precision of ...  |
 | [SetHorizontalPrecision](#set-horizontal-precision) | Sets the horizontal precision of ...  |
+
+<h1>Data structures</h1>
+
+<p id="arrow">
+
+```cpp
+enum class Arrow {
+        Big,
+        Small
+    };
+```
+
+<p id="chart-type">
+
+```cpp
+enum class ChartType {
+    Column,
+    Bar,
+    Pie,
+};
+```
+
+<p id="color">
+
+```cpp
+enum class Color {
+    Black,
+    Red,
+    Green,
+    Yellow,
+    Blue,
+    Magenta,
+    Cyan,
+    White,
+    BrightBlack,
+    BrightRed,
+    BrightGreen,
+    BrightYellow,
+    BrightBlue,
+    BrightMagenta,
+    BrightCyan,
+    BrightWhite,
+    Default,
+    BrightDefault
+};
+```
+
+<p id="data-position">
+
+```cpp
+enum class DataPosition {
+    Right,
+    Left,
+    Center
+};
+```
+
+<p id="font-type">
+
+```cpp
+enum class FontType {
+    Serif,
+    SerifItal,
+    SerifBold,
+    SerifBoldItal,
+    SansSerif,
+    SansSerifItal,
+    SansSerifBold,
+    SansSerifBoldItal,
+    Monospace,
+    ScriptBold,
+    FrakturBold,
+    FullWidth,
+};
+```
+
+<p id="opacity">
+
+```cpp
+enum class Opacity {
+    OP_100,
+    OP_75,
+    OP_50,
+    OP_25,
+};
+```
+
+<p id="point">
+
+```cpp
+enum class Point : wchar_t {
+    Dot           = 0x2022,
+    Triangle      = 0x25B2,
+    SmallTriangle = 0x25B4,
+    Rhombus       = 0x25C6,
+    SmallSquare   = 0x25FE,
+    Star          = 0x2605,
+    Clover        = 0x2618,
+    Scythe        = 0x262D,
+    YinYang       = 0x262F,
+    Smile         = 0x263B,
+    SpadeSuit     = 0x2660,
+    ClubSuit      = 0x2663,
+    HeartSuit     = 0x2665,
+    DiamondSuit   = 0x2666,
+    Flag          = 0x2691,
+    Flower        = 0x2698,
+    Zeus          = 0x26A1,
+    CheckMarkItal = 0x2714,
+    CrossX        = 0x2716,
+    CrossXItal    = 0x2718,
+    Cross         = 0x271A,
+    StarInCircle  = 0x272A,
+    Asterisk      = 0x2731,
+    BigCrossX     = 0x274C,
+    Heart         = 0x2764,
+    Square        = 0x2B1B,
+    Pentagon      = 0x2B1F,
+    Hexagon       = 0x2B22,
+    Circle        = 0x2B24,
+    SmallRhombus  = 0x2B25,
+    Beaver        = 0xF800,
+};
+```
 
 --------------------------------------------------------
 <style>
