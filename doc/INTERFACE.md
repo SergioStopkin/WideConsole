@@ -13,6 +13,7 @@
 | class | [Chart](#chart) | [chart.h](../src/wconsole/chart.h) |
 | class | [Graph](#graph) | [graph.h](../src/wconsole/graph.h) |
 | class | [Text](#text) | [text.h](../src/wconsole/text.h) |
+| class | [Font](#font) | [font.h](../src/wconsole/font.h) |
 | abstract class | [*IWConsole*](#iwconsole) | [iwconsole.h](../src/wconsole/iwconsole.h) |
 | abstract class | [*IHeader*](#iheader) | [iheader.h](../src/wconsole/iheader.h) |
 | abstract class | [*IRange*](#irange) | [irange.h](../src/wconsole/irange.h) |
@@ -229,7 +230,107 @@ Constructs the text object.</br>
 Print text.</br>
 `s` pointer to C-string</br>
 `str` string</br>
-`font` [Font](font) object</br>
+`font` [Font](#font) object</br>
+</br>
+
+<h1 id="font">Font</h1>
+
+| Public methods | Description |
+| -------------- | ----------- |
+| [(constructor)](#font-constructor) | Constructs the font object |
+| [SetFontType](#set-font-type) | Sets the [FontType](#font-type) |
+| [SetForegroundColor](#set-foreground-color) | Sets the foreground [Color](#color) |
+| [SetBackgroundColor](#set-background-color) | Sets the background [Color](#color) |
+| [SetInverseColor](#set-inverse-color) | Sets the inverse color |
+| [SetUnderline](#set-underline) | Sets the underline |
+| [GetFontType](#get-font-type) | Gets the [FontType](#font-type) |
+| [WriteParametersToBuff](#write-parameters-to-buff) | Write parameters to `std::wstring` buffer |
+
+<p id="font-constructor" class="func">
+    <t class="keyw">explicit</t> <b>Font</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    FontType & <b>font_type</b>
+    <t class="keyw">=</t>
+    FontType<t class="mark">::</t>Monospace<t class="mark">)</t><t class="term">;</t>
+</p>
+
+Constructs the font object.</br>
+`font_type` [FontType](#font-type)</br>
+</br>
+
+<p id="set-font-type" class="func">
+    <t class="keyw">void</t> <b>SetFontType</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    FontType & <b>font_type</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Setting the font type.</br>
+`font_type` [FontType](#font-type)</br>
+</br>
+
+<p id="set-foreground-color" class="func">
+    <t class="keyw">void</t> <b>SetForegroundColor</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    Color & <b>color</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Setting the foreground color.</br>
+`color` the foreground [Color](#color)</br>
+</br>
+
+<p id="set-background-color" class="func">
+    <t class="keyw">void</t> <b>SetBackgroundColor</b>
+    <t class="mark">(</t><t class="keyw">const</t>
+    Color & <b>color</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Setting the background color.</br>
+`color` the background [Color](#color)</br>
+</br>
+
+<p id="set-inverse-color" class="func">
+    <t class="keyw">void</t> <b>SetInverseColor</b>
+    <t class="mark">(</t><t class="keyw">const bool</t>
+    <b>is_inverse</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Setting the inverse color.</br>
+`is_inverse` `true` - inverse, `false` - not inverse</br>
+</br>
+
+<p id="set-underline" class="func">
+    <t class="keyw">void</t> <b>SetUnderline</b>
+    <t class="mark">(</t><t class="keyw">const bool</t>
+    <b>is_underline</b><t class="mark">)</t>
+    <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Setting the underline.</br>
+`is_underline` `true` - underline, `false` - not underline</br>
+</br>
+
+<p id="get-font-type" class="func">
+    FontType <b>GetFontType</b>
+    <t class="mark">()</t>
+    <t class="keyw">const</t> <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Return the [FontType](#font-type).</br>
+</br>
+
+<p id="write-parameters-to-buff" class="func">
+    <t class="keyw">void</t> <b>WriteParametersToBuff</b>
+    <t class="mark">(</t>std<t class="mark">::</t>wstring
+    & <b>buff</b><t class="mark">)</t>
+    <t class="keyw">const</t> <t class="keyw">noexcept</t><t class="term">;</t>
+</p>
+
+Write parameters to `std::wstring` buffer.</br>
+`buff` `std::wstring` buffer</br>
 </br>
 
 <h1 id="iwconsole"><i>IWConsole</i></h1>
