@@ -66,27 +66,33 @@ enum class Point : wchar_t {
 
 class Graph final : public IWConsole, public IHeader, public IPrecisionP2, public IRange, public IGrid {
 public:
-    explicit Graph(const Point point = Point::Dot)
-                 : IHeader(true, DataPosition::Left),
-                   IRange (-10, 10, -10, 10),
-                   point_ ((wchar_t)point) {
+    explicit Graph(const Point point       = Point::Dot,
+                   const Color point_color = Color::BrightRed)
+                 : IHeader     (true, DataPosition::Left),
+                   IRange      (-10, 10, -10, 10),
+                   point_      ((wchar_t)point),
+                   point_color_(point_color) {
     }
 
-    void SetPoint(Point point) noexcept {
+    void SetPoint(const Point point) noexcept {
         point_ = (wchar_t)point;
+    }
+
+    void SetPointColor(const Color color) noexcept {
+        point_color_ = color;
     }
 
     template <typename T>
     void PrintGraph(const std::vector<std::pair<T, T>> & data) {
+        SetPosition();
+
         const double h_step        = (h_max_ - h_min_) / (double)(horizontal_size_ - 1);
         const double v_step        = (v_max_ - v_min_) / (double)(vertical_size_   - 1);
         const auto   v_alignment   = (uint)(std::max(std::to_string((int)v_min_).size(), std::to_string((int)v_max_).size())
                                             + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
         const bool   is_data_empty = (data.begin() == data.end());
-        uint         h_zero        = 2 * horizontal_size_;
-        uint         v_zero        = 2 * vertical_size_;
-        double       hs_zero       = 2.0 * h_max_;
-        double       vs_zero       = 2.0 * v_max_;
+        const uint   h_zero        = horizontal_size_ / 2;
+        const uint   v_zero        = vertical_size_   / 2;
 
         std::vector<std::pair<uint, uint>> sort_data;
 
@@ -98,16 +104,6 @@ public:
 
                 const auto h = (uint)((pair.first  - h_min_) / h_step + 0.5);
                 const auto v = (uint)((pair.second - v_min_) / v_step + 0.5);
-
-                if (pair.first >= -h_step && pair.first <= h_step && pair.first < hs_zero) {
-                    hs_zero = pair.first;
-                    h_zero  = h + 1;
-                }
-
-                if (pair.second >= -v_step && pair.second <= v_step && pair.second < vs_zero) {
-                    vs_zero = pair.second;
-                    v_zero  = v + 1;
-                }
 
                 /// todo: optimize
                 bool duplicate = false;
@@ -188,7 +184,7 @@ public:
             // Horizontal loop
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
                 if (data_iterator != sort_data.end() && vi == data_iterator->second && hi == data_iterator->first) {
-                    WriteColorToBuff(buff, color_);
+                    WriteColorToBuff(buff, point_color_);
                     buff += point_;
 
                     while (data_iterator != sort_data.end() && hi == data_iterator->first && vi == data_iterator->second) {
@@ -246,8 +242,7 @@ public:
                                                 + ((hs < 0) ? 1 : 0)
                                                 + ((h_precision_ > 0) ? (h_precision_ + 1) : 0)
                                                 + 1); // for one space
-
-                if (count % h_alignment == 0 || hs == hs_zero) {
+                if (count % h_alignment == 0) {
                     WriteDataToBuff(buff, hs, h_alignment, h_precision_);
                     h_pos_header += h_alignment;
                     count = 0;
@@ -270,10 +265,14 @@ public:
         WriteColorToBuff(buff, Color::Default);
         buff += L'\n';
         Print(buff);
+
+        h_global_pos_ = h_pos_;
+        v_global_pos_ = v_pos_;
     }
 
 private:
     wchar_t point_;
+    Color   point_color_;
 };
 
 } // namespace WConsole
