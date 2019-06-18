@@ -68,6 +68,10 @@ public:
     }
 
     void PrintObject(const std::string & str) noexcept {
+        PrintObject(str, font_);
+    }
+
+    void PrintObject(const std::string & str, const Font & font) noexcept {
         std::wstring buff;
 
         if (v_pos_ > 0) {
@@ -82,13 +86,13 @@ public:
 //        std::wstring shift_pos = L"\e[0;0H";
 //        buff += shift_pos;
 
-        WriteStateToBuff(buff, font_.GetConsoleState());
+        WriteStateToBuff(buff, font.GetConsoleState());
 
         for (auto & wc : str) {
-            if (font_.GetFontType() == FontType::FullWidth && wc >= 0x21 && wc <= 0x7E) {
+            if (font.GetFontType() == FontType::FullWidth && wc >= 0x21 && wc <= 0x7E) {
                 buff += (wc + 0xFF01 - 0x21);
             } else if (wc >= 'A' && wc <= 'Z') {
-                switch (font_.GetFontType()) {
+                switch (font.GetFontType()) {
                     case FontType::Serif:             buff += wc;                   break;
                     case FontType::SerifItal:         buff += (wc + 0x1D434 - 'A'); break;
                     case FontType::SerifBold:         buff += (wc + 0x1D400 - 'A'); break;
@@ -103,7 +107,7 @@ public:
                     default: break;
                 }
             } else if (wc >= 'a' && wc <= 'z') {
-                switch (font_.GetFontType()) {
+                switch (font.GetFontType()) {
                     case FontType::Serif:             buff += wc;                   break;
                     case FontType::SerifItal:         buff += ((wc == 'h') ? 0x1D489 : (wc + 0x1D44E - 'a')); break;
                     case FontType::SerifBold:         buff += (wc + 0x1D41A - 'a'); break;
@@ -118,7 +122,7 @@ public:
                     default: break;
                 }
             } else if (wc >= '0' && wc <= '9') {
-                switch (font_.GetFontType()) {
+                switch (font.GetFontType()) {
                     case FontType::Serif:             buff += wc;                   break;
                     case FontType::SerifItal:         buff += wc;                   break;
                     case FontType::SerifBoldItal:     buff += wc;                   break;
