@@ -179,7 +179,7 @@ protected:
     }
 
     static void ChangeColor(const Color color, const bool is_foreground = true) noexcept {
-        std::wcout << "Color:  " << (int)color << " / " << (int)global_state_.foreground<< std::endl;
+//        std::wcout << "Color:  " << (int)color << " / " << (int)global_state_.foreground<< std::endl;
         if ((is_foreground && color != global_state_.foreground) || (!is_foreground && color != global_state_.background)) {
 #ifdef WINDOWS
             switch (color) {
@@ -432,12 +432,12 @@ private:
     static uint         v_global_pos_;
     static int          object_counter_;
     static ConsoleState global_state_;
+#ifdef WINDOWS
+    static short        default_color_;
+    static short        default_back_color_;
+#endif
 
     ObjectRef object_ref_;
-#ifdef WINDOWS
-    short     default_color_;
-    short     default_back_color_;
-#endif
 
     void ShowCursor(const bool show) const noexcept {
 #ifdef WINDOWS
@@ -469,6 +469,10 @@ uint         IWConsole::h_global_pos_   = 0;
 uint         IWConsole::v_global_pos_   = 0;
 int          IWConsole::object_counter_ = 0;
 ConsoleState IWConsole::global_state_;
+#ifdef WINDOWS
+short        default_color_             = 0;
+short        default_back_color_        = 0;
+#endif
 
 
 } // namespace WConsole
