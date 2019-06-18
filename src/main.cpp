@@ -75,15 +75,17 @@ int main() {
             }
 
             graph.Clear();
-//            graph.ClearLast();
-            graph.SetColor(WConsole::Color::BrightBlue);
-            graph.PrintGraph(sin1);
 
-            graph.SetColor(WConsole::Color::BrightGreen);
-            graph.PrintGraph(sin2);
+            graph.SetPointColor(WConsole::Color::BrightBlue);
+            graph.PrintBound(sin1);
 
-            graph.SetColor(WConsole::Color::BrightRed);
-            graph.PrintGraph(sin3);
+            graph.SetPointColor(WConsole::Color::BrightGreen);
+            graph.PrintBound(sin2);
+
+            graph.SetPointColor(WConsole::Color::BrightRed);
+            graph.PrintBound(sin3);
+
+            graph.NewLine();
 
             // Data for charts
             std::vector<int> data;
@@ -91,70 +93,69 @@ int main() {
                 data.emplace_back((10 * i + 5 * count) % max);
             }
 
-            graph.NewLine();
-            chart.SetPosition(graph);
-
             // Column chart
             chart.SetChartType(WConsole::ChartType::Column);
             chart.SetSize(5, 16);
-            chart.PrintChart(data);
+            chart.PrintBound(data);
 
             // Bar chart
             chart.SetChartType(WConsole::ChartType::Bar);
             chart.SetSize(40, 2);
-            chart.PrintChart(data);
+            chart.PrintBound(data);
 
             // Pie chart
             chart.SetChartType(WConsole::ChartType::Pie);
             chart.SetSize(35, 17);
-            chart.PrintChart(data);
+            chart.PrintBound(data);
 
             ++count;
             l_start = std::chrono::steady_clock::now();
         }
     }
 
-    return 0;
+//    return 0;
 
     // TEXT
     WConsole::Text text;
-    text.SetColor(WConsole::Color::Black);         text.PrintText("Black");         text.NewLine();
-    text.SetColor(WConsole::Color::Default);       text.PrintText("Default");       text.NewLine();
-    text.SetColor(WConsole::Color::BrightBlack);   text.PrintText("BrightBlack");   text.NewLine();
-    text.SetColor(WConsole::Color::BrightDefault); text.PrintText("BrightDefault"); text.NewLine();
-    text.SetColor(WConsole::Color::White);         text.PrintText("White");         text.NewLine();
-    text.SetColor(WConsole::Color::BrightWhite);   text.PrintText("BrightWhite");   text.NewLine();
-    text.SetColor(WConsole::Color::Red);           text.PrintText("Red");           text.NewLine();
-    text.SetColor(WConsole::Color::BrightRed);     text.PrintText("BrightRed");     text.NewLine();
-    text.SetColor(WConsole::Color::Blue);          text.PrintText("Blue");          text.NewLine();
-    text.SetColor(WConsole::Color::BrightBlue);    text.PrintText("BrightBlue");    text.NewLine();
-    text.SetColor(WConsole::Color::Cyan);          text.PrintText("Cyan");          text.NewLine();
-    text.SetColor(WConsole::Color::BrightCyan);    text.PrintText("BrightCyan");    text.NewLine();
-    text.SetColor(WConsole::Color::Magenta);       text.PrintText("Magenta");       text.NewLine();
-    text.SetColor(WConsole::Color::BrightMagenta); text.PrintText("BrightMagenta"); text.NewLine();
-    text.SetColor(WConsole::Color::Yellow);        text.PrintText("Yellow");        text.NewLine();
-    text.SetColor(WConsole::Color::BrightYellow);  text.PrintText("BrightYellow");  text.NewLine();
-    text.SetColor(WConsole::Color::Green);         text.PrintText("Green");         text.NewLine();
-    text.SetColor(WConsole::Color::BrightGreen);   text.PrintText("BrightGreen");   text.NewLine();
+    text.NewLine();
+    text.SetColor(WConsole::Color::Black);         text.PrintBound("Black");         text.NewLine();
+    text.SetColor(WConsole::Color::Default);       text.PrintBound("Default");       text.NewLine();
+    text.SetColor(WConsole::Color::BrightBlack);   text.PrintBound("BrightBlack");   text.NewLine();
+    text.SetColor(WConsole::Color::BrightDefault); text.PrintBound("BrightDefault"); text.NewLine();
+    text.SetColor(WConsole::Color::White);         text.PrintBound("White");         text.NewLine();
+    text.SetColor(WConsole::Color::BrightWhite);   text.PrintBound("BrightWhite");   text.NewLine();
+    text.SetColor(WConsole::Color::Red);           text.PrintBound("Red");           text.NewLine();
+    text.SetColor(WConsole::Color::BrightRed);     text.PrintBound("BrightRed");     text.NewLine();
+    text.SetColor(WConsole::Color::Blue);          text.PrintBound("Blue");          text.NewLine();
+    text.SetColor(WConsole::Color::BrightBlue);    text.PrintBound("BrightBlue");    text.NewLine();
+    text.SetColor(WConsole::Color::Cyan);          text.PrintBound("Cyan");          text.NewLine();
+    text.SetColor(WConsole::Color::BrightCyan);    text.PrintBound("BrightCyan");    text.NewLine();
+    text.SetColor(WConsole::Color::Magenta);       text.PrintBound("Magenta");       text.NewLine();
+    text.SetColor(WConsole::Color::BrightMagenta); text.PrintBound("BrightMagenta"); text.NewLine();
+    text.SetColor(WConsole::Color::Yellow);        text.PrintBound("Yellow");        text.NewLine();
+    text.SetColor(WConsole::Color::BrightYellow);  text.PrintBound("BrightYellow");  text.NewLine();
+    text.SetColor(WConsole::Color::Green);         text.PrintBound("Green");         text.NewLine();
+    text.SetColor(WConsole::Color::BrightGreen);   text.PrintBound("BrightGreen");   text.NewLine();
     text.SetColor(WConsole::Color::Default);
 
-    /*std::string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789";
+    std::string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789";
     WConsole::Font font;
 
     font.SetForegroundColor(WConsole::Color::Yellow);
     font.SetInverseColor(true);
-
-    font.SetFontType(WConsole::FontType::Monospace);         text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::SerifItal);         text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::SerifBold);         text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::SerifBoldItal);     text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::SansSerif);         text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifItal);     text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifBold);     text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifBoldItal); text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::ScriptBold);        text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::FrakturBold);       text.PrintText(str, font); text.NewLine();
-    font.SetFontType(WConsole::FontType::FullWidth);         text.PrintText(str, font); text.NewLine();*/
+    font.SetFontType(WConsole::FontType::Monospace);         text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::SerifItal);         text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::SerifBold);         text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::SerifBoldItal);     text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::SansSerif);         text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::SansSerifItal);     text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::SansSerifBold);     text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::SansSerifBoldItal); text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::ScriptBold);        text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::FrakturBold);       text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::FullWidth);         text.SetFont(font); text.PrintBound(str); text.NewLine();
+    text.ResetFont();
+    text.PrintBound("");
 
     return 0;
 }
