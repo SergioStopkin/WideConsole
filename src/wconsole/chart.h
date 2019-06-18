@@ -47,8 +47,8 @@ class Chart final : public IWConsole, public IHeader, public IPrecisionP1, publi
 public:
     explicit Chart(const ChartType type    = ChartType::Column,
                    const Opacity   opacity = Opacity::OP_100)
-                 : IWConsole   (4, 6, Color::Default),
-                   chart_type_ (type) {
+                 : IWConsole  (ObjectType::Chart, 4, 6),
+                   chart_type_(type) {
         SetOpacity(opacity);
         // Default colors
         SetChartColors({Color::Red, Color::Yellow, Color::Black});
@@ -72,7 +72,7 @@ public:
     }
 
     template <typename T>
-    void PrintChart(const std::vector<T> & data) {
+    void PrintObject(const std::vector<T> & data) {
         switch (chart_type_) {
             case ChartType::Column: PrintColumnChart(data); break;
             case ChartType::Bar:    PrintBarChart(data);    break;
@@ -598,7 +598,7 @@ private:
         }
 
         if (h_pos_ > 0) {
-            h_global_pos_ = h_pos_;
+//            h_global_pos_ = h_pos_;
         }
 
         // Vertical loop
