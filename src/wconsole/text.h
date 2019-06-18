@@ -28,30 +28,46 @@ namespace WConsole {
 class Text final : public IWConsole {
 public:
     explicit Text(const FontType & font_type = FontType::Monospace)
-                : font_(font_type) {
+                : IWConsole(ObjectType::Text),
+                  font_    (font_type) {
     }
 
-    void PrintText(const char * s) noexcept {
+    void SetColor(const Color & color) noexcept {
+        font_.SetForegroundColor(color);
+    }
+
+    void SetFont(const Font & font) noexcept {
+        font_ = font;
+    }
+
+    void ResetFont() noexcept {
+        font_ = Font();
+    }
+
+    void PrintObject(const char * s) noexcept {
+        std::wstring buff;
+
         if (v_pos_ > 0) {
-            ChangePosition(Position::Up, v_pos_);
+//            ChangePosition(Position::Up, v_pos_);
+            WritePositionToBuff(buff, Position::Up, v_pos_);
         }
 
         if (h_pos_ > 0) {
-            h_global_pos_ = h_pos_;
-            ChangePosition(Position::Right, h_pos_);
+//            h_global_pos_ = h_pos_;
+//            ChangePosition(Position::Right, h_pos_);
+            WritePositionToBuff(buff, Position::Right, h_pos_);
         }
 
-        ChangeColor(color_);
+//        ChangeColor(color_);
+//        Print(s);
+        WriteStateToBuff(buff, font_.GetConsoleState());
+        Print(buff);
         Print(s);
         h_pos_ = 0;
-        h_global_pos_ += std::strlen(s);
+//        h_global_pos_ += std::strlen(s);
     }
 
-    void PrintText(const std::string & str) noexcept {
-        PrintText(str, font_);
-    }
-
-    void PrintText(const std::string & str, const Font & font) noexcept {
+    void PrintObject(const std::string & str) noexcept {
         std::wstring buff;
 
         if (v_pos_ > 0) {
@@ -59,20 +75,20 @@ public:
         }
 
         if (h_pos_ > 0) {
-            h_global_pos_ = h_pos_;
+//            h_global_pos_ = h_pos_;
             WritePositionToBuff(buff, Position::Right, h_pos_);
         }
 
 //        std::wstring shift_pos = L"\e[0;0H";
 //        buff += shift_pos;
 
-        font.WriteParametersToBuff(buff);
+        WriteStateToBuff(buff, font_.GetConsoleState());
 
         for (auto & wc : str) {
-            if (font.GetFontType() == FontType::FullWidth && wc >= 0x21 && wc <= 0x7E) {
+            if (font_.GetFontType() == FontType::FullWidth && wc >= 0x21 && wc <= 0x7E) {
                 buff += (wc + 0xFF01 - 0x21);
             } else if (wc >= 'A' && wc <= 'Z') {
-                switch (font.GetFontType()) {
+                switch (font_.GetFontType()) {
                     case FontType::Serif:             buff += wc;                   break;
                     case FontType::SerifItal:         buff += (wc + 0x1D434 - 'A'); break;
                     case FontType::SerifBold:         buff += (wc + 0x1D400 - 'A'); break;
@@ -87,7 +103,7 @@ public:
                     default: break;
                 }
             } else if (wc >= 'a' && wc <= 'z') {
-                switch (font.GetFontType()) {
+                switch (font_.GetFontType()) {
                     case FontType::Serif:             buff += wc;                   break;
                     case FontType::SerifItal:         buff += ((wc == 'h') ? 0x1D489 : (wc + 0x1D44E - 'a')); break;
                     case FontType::SerifBold:         buff += (wc + 0x1D41A - 'a'); break;
@@ -102,7 +118,7 @@ public:
                     default: break;
                 }
             } else if (wc >= '0' && wc <= '9') {
-                switch (font.GetFontType()) {
+                switch (font_.GetFontType()) {
                     case FontType::Serif:             buff += wc;                   break;
                     case FontType::SerifItal:         buff += wc;                   break;
                     case FontType::SerifBoldItal:     buff += wc;                   break;
