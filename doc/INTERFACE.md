@@ -32,15 +32,14 @@
 | [SetChartType](#set-chart-type) | Sets the [ChartType](#chart-type) |
 | [SetOpacity](#set-opacity) | Sets the [Opacity](#opacity) |
 | [SetChartColors](#set-chart-colors) | Sets the chart [Color](#color)s |
-| [PrintChart](#print-chart) | Print the chart to the console |
-| [SetColor](#set-color) | Sets the chart [Color](#color) | [*IWConsole*](#iwconsole) |
+| [PrintObject](#print-chart) | Print the chart to the console |
 | [SetSize](#set-size) | Sets the size ...  | [*IWConsole*](#iwconsole) |
-| [SetPosition](#set-position) | Sets the position | [*IWConsole*](#iwconsole) |
 | [NewLine](#new-line) | Print the new line and ...  | [*IWConsole*](#iwconsole) |
 | [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  | [*IWConsole*](#iwconsole) |
 | [Clear](#clear) | Clear console output | [*IWConsole*](#iwconsole) |
 | [ClearLast](#clear-last) | Clear the last chart  | [*IWConsole*](#iwconsole) |
 | [ClearFirst](#clear-first) | Go to the position of the first printing chart | [*IWConsole*](#iwconsole) |
+| [PrintBound](#print-bound) | Print object subject to previous changes | [*IWConsole*](#iwconsole) |
 | [SetDataPosition](#set-data-position) | Sets the [DataPosition](#data-position) | [*IHeader*](#iheader) |
 | [ShowDataHeader](#show-data-header) | Show the data header  | [*IHeader*](#iheader) |
 | [SetVerticalRange](#set-vertical-range) | Sets the vertical range value (Y) | [*IRange*](#irange) |
@@ -105,7 +104,7 @@ Setting the chart colors. If the colors are less than the data, the colors are r
 
 <p id="print-chart" class="func">
     <t class="keyw">template</t> <t class="keyw"><</t><t class="keyw">typename</t> T<t class="keyw">></t></br>
-    <t class="keyw">void</t> <b>PrintChart</b>
+    <t class="keyw">void</t> <b>PrintObject</b>
     <t class="mark">(</t><t class="keyw">const</t>
     std<t class="mark">::</t>vector<t class="keyw"><</t>T<t class="keyw">></t>
     & <b>data</b><t class="mark">)</t><t class="term">;</t>
@@ -121,15 +120,14 @@ Print chart.</br>
 | -------------- | ----------- | ------- |
 | [(constructor)](#graph-constructor) | Constructs the graph object |
 | [SetPoint](#set-point) | Sets the [Point](#point) type |
-| [PrintGraph](#print-graph) | Print the graph to the console |
-| [SetColor](#set-color) | Sets the chart [Color](#color) | [*IWConsole*](#iwconsole) |
+| [PrintObject](#print-graph) | Print the graph to the console |
 | [SetSize](#set-size) | Sets the size ...  | [*IWConsole*](#iwconsole) |
-| [SetPosition](#set-position) | Sets the position | [*IWConsole*](#iwconsole) |
 | [NewLine](#new-line) | Print the new line and ...  | [*IWConsole*](#iwconsole) |
 | [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  | [*IWConsole*](#iwconsole) |
 | [Clear](#clear) | Clear console output | [*IWConsole*](#iwconsole) |
 | [ClearLast](#clear-last) | Clear the last chart  | [*IWConsole*](#iwconsole) |
 | [ClearFirst](#clear-first) | Go to the position of the first printing chart | [*IWConsole*](#iwconsole) |
+| [PrintBound](#print-bound) | Print object subject to previous changes | [*IWConsole*](#iwconsole) |
 | [SetDataPosition](#set-data-position) | Sets the [DataPosition](#data-position) | [*IHeader*](#iheader) |
 | [ShowDataHeader](#show-data-header) | Show the data header  | [*IHeader*](#iheader) |
 | [SetVerticalRange](#set-vertical-range) | Sets the vertical range value (Y) | [*IRange*](#irange) |
@@ -147,11 +145,15 @@ Print chart.</br>
     <t class="mark">(</t><t class="keyw">const</t>
     Point <b>point</b>
     <t class="keyw">=</t>
-    Point<t class="mark">::</t>Dot<t class="mark">)</t><t class="term">;</t>
+    Point<t class="mark">::</t>Dot<t class="mark">,</t>
+    <t class="keyw">const</t> Color <b>point_color</b>
+    <t class="keyw">=</t>
+    Color<t class="mark">::</t>BrightRed<t class="mark">)</t><t class="term">;</t>
 </p>
 
 Constructs the graph object.</br>
 `point` [Point](#point)</br>
+`point_color` point [Color](#color)</br>
 </br>
 
 <p id="set-point" class="func">
@@ -167,9 +169,9 @@ Setting the point.</br>
 
 <p id="print-graph" class="func">
     <t class="keyw">template</t> <t class="keyw"><</t><t class="keyw">typename</t> T<t class="keyw">></t></br>
-    <t class="keyw">void</t> <b>PrintGraph</b>
+    <t class="keyw">void</t> <b>PrintObject</b>
     <t class="mark">(</t><t class="keyw">const</t>
-    std<t class="mark">::</t>vector<t class="keyw"><</t>std<t class="mark">::</t>pair<t class="keyw"><</t>T,
+    std<t class="mark">::</t>vector<t class="keyw"><</t>std<t class="mark">::</t>pair<t class="keyw"><</t>T<t class="mark">,</t>
     T<t class="keyw">></t><t class="keyw">></t>
     & <b>data</b><t class="mark">)</t><t class="term">;</t>
 </p>
@@ -184,15 +186,14 @@ Print garph.</br>
 | Public methods | Description | Derived |
 | -------------- | ----------- | ------- |
 | [(constructor)](#text-constructor) | Constructs the text object |
-| [PrintText](#print-text) | Print the text to the console |
-| [SetColor](#set-color) | Sets the chart [Color](#color) | [*IWConsole*](#iwconsole) |
+| [PrintObject](#print-text) | Print the text to the console |
 | [SetSize](#set-size) | Sets the size ...  | [*IWConsole*](#iwconsole) |
-| [SetPosition](#set-position) | Sets the position | [*IWConsole*](#iwconsole) |
 | [NewLine](#new-line) | Print the new line and ...  | [*IWConsole*](#iwconsole) |
 | [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  | [*IWConsole*](#iwconsole) |
 | [Clear](#clear) | Clear console output | [*IWConsole*](#iwconsole) |
 | [ClearLast](#clear-last) | Clear the last chart  | [*IWConsole*](#iwconsole) |
 | [ClearFirst](#clear-first) | Go to the position of the first printing chart | [*IWConsole*](#iwconsole) |
+| [PrintBound](#print-bound) | Print object subject to previous changes | [*IWConsole*](#iwconsole) |
 
 <p id="text-constructor" class="func">
     <t class="keyw">explicit</t> <b>Text</b>
@@ -207,18 +208,18 @@ Constructs the text object.</br>
 </br>
 
 <p id="print-text" class="func">
-    <t class="keyw">void</t> <b>PrintText</b>
+    <t class="keyw">void</t> <b>PrintObject</b>
     <t class="mark">(</t><t class="keyw">const char *</t>
     <b>s</b><t class="mark">)</t>
     <t class="keyw">noexcept</t><t class="term">;</t>
     </br>
-    <t class="keyw">void</t> <b>PrintText</b>
+    <t class="keyw">void</t> <b>PrintObject</b>
     <t class="mark">(</t><t class="keyw">const</t>
     std<t class="mark">::</t>string
     & <b>str</b><t class="mark">)</t>
     <t class="keyw">noexcept</t><t class="term">;</t>
     </br>
-    <t class="keyw">void</t> <b>PrintText</b>
+    <t class="keyw">void</t> <b>PrintObject</b>
     <t class="mark">(</t><t class="keyw">const</t>
     std<t class="mark">::</t>string
     & <b>str</b>,
@@ -337,14 +338,13 @@ Write parameters to `std::wstring` buffer.</br>
 
 | Public methods | Description |
 | -------------- | ----------- |
-| [SetColor](#set-color) | Sets the chart [Color](#color) |
-| [SetSize](#set-size) | Sets the size ...  |
-| [SetPosition](#set-position) | Sets the position |
-| [NewLine](#new-line) | Print the new line and ...  |
-| [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  |
-| [Clear](#clear) | Clear console output |
-| [ClearLast](#clear-last) | Clear the last chart  |
-| [ClearFirst](#clear-first) | Go to the position of the first printing chart |
+| [SetSize](#set-size) | Sets the size ...  | [*IWConsole*](#iwconsole) |
+| [NewLine](#new-line) | Print the new line and ...  | [*IWConsole*](#iwconsole) |
+| [NewLineInBlock](#new-line-in-block) | Print the new line in block and ...  | [*IWConsole*](#iwconsole) |
+| [Clear](#clear) | Clear console output | [*IWConsole*](#iwconsole) |
+| [ClearLast](#clear-last) | Clear the last chart  | [*IWConsole*](#iwconsole) |
+| [ClearFirst](#clear-first) | Go to the position of the first printing chart | [*IWConsole*](#iwconsole) |
+| [PrintBound](#print-bound) | Print object subject to previous changes | [*IWConsole*](#iwconsole) |
 
 <h1 id="iheader"><i>IHeader</i></h1>
 
