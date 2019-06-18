@@ -470,8 +470,8 @@ uint         IWConsole::v_global_pos_   = 0;
 int          IWConsole::object_counter_ = 0;
 ConsoleState IWConsole::global_state_;
 #ifdef WINDOWS
-short        default_color_             = 0;
-short        default_back_color_        = 0;
+short        IWConsole::default_color_      = 0;
+short        IWConsole::default_back_color_ = 0;
 #endif
 
 
