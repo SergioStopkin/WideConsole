@@ -68,7 +68,8 @@ class Graph final : public IWConsole, public IHeader, public IPrecisionP2, publi
 public:
     explicit Graph(const Point point       = Point::Dot,
                    const Color point_color = Color::BrightRed)
-                 : IHeader     (true, DataPosition::Left),
+                 : IWConsole   (ObjectType::Graph),
+                   IHeader     (true, DataPosition::Left),
                    IRange      (-10, 10, -10, 10),
                    point_      ((wchar_t)point),
                    point_color_(point_color) {
@@ -83,9 +84,7 @@ public:
     }
 
     template <typename T>
-    void PrintGraph(const std::vector<std::pair<T, T>> & data) {
-        SetPosition();
-
+    void PrintObject(const std::vector<std::pair<T, T>> & data) {
         const double h_step        = (h_max_ - h_min_) / (double)(horizontal_size_ - 1);
         const double v_step        = (v_max_ - v_min_) / (double)(vertical_size_   - 1);
         const auto   v_alignment   = (uint)(std::max(std::to_string((int)v_min_).size(), std::to_string((int)v_max_).size())
@@ -136,7 +135,7 @@ public:
         }
 
         if (h_pos_ > 0) {
-            h_global_pos_ = h_pos_;
+//            h_global_pos_ = h_pos_;
         }
 
         // Upper arrow
@@ -265,9 +264,6 @@ public:
         WriteColorToBuff(buff, Color::Default);
         buff += L'\n';
         Print(buff);
-
-        h_global_pos_ = h_pos_;
-        v_global_pos_ = v_pos_;
     }
 
 private:
