@@ -43,6 +43,20 @@ enum class Color {
     BrightDefault
 };
 
+struct ConsoleState {
+    Color foreground;
+    Color background;
+    bool  is_inverse;
+    bool  is_underline;
+
+    ConsoleState()
+               : foreground  (Color::Default),
+                 background  (Color::Default),
+                 is_inverse  (false),
+                 is_underline(false) {
+    }
+};
+
 } // namespace WConsole
 
 #endif // WCONSOLE_TYPES_H_
