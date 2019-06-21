@@ -52,17 +52,17 @@ public:
 
     void NewLine() noexcept {
         Print("\n");
-        h_global_pos_ = 0;
-        v_global_pos_ = 0;//(v_pos_ + 1);
+        global_h_pos_ = 0;
+        global_v_pos_ = 0;//(v_pos_ + 1);
         h_pos_ = 0;
         v_pos_ = 0;
     }
 
     void NewLineInBlock() noexcept {
         Print("\n");
-        v_global_pos_ += (v_pos_ + 1);
+        global_v_pos_ += (v_pos_ + 1);
         v_pos_ = 0;
-        h_pos_ = h_global_pos_;
+        h_pos_ = global_h_pos_;
     }
 
     void Clear() noexcept {
@@ -74,24 +74,24 @@ public:
 #endif
         h_pos_        = 0;
         v_pos_        = 0;
-        h_global_pos_ = 0;
-        v_global_pos_ = 0;
+        global_h_pos_ = 0;
+        global_v_pos_ = 0;
     }
 
     void ClearLast() noexcept {
         Print("\n");
         ChangePosition(Position::Up, v_pos_ + 1);
         v_pos_ = 0;
-        h_pos_ = h_global_pos_;
+        h_pos_ = global_h_pos_;
     }
 
     void ClearFirst() noexcept {
         Print("\n");
-        ChangePosition(Position::Up, v_global_pos_ + v_pos_ + 1);
+        ChangePosition(Position::Up, global_v_pos_ + v_pos_ + 1);
         h_pos_        = 0;
         v_pos_        = 0;
-        h_global_pos_ = 0;
-        v_global_pos_ = 0;
+        global_h_pos_ = 0;
+        global_v_pos_ = 0;
     }
 
     template <typename T>
@@ -140,8 +140,8 @@ protected:
                      : object_type_    (object_type),
                        horizontal_size_(horizontal_size),
                        vertical_size_  (vertical_size),
-                       h_pos_          (h_global_pos_),
-                       v_pos_          (v_global_pos_) {
+                       h_pos_          (global_h_pos_),
+                       v_pos_          (global_v_pos_) {
         // Set reference to the object
         switch (object_type_) {
             case ObjectType::Chart : object_ref_.chart = (Chart *)this; break;
@@ -433,8 +433,8 @@ private:
         Text  * text;
     };
 
-    static uint         h_global_pos_;
-    static uint         v_global_pos_;
+    static uint         global_h_pos_;
+    static uint         global_v_pos_;
     static int          object_counter_;
     static ConsoleState global_state_;
 #ifdef WINDOWS
@@ -458,20 +458,20 @@ private:
     void PrintHost(      O    &     object,
                    const ARGS & ... data) {
         // Pre-processing
-        h_pos_ = h_global_pos_;
-        v_pos_ = v_global_pos_;
+        h_pos_ = global_h_pos_;
+        v_pos_ = global_v_pos_;
 
         // Call Print() in derived objects
         object->PrintObject(data ...);
 
         // Post-processing
-        h_global_pos_ = h_pos_;
-        v_global_pos_ = v_pos_;
+        global_h_pos_ = h_pos_;
+        global_v_pos_ = v_pos_;
     }
 };
 
-uint         IWConsole::h_global_pos_   = 0;
-uint         IWConsole::v_global_pos_   = 0;
+uint         IWConsole::global_h_pos_   = 0;
+uint         IWConsole::global_v_pos_   = 0;
 int          IWConsole::object_counter_ = 0;
 ConsoleState IWConsole::global_state_;
 #ifdef WINDOWS
