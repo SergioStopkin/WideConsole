@@ -33,6 +33,8 @@
 #else
 #include <iostream>
 #include <locale>
+#include <sys/ioctl.h>
+#include <unistd.h>
 #endif
 
 #include "types.h"
@@ -163,6 +165,12 @@ protected:
 #else
             std::ios_base::sync_with_stdio(false);
             std::wcout.imbue(std::locale(""));
+
+            winsize wsize {};
+            if (ioctl(STDIN_FILENO, TIOCGWINSZ, (char *)&wsize) != -1) {
+                global_row_num_ = wsize.ws_row;
+                global_col_num_ = wsize.ws_col;
+            }
 #endif
             ShowCursor(false);
         }
@@ -435,6 +443,8 @@ private:
 
     static uint         global_h_pos_;
     static uint         global_v_pos_;
+    static uint         global_row_num_;
+    static uint         global_col_num_;
     static int          object_counter_;
     static ConsoleState global_state_;
 #ifdef WINDOWS
@@ -458,10 +468,13 @@ private:
     void PrintHost(      O    &     object,
                    const ARGS & ... data) {
         // Pre-processing
+        if (global_col_num_ > 0 && (global_h_pos_ + horizontal_size_) > global_col_num_) {
+            NewLine();
+        }
         h_pos_ = global_h_pos_;
         v_pos_ = global_v_pos_;
 
-        // Call Print() in derived objects
+        // Call PrintObject() in derived objects
         object->PrintObject(data ...);
 
         // Post-processing
@@ -472,6 +485,8 @@ private:
 
 uint         IWConsole::global_h_pos_   = 0;
 uint         IWConsole::global_v_pos_   = 0;
+uint         IWConsole::global_row_num_ = 0;
+uint         IWConsole::global_col_num_ = 0;
 int          IWConsole::object_counter_ = 0;
 ConsoleState IWConsole::global_state_;
 #ifdef WINDOWS
