@@ -143,17 +143,17 @@ int main() {
 
     font.SetForegroundColor(WConsole::Color::Yellow);
     font.SetInverseColor(true);
-    font.SetFontType(WConsole::FontType::Monospace);         text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::SerifItal);         text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::SerifBold);         text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::SerifBoldItal);     text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::SansSerif);         text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifItal);     text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifBold);     text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifBoldItal); text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::ScriptBold);        text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::FrakturBold);       text.SetFont(font); text.PrintBound(str); text.NewLine();
-    font.SetFontType(WConsole::FontType::FullWidth);         text.SetFont(font); text.PrintBound(str); text.NewLine();
+    font.SetFontType(WConsole::FontType::Monospace);         text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::SerifItal);         text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::SerifBold);         text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::SerifBoldItal);     text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::SansSerif);         text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::SansSerifItal);     text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::SansSerifBold);     text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::SansSerifBoldItal); text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::ScriptBold);        text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::FrakturBold);       text.PrintBound(str, font); text.NewLine();
+    font.SetFontType(WConsole::FontType::FullWidth);         text.PrintBound(str, font); text.NewLine();
     text.ResetFont();
     text.PrintBound("");
 

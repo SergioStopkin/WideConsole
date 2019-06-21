@@ -109,6 +109,11 @@ public:
         PrintHost(object_ref_.text, data);
     }
 
+    template <typename T, typename F>
+    void PrintBound(const T & data, const F & font) {
+        PrintHost(object_ref_.text, data, font);
+    }
+
 protected:
     enum class ObjectType {
         Chart,
@@ -449,15 +454,15 @@ private:
 #endif
     }
 
-    template <class O, typename T>
-    void PrintHost(      O & object,
-                   const T & data) {
+    template <class O, typename ... ARGS>
+    void PrintHost(      O    &     object,
+                   const ARGS & ... data) {
         // Pre-processing
         h_pos_ = h_global_pos_;
         v_pos_ = v_global_pos_;
 
         // Call Print() in derived objects
-        object->PrintObject(data);
+        object->PrintObject(data ...);
 
         // Post-processing
         h_global_pos_ = h_pos_;
