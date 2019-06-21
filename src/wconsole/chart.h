@@ -237,6 +237,7 @@ private:
         const uint   over          = ((is_data_header_ && (data_max > v_max_)) ? 1 : 0);
 //        const uint   clst          = vertical_size_ / static_cast<uint>(colors_.size());
 //        const bool   is_data_empty = (data.begin() == data.end());
+        const uint   one_h_size    = horizontal_size_ / data.size();
 
         std::wstring      buff;
 
@@ -306,9 +307,9 @@ private:
                         space_diff = 0;
                     }
 
-                    WriteDataToBuff(buff, data[di], horizontal_size_, precision_);
+                    WriteDataToBuff(buff, data[di], one_h_size, precision_);
 
-                    space_diff = ((data_alignment > horizontal_size_) ? (data_alignment - horizontal_size_) : 0);
+                    space_diff = ((data_alignment > one_h_size) ? (data_alignment - one_h_size) : 0);
                     print_data_once[di] = true;
 //                    WriteColorToBuff(buff, v_color);
                 } else if (is_data_header_ && vi == 0 && !print_data_once[di]) {
@@ -317,29 +318,29 @@ private:
                         space_diff = 0;
                     }
 
-                    WriteDataToBuff(buff, data[di], horizontal_size_, precision_);
+                    WriteDataToBuff(buff, data[di], one_h_size, precision_);
 
-                    space_diff = ((data_alignment > horizontal_size_) ? (data_alignment - horizontal_size_) : 0);
+                    space_diff = ((data_alignment > one_h_size) ? (data_alignment - one_h_size) : 0);
                 } else if (data[di] >= grid_value) {
                     if (space_diff > 0) {
                         WritePositionToBuff(buff, Position::Left, space_diff);
                         space_diff = 0;
                     }
 
-                    WriteBricksToBuff(buff, brick_, horizontal_size_ - 1);
+                    WriteBricksToBuff(buff, brick_, one_h_size - 1);
                     WriteBricksToBuff(buff, BrickCode::FS_);
                 } else if (write_over) {
                     if (is_grid_) {
                         WriteColorToBuff(buff, grid_color_);
                     }
 
-                    buff.append(horizontal_size_, grid_);
+                    buff.append(one_h_size, grid_);
                     WriteColorToBuff(buff, v_color);
                 } else {
-                    if (space_diff > horizontal_size_) {
-                        space_diff -= horizontal_size_;
+                    if (space_diff > one_h_size) {
+                        space_diff -= one_h_size;
                     } else {
-                        buff.append(horizontal_size_ - space_diff, ' ');
+                        buff.append(one_h_size - space_diff, ' ');
                         space_diff = 0;
                     }
                 }
@@ -353,9 +354,9 @@ private:
         }
 
         v_pos_  = vertical_size_+ over;
-        h_pos_ += (horizontal_size_ * data.size()
+        h_pos_ += (one_h_size * data.size()
                    + (is_grid_ ? grid_alignment : 0)
-                   + ((data_alignment > horizontal_size_) ? (data_alignment - horizontal_size_) : 0));
+                   + ((data_alignment > one_h_size) ? (data_alignment - one_h_size) : 0));
 
         WriteColorToBuff(buff, Color::Default);
         Print(buff);
@@ -369,6 +370,7 @@ private:
         const uint   over          = ((is_data_header_  ? (uint)(std::max(std::to_string((int)v_max_).size(), std::to_string((int)v_min_).size())) : 0)
                                                                + ((precision_ > 0) ? (precision_ + 1) : 0));
 //        const bool is_data_empty = (data.begin() == data.end());
+        const uint   one_v_size    = vertical_size_ / data.size();
 
         std::wstring buff;
 
@@ -389,13 +391,13 @@ private:
                 num_bricks = horizontal_size_;
             }
 
-            for (uint i = 0; i < vertical_size_ - 1; ++i) {
+            for (uint i = 0; i < one_v_size - 1; ++i) {
                 if (h_pos_ > 0) {
                     WritePositionToBuff(buff, Position::Right, h_pos_);
                 }
 
                 WriteBricksToBuff(buff, brick_, num_bricks);
-                if (!print_data_once && i == (vertical_size_ - 1) / 2) {
+                if (!print_data_once && i == (one_v_size - 1) / 2) {
                     WriteDataToBuff(buff, data[di], 1, precision_);
                     print_data_once = true;
                 }
@@ -448,7 +450,7 @@ private:
             buff += L'\n';
         }
 
-        v_pos_  = vertical_size_ * (uint)data.size() + (is_grid_ ? 1 : 0);
+        v_pos_  = one_v_size * (uint)data.size() + (is_grid_ ? 1 : 0);
         h_pos_ += (horizontal_size_ + over);
 
         WriteColorToBuff(buff, Color::Default);
