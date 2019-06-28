@@ -32,6 +32,15 @@ int main() {
 
     // GRAPH
     WConsole::Graph graph;
+
+    for (int i = 1; i < 20; ++i) {
+        graph.SetSize(2*i, i);
+        graph.PrintBound(std::vector<std::pair<double, double>> {{0.0, 0.0}, {10, 10}, {-10, -10}});
+    }
+
+    return 0;
+
+
     graph.SetSize(33, 17);
     graph.SetHorizontalRange(-1.5, 1.5);
     graph.SetVerticalRange(-1.5, 1.5);
@@ -85,8 +94,6 @@ int main() {
             graph.SetPointColor(WConsole::Color::BrightRed);
             graph.PrintBound(sin3);
 
-            graph.NewLine();
-
             // Data for charts
             std::vector<int> data;
             for (size_t i = 0; i < colors.size(); ++i) {
@@ -95,12 +102,12 @@ int main() {
 
             // Column chart
             chart.SetChartType(WConsole::ChartType::Column);
-            chart.SetSize(5, 16);
+            chart.SetSize(40, 16);
             chart.PrintBound(data);
 
             // Bar chart
             chart.SetChartType(WConsole::ChartType::Bar);
-            chart.SetSize(40, 2);
+            chart.SetSize(40, 16);
             chart.PrintBound(data);
 
             // Pie chart
@@ -112,8 +119,6 @@ int main() {
             l_start = std::chrono::steady_clock::now();
         }
     }
-
-//    return 0;
 
     // TEXT
     WConsole::Text text;
