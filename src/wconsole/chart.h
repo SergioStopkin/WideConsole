@@ -30,13 +30,13 @@
 
 namespace WConsole {
 
-enum class ChartType {
+enum class ChartType : uchar {
     Column,
     Bar,
     Pie,
 };
 
-enum class Opacity {
+enum class Opacity : uchar {
     OP_100,
     OP_75,
     OP_50,

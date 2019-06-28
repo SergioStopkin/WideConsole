@@ -24,7 +24,7 @@ namespace WConsole {
 
 class IGrid {
 public:
-    enum class Arrow {
+    enum class Arrow : uchar {
         Big,
         Small
     };

@@ -388,7 +388,7 @@ Write parameters to `std::wstring` buffer.</br>
 <p id="arrow">
 
 ```cpp
-enum class Arrow {
+enum class Arrow : uchar {
         Big,
         Small
     };
@@ -397,7 +397,7 @@ enum class Arrow {
 <p id="chart-type">
 
 ```cpp
-enum class ChartType {
+enum class ChartType : uchar {
     Column,
     Bar,
     Pie,
@@ -407,7 +407,7 @@ enum class ChartType {
 <p id="color">
 
 ```cpp
-enum class Color {
+enum class Color : uchar {
     Black,
     Red,
     Green,
@@ -432,7 +432,7 @@ enum class Color {
 <p id="data-position">
 
 ```cpp
-enum class DataPosition {
+enum class DataPosition : uchar {
     Right,
     Left,
     Center
@@ -442,7 +442,7 @@ enum class DataPosition {
 <p id="font-type">
 
 ```cpp
-enum class FontType {
+enum class FontType : uchar {
     Serif,
     SerifItal,
     SerifBold,
@@ -461,7 +461,7 @@ enum class FontType {
 <p id="opacity">
 
 ```cpp
-enum class Opacity {
+enum class Opacity : uchar {
     OP_100,
     OP_75,
     OP_50,

@@ -117,13 +117,13 @@ public:
     }
 
 protected:
-    enum class ObjectType {
+    enum class ObjectType : uchar {
         Chart,
         Graph,
         Text
     };
 
-    enum class Position {
+    enum class Position : uchar {
         Up,
         Down,
         Right,

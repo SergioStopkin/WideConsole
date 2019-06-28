@@ -22,7 +22,7 @@
 
 namespace WConsole {
 
-enum class FontType {
+enum class FontType : uchar {
     Serif,
     SerifItal,
     SerifBold,

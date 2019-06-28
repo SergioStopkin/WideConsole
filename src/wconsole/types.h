@@ -23,7 +23,7 @@ namespace WConsole {
 typedef unsigned char uchar;
 typedef unsigned int  uint;
 
-enum class Color {
+enum class Color : uchar {
     Black,
     Red,
     Green,

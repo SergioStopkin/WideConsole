@@ -24,7 +24,7 @@
 
 namespace WConsole {
 
-enum class DataPosition {
+enum class DataPosition : uchar {
     Right,
     Left,
     Center
