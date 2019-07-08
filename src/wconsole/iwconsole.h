@@ -465,7 +465,7 @@ private:
     }
 
     template <class O, typename ... ARGS>
-    void PrintHost(      O    &     object,
+    void PrintHost(const O    &     object,
                    const ARGS & ... data) {
         // Pre-processing
         if (global_col_num_ > 0 && (global_h_pos_ + horizontal_size_) > global_col_num_) {
