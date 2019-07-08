@@ -93,7 +93,6 @@ protected:
             buff.append(diff, ' ');
         }
     }
-
 };
 
 } // namespace WConsole

@@ -708,7 +708,6 @@ private:
         buff += L'\n';
         Print(buff);
     }
-
 }; // class Chart
 
 } // namespace WConsole
