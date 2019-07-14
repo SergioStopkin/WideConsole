@@ -39,22 +39,22 @@ public:
 
     template <typename T>
     void PrintBound(const std::vector<T> & data) {
-        PrintHost(object_ref_.chart, data);
+        PrintHost((Chart *)this, data);
     }
 
     template <typename T>
     void PrintBound(const std::vector<std::pair<T, T>> & data) {
-        PrintHost(object_ref_.graph, data);
+        PrintHost((Graph *)this, data);
     }
 
     template <typename T>
     void PrintBound(const T & data) {
-        PrintHost(object_ref_.text, data);
+        PrintHost((Text *)this, data);
     }
 
     template <typename T, typename F>
     void PrintBound(const T & data, const F & font) {
-        PrintHost(object_ref_.text, data, font);
+        PrintHost((Text *)this, data, font);
     }
 
 protected:
@@ -74,13 +74,6 @@ protected:
         : object_type_    (object_type),
           horizontal_size_(horizontal_size),
           vertical_size_  (vertical_size) {
-        // Set reference to the object
-        switch (object_type_) {
-            case ObjectType::Chart : object_ref_.chart = (Chart *)this; break;
-            case ObjectType::Graph : object_ref_.graph = (Graph *)this; break;
-            case ObjectType::Text  : object_ref_.text  = (Text  *)this; break;
-        }
-
         if (object_counter_ == 0) {
             Console::Start();
             Console::ShowCursor(false);
@@ -102,15 +95,7 @@ protected:
     }
 
 private:
-    union ObjectRef {
-        Chart * chart;
-        Graph * graph;
-        Text  * text;
-    };
-
     static int object_counter_;
-
-    ObjectRef object_ref_;
 
     template <class O, typename ... ARGS>
     void PrintHost(const O    &     object,
