@@ -50,35 +50,31 @@ enum class Position : uchar {
 
 class Console {
 public:
-    /*void NewLine() noexcept {
+    static void NewLine() noexcept {
         Print("\n");
         global_h_pos_ = 0;
-        global_v_pos_ = 0;//(v_pos_ + 1);
-        h_pos_ = 0;
-        v_pos_ = 0;
+        global_v_pos_ = 0;
     }
 
-    void NewLineInBlock() noexcept {
+    /*void NewLineInBlock() noexcept {
         Print("\n");
         global_v_pos_ += (v_pos_ + 1);
         v_pos_ = 0;
         h_pos_ = global_h_pos_;
-    }
+    }*/
 
-    void Clear() noexcept {
+    static void Clear() noexcept {
 #ifdef WINDOWS
         COORD pos {0, 0};
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 #else
         Print("\ec");
 #endif
-        h_pos_        = 0;
-        v_pos_        = 0;
         global_h_pos_ = 0;
         global_v_pos_ = 0;
     }
 
-    void ClearLast() noexcept {
+    /*void ClearLast() noexcept {
         Print("\n");
         ChangePosition(Position::Up, v_pos_ + 1);
         v_pos_ = 0;
@@ -347,6 +343,28 @@ public:
 #else
         Print(std::string("\e[?25") + ((show) ? "h" : "l"));
 #endif
+    }
+
+    static void PreProcessing(const uint horizontal_size) noexcept {
+        if (global_col_num_ > 0 && (global_h_pos_ + horizontal_size) > global_col_num_) {
+            NewLine();
+        }
+    }
+
+    static const uint GlobalHPos() noexcept {
+        return global_h_pos_;
+    }
+
+    static const uint GlobalVPos() noexcept {
+        return global_v_pos_;
+    }
+
+    static void GlobalHPos(const uint h_pos) noexcept {
+        global_h_pos_ = h_pos;
+    }
+
+    static void GlobalVPos(const uint v_pos) noexcept {
+        global_v_pos_ = v_pos;
     }
 
     static void Start() noexcept {

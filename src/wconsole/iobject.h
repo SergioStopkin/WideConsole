@@ -57,16 +57,12 @@ public:
         PrintHost(object_ref_.text, data, font);
     }
 
-
 protected:
     enum class ObjectType : uchar {
         Chart,
         Graph,
         Text
     };
-
-    uint h_pos_ = 0;
-    uint v_pos_ = 0;
 
     ObjectType object_type_;
     uint       horizontal_size_;
@@ -120,18 +116,10 @@ private:
     void PrintHost(const O    &     object,
                    const ARGS & ... data) {
         // Pre-processing
-//        if (global_col_num_ > 0 && (global_h_pos_ + horizontal_size_) > global_col_num_) {
-//            NewLine();
-//        }
-//        h_pos_ = global_h_pos_;
-//        v_pos_ = global_v_pos_;
+        Console::PreProcessing(horizontal_size_);
 
         // Call PrintObject() in derived objects
         object->PrintObject(data ...);
-
-        // Post-processing
-//        global_h_pos_ = h_pos_;
-//        global_v_pos_ = v_pos_;
     }
 };
 
