@@ -20,16 +20,17 @@
 
 #include <cstring>
 
+#include "console.h"
 #include "font.h"
-#include "iwconsole.h"
+#include "iobject.h"
 
 namespace WConsole {
 
-class Text final : public IWConsole {
+class Text final : public IObject {
 public:
     explicit Text(const FontType & font_type = FontType::Monospace)
-                : IWConsole(ObjectType::Text),
-                  font_    (font_type) {
+                : IObject(ObjectType::Text),
+                  font_  (font_type) {
     }
 
     void SetColor(const Color & color) noexcept {
@@ -47,23 +48,23 @@ public:
     void PrintObject(const char * s) noexcept {
         std::wstring buff;
 
-        if (v_pos_ > 0) {
-//            ChangePosition(Position::Up, v_pos_);
-            WritePositionToBuff(buff, Position::Up, v_pos_);
+        if (Console::GlobalVPos() > 0) {
+//            ChangePosition(Position::Up, Console::GlobalVPos());
+            Console::WritePositionToBuff(buff, Position::Up, Console::GlobalVPos());
         }
 
-        if (h_pos_ > 0) {
-//            h_global_pos_ = h_pos_;
-//            ChangePosition(Position::Right, h_pos_);
-            WritePositionToBuff(buff, Position::Right, h_pos_);
+        if (Console::GlobalHPos() > 0) {
+//            h_global_pos_ = Console::GlobalHPos();
+//            ChangePosition(Position::Right, Console::GlobalHPos());
+            Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
         }
 
 //        ChangeColor(color_);
 //        Print(s);
-        WriteStateToBuff(buff, font_.GetConsoleState());
-        Print(buff);
-        Print(s);
-        h_pos_ = 0;
+        Console::WriteStateToBuff(buff, font_.GetConsoleState());
+        Console::Print(buff);
+        Console::Print(s);
+        Console::GlobalHPos(0);
 //        h_global_pos_ += std::strlen(s);
     }
 
@@ -74,19 +75,19 @@ public:
     void PrintObject(const std::string & str, const Font & font) noexcept {
         std::wstring buff;
 
-        if (v_pos_ > 0) {
-            WritePositionToBuff(buff, Position::Up, v_pos_);
+        if (Console::GlobalVPos() > 0) {
+            Console::WritePositionToBuff(buff, Position::Up, Console::GlobalVPos());
         }
 
-        if (h_pos_ > 0) {
-//            h_global_pos_ = h_pos_;
-            WritePositionToBuff(buff, Position::Right, h_pos_);
+        if (Console::GlobalHPos() > 0) {
+//            h_global_pos_ = Console::GlobalHPos();
+            Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
         }
 
 //        std::wstring shift_pos = L"\e[0;0H";
 //        buff += shift_pos;
 
-        WriteStateToBuff(buff, font.GetConsoleState());
+        Console::WriteStateToBuff(buff, font.GetConsoleState());
 
         for (auto & wc : str) {
             if (font.GetFontType() == FontType::FullWidth && wc >= 0x21 && wc <= 0x7E) {
@@ -141,10 +142,10 @@ public:
             }
         }
 
-        Print(buff);
+        Console::Print(buff);
 
-        v_pos_ = 0;
-        h_pos_ = 0;
+//        Console::GlobalVPos() = 0;
+//        Console::GlobalHPos() = 0;
 //        h_global_pos_ += str.length();
     }
 
