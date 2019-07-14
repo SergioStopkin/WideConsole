@@ -76,7 +76,6 @@ protected:
           vertical_size_  (vertical_size) {
         if (object_counter_ == 0) {
             Console::Start();
-            Console::ShowCursor(false);
         }
 
         ++object_counter_;
@@ -84,11 +83,7 @@ protected:
 
     virtual ~IObject() {
         if (object_counter_ == 1) {
-            Console::ChangeColor(Color::Default);
-            Console::ShowCursor(true);
-#ifdef UNIX
             Console::End();
-#endif
         }
 
         --object_counter_;

@@ -388,14 +388,18 @@ public:
             global_col_num_ = wsize.ws_col;
         }
 #endif
+        Console::ShowCursor(false);
     }
 
-#ifdef UNIX
     static void End() noexcept {
+        Console::ChangeColor(Color::Default);
+        Console::ShowCursor(true);
+#ifdef UNIX
         std::ios_base::sync_with_stdio(true);
         std::wcout.imbue(std::locale());
-    }
 #endif
+    }
+
 
 private:
     static uint         global_h_pos_;
