@@ -37,6 +37,8 @@
 #include <unistd.h>
 #endif
 
+#include <string>
+
 #include "types.h"
 
 namespace WConsole {
@@ -371,21 +373,25 @@ public:
 #ifdef WINDOWS
         _setmode(_fileno(stdout), _O_WTEXT);
 
-            CONSOLE_SCREEN_BUFFER_INFO info;
-            if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info)) {
-                default_color_      = 0x0A;
-                default_back_color_ = 0x00;
-            }
+        CONSOLE_SCREEN_BUFFER_INFO info;
+        if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info)) {
+            default_color_      = 0x0A;
+            default_back_color_ = 0x00;
+        } else {
             default_color_      = 0x0F & info.wAttributes;
             default_back_color_ = 0xF0 & info.wAttributes;
+
+            global_col_num_     = info.dwSize.X;
+            global_row_num_     = info.dwSize.Y;
+        }
 #else
         std::ios_base::sync_with_stdio(false);
         std::wcout.imbue(std::locale(""));
 
         winsize wsize {};
         if (ioctl(STDIN_FILENO, TIOCGWINSZ, (char *)&wsize) != -1) {
-            global_row_num_ = wsize.ws_row;
             global_col_num_ = wsize.ws_col;
+            global_row_num_ = wsize.ws_row;
         }
 #endif
         Console::ShowCursor(false);
@@ -404,8 +410,8 @@ public:
 private:
     static uint         global_h_pos_;
     static uint         global_v_pos_;
-    static uint         global_row_num_;
     static uint         global_col_num_;
+    static uint         global_row_num_;
     static ConsoleState global_state_;
 #ifdef WINDOWS
     static short        default_color_;
@@ -415,12 +421,12 @@ private:
 
 uint         Console::global_h_pos_   = 0;
 uint         Console::global_v_pos_   = 0;
-uint         Console::global_row_num_ = 0;
 uint         Console::global_col_num_ = 0;
+uint         Console::global_row_num_ = 0;
 ConsoleState Console::global_state_;
 #ifdef WINDOWS
-short        IWConsole::default_color_      = 0;
-short        IWConsole::default_back_color_ = 0;
+short        Console::default_color_      = 0;
+short        Console::default_back_color_ = 0;
 #endif
 
 } // namespace WConsole
