@@ -53,6 +53,10 @@ protected:
 
     virtual ~IHeader() = default;
 
+    void SetHeaderSize(const uint header_size) noexcept {
+        header_size_ = header_size;
+    }
+
     uint GetHeaderSize() const noexcept {
         return header_size_;
     }
