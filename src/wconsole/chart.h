@@ -81,11 +81,6 @@ public:
         }
     }
 
-protected:
-    uint HeaderSize() const noexcept override {
-        return GetHeaderSize();
-    }
-
 private:
     enum class BrickCode : wchar_t {
         FF_OP100_ = 0x2588, // upper full,  last full,  opacity 100%
@@ -102,6 +97,10 @@ private:
     ChartType          chart_type_;
     std::vector<Color> colors_;
     BrickCode          brick_;
+
+    uint HeaderSize() const noexcept override {
+        return GetHeaderSize();
+    }
 
     void WriteBricksToBuff(std::wstring & buff, const BrickCode brick, const uint number = 1) const noexcept {
         for (uint i = 0; i < number; ++i) {

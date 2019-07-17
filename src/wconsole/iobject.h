@@ -89,8 +89,6 @@ protected:
         --object_counter_;
     }
 
-    virtual uint HeaderSize() const noexcept = 0;
-
 private:
     static int object_counter_;
 
@@ -103,6 +101,8 @@ private:
         // Call PrintObject() in derived objects
         object->PrintObject(data ...);
     }
+
+    virtual uint HeaderSize() const noexcept = 0;
 };
 
 int IObject::object_counter_ = 0;
