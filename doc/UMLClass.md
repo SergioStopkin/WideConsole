@@ -1,7 +1,7 @@
 ```plantuml
 @startuml
 
-scale 1600 width
+scale 1920 width
 
 hide empty members
 
@@ -19,7 +19,7 @@ class Graph <<final>>
 class Text <<final>>
 class Font <<final>>
 
-Console <. IObject
+Console <.. IObject
 Console <... Chart
 Console <... Graph
 Console <... Text
@@ -40,7 +40,7 @@ IGrid <|--- Graph
 IPrecisionP1 <|--- Chart
 IPrecisionP2 <|--- Graph
 
-Font         <-* Text
+Font <-* Text
 
 }
 
