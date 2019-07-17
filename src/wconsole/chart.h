@@ -99,7 +99,7 @@ private:
     BrickCode          brick_;
 
     uint HeaderSize() const noexcept override {
-        return GetHeaderSize();
+        return ((chart_type_ == ChartType::Pie) ? (2 * GetHeaderSize()) : GetHeaderSize());
     }
 
     void WriteBricksToBuff(std::wstring & buff, const BrickCode brick, const uint number = 1) const noexcept {
