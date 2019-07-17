@@ -45,18 +45,25 @@ protected:
     DataPosition data_pos_;
 
     explicit IHeader(const bool         is_data_header = true,
-                     const DataPosition data_position  = DataPosition::Center)
+                     const DataPosition data_position  = DataPosition::Center,
+                     const uint         header_size    = 0)
                    : is_data_header_(is_data_header),
-                     data_pos_      (data_position) {}
+                     data_pos_      (data_position),
+                     header_size_   (header_size) {}
 
     virtual ~IHeader() = default;
+
+    uint GetHeaderSize() const noexcept {
+        return header_size_;
+    }
 
     template <typename T>
     void WriteDataToBuff(std::wstring & buff,
                          T              value,
                          uint           alignment,
-                         int            precision) const noexcept {
+                         int            precision) noexcept {
         std::wstring wvalue;
+        header_size_ = alignment;
 
         if (typeid(value) == typeid(float)
             || typeid(value) == typeid(double)
@@ -93,6 +100,9 @@ protected:
             buff.append(diff, ' ');
         }
     }
+
+private:
+    uint header_size_;
 };
 
 } // namespace WConsole

@@ -89,6 +89,8 @@ protected:
         --object_counter_;
     }
 
+    virtual uint HeaderSize() const noexcept = 0;
+
 private:
     static int object_counter_;
 
@@ -96,7 +98,7 @@ private:
     void PrintHost(const O    &     object,
                    const ARGS & ... data) {
         // Pre-processing
-        Console::PreProcessing(horizontal_size_);
+        Console::PreProcessing(horizontal_size_, HeaderSize());
 
         // Call PrintObject() in derived objects
         object->PrintObject(data ...);

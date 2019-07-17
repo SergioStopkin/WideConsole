@@ -149,6 +149,11 @@ public:
 //        h_global_pos_ += str.length();
     }
 
+protected:
+    uint HeaderSize() const noexcept override {
+        return 0;
+    }
+
 private:
     Font font_;
 };

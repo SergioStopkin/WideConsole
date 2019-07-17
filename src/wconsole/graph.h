@@ -267,6 +267,11 @@ public:
         Console::Print(buff);
     }
 
+protected:
+    uint HeaderSize() const noexcept override {
+        return GetHeaderSize();
+    }
+
 private:
     wchar_t point_;
     Color   point_color_;

@@ -347,8 +347,8 @@ public:
 #endif
     }
 
-    static void PreProcessing(const uint horizontal_size) noexcept {
-        if (global_col_num_ > 0 && (global_h_pos_ + horizontal_size) > global_col_num_) {
+    static void PreProcessing(const uint horizontal_size, const uint header_size) noexcept {
+        if (global_col_num_ > 0 && (global_h_pos_ + horizontal_size + header_size) > global_col_num_) {
             NewLine();
         }
     }

@@ -81,6 +81,11 @@ public:
         }
     }
 
+protected:
+    uint HeaderSize() const noexcept override {
+        return GetHeaderSize();
+    }
+
 private:
     enum class BrickCode : wchar_t {
         FF_OP100_ = 0x2588, // upper full,  last full,  opacity 100%
