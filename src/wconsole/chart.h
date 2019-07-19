@@ -49,7 +49,8 @@ public:
     explicit Chart(const ChartType type    = ChartType::Column,
                    const Opacity   opacity = Opacity::OP_100)
                  : IObject    (ObjectType::Chart, 4, 6),
-                   chart_type_(type) {
+                   chart_type_(type),
+                   brick_     (BrickCode::FF_OP100_) {
         SetOpacity(opacity);
         // Default colors
         SetChartColors({Color::Red, Color::Yellow, Color::Black});
@@ -82,6 +83,9 @@ public:
     }
 
 private:
+    typedef std::vector<std::pair<std::pair<  uint,   uint>,
+                                  std::pair<double, double>>> sort_t;
+
     enum class BrickCode : wchar_t {
         FF_OP100_ = 0x2588, // upper full,  last full,  opacity 100%
         FF_OP75_  = 0x2593, // upper full,  last full,  opacity 75%
@@ -108,16 +112,19 @@ private:
         }
     }
 
-    wchar_t GetOuterBrick(const double hs,
+    wchar_t GetOuterBrick(std::wstring & buff,
+                          const double hs,
                           const double vs,
                           const double h_center,
                           const double v_center,
                           const double h_step,
                           const double v_step,
                           const double real_x,
-                          const double real_y) const noexcept {
+                          const double real_y) noexcept {
         BrickCode brick    = BrickCode::FF_OP100_;
         uint      quadrant = 0;
+
+//        buff.append(L"*");
 
         if (real_x > h_center && real_y > v_center) {
             quadrant = 1;
@@ -133,18 +140,19 @@ private:
 //            return L'4';
         }
 
+//        buff.append(L"[" + std::to_wstring(quadrant) + L"]");
+
+//        const double coef = 0.4;
         const double coef = 0.4;
         if (quadrant == 1 || quadrant == 2) {
-            if ((real_y - vs) > coef) {
-                brick = BrickCode::FF_OP100_;
-            } else {
+            if ((real_y - vs) <= coef) {
                 brick = BrickCode::SF_;
+//                WriteDataToBuff(buff, (real_y - vs), 1, 1);
             }
         } else if (quadrant == 3 || quadrant == 4) {
             if ((1 - (real_y - vs)) < coef) {
                 brick = BrickCode::SFI_;
-            } else {
-                brick = BrickCode::FF_OP100_;
+//                WriteDataToBuff(buff, 1 - (real_y - vs), 1, 1);
             }
         }
 
@@ -539,10 +547,8 @@ private:
             }
         }
 
-        std::vector<std::pair<std::pair<  uint,   uint>,
-                              std::pair<double, double>>> sort_coord;
-        std::vector<std::pair<std::pair<  uint,   uint>,
-                              std::pair<double, double>>> sort_header;
+        sort_t sort_coord;
+        sort_t sort_header;
 
         if (!is_data_empty) {
             for (const auto & coord_pair : coord) {
@@ -564,9 +570,7 @@ private:
             }
 
             // Sort coordinates by second value in pair
-            std::sort(sort_coord.begin(), sort_coord.end(), [](const auto & left, const auto & right) {
-                return (left.first.second > right.first.second || (left.first.second == right.first.second && left.first.first < right.first.first));
-            });
+            Sort(sort_coord);
 
             if (is_data_header_) {
                 for (const auto & coord_pair : header_coord) {
@@ -588,9 +592,7 @@ private:
                 }
 
                 // Sort header coordinates by second value in pair
-                std::sort(sort_header.begin(), sort_header.end(), [](const auto & left, const auto & right) {
-                    return (left.first.second > right.first.second || (left.first.second == right.first.second && left.first.first < right.first.first));
-                });
+                Sort(sort_header);
             }
         }
 
@@ -692,13 +694,14 @@ private:
                         Console::WriteColorToBuff(buff, colors_[index % colors_.size()]);
                     }
 
-                    buff += GetOuterBrick(hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
+                    buff += GetOuterBrick(buff, hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
                     v_prev = vi;
                     ++coord_iterator;
                 } else if ((coord_iterator != sort_coord.end() && vi == v_prev && hi >= h_first && hi <= coord_iterator->first.first)
                     && (index = GetPieIndex(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1) {
                     Console::WriteColorToBuff(buff, colors_[index % colors_.size()]);
-                    buff += (wchar_t)brick_;
+//                    buff += (wchar_t)brick_;
+                    buff += L'#';
                 } else {
                     buff += L' ';
                 }
@@ -713,6 +716,12 @@ private:
         Console::WriteColorToBuff(buff, Color::Default);
         buff += L'\n';
         Console::Print(buff);
+    }
+
+    void Sort(sort_t & data) const noexcept {
+        std::sort(data.begin(), data.end(), [](const auto & left, const auto & right) {
+            return (left.first.second > right.first.second || (left.first.second == right.first.second && left.first.first < right.first.first));
+        });
     }
 }; // class Chart
 
