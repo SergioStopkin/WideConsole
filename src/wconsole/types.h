@@ -44,17 +44,17 @@ enum class Color : uchar {
     BrightDefault
 };
 
-struct ConsoleState {
+struct ConsoleView {
     Color foreground;
     Color background;
     bool  is_inverse;
     bool  is_underline;
 
-    ConsoleState()
-               : foreground  (Color::Default),
-                 background  (Color::Default),
-                 is_inverse  (false),
-                 is_underline(false) {
+    ConsoleView()
+              : foreground  (Color::Default),
+                background  (Color::Default),
+                is_inverse  (false),
+                is_underline(false) {
     }
 };
 

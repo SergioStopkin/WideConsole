@@ -96,7 +96,7 @@ public:
 
     static void ChangeColor(const Color color, const bool is_foreground = true) noexcept {
 //        std::wcout << "Color:  " << (int)color << " / " << (int)global_state_.foreground<< std::endl;
-        if ((is_foreground && color != global_state_.foreground) || (!is_foreground && color != global_state_.background)) {
+        if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
             switch (color) {
 //                case Color::Normal:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);                                                          break;
@@ -152,16 +152,16 @@ public:
             }
 #endif
             if (is_foreground) {
-                global_state_.foreground = color;
+                global_view_.foreground = color;
             } else {
-                global_state_.background = color;
+                global_view_.background = color;
             }
         }
     }
 
     static void WriteColorToBuff(std::wstring & buff, const Color color, const bool is_foreground = true) noexcept {
 //        std::wcout << "Color:  " << (int)color << " / " << (int)foreground_color_<< std::endl;
-        if ((is_foreground && color != global_state_.foreground) || (!is_foreground && color != global_state_.background)) {
+        if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
             Print(buff);
             ChangeColor(color);
@@ -189,9 +189,9 @@ public:
             }
 #endif
             if (is_foreground) {
-                global_state_.foreground = color;
+                global_view_.foreground = color;
             } else {
-                global_state_.background = color;
+                global_view_.background = color;
             }
         }
     }
@@ -242,14 +242,14 @@ public:
         }
     }
 
-    static void WriteStateToBuff(std::wstring & buff, const ConsoleState & state) noexcept {
+    static void WriteStateToBuff(std::wstring & buff, const ConsoleView & view) noexcept {
         buff += L"\e[";
 
-        if (state.foreground == Color::Default || state.background == Color::Default || state.background == Color::BrightDefault) {
+        if (view.foreground == Color::Default || view.background == Color::Default || view.background == Color::BrightDefault) {
             buff += L"0;";
         }
 
-        switch (state.foreground) {
+        switch (view.foreground) {
             case Color::Black:         buff += L"21;30"; break;
             case Color::Red:           buff += L"21;31"; break;
             case Color::Green:         buff += L"21;32"; break;
@@ -270,7 +270,7 @@ public:
             default: break;
         }
 
-        switch (state.background) {
+        switch (view.background) {
             case Color::Black:         buff += L";40"; break;
             case Color::Red:           buff += L";41"; break;
             case Color::Green:         buff += L";42"; break;
@@ -290,13 +290,13 @@ public:
             default: break;
         }
 
-        if (state.is_underline) {
+        if (view.is_underline) {
             buff += L";4";
         } else {
             buff += L";24";
         }
 
-        if (state.is_inverse) {
+        if (view.is_inverse) {
             buff += L";7";
         } else {
             buff += L";27";
@@ -408,11 +408,11 @@ public:
 
 
 private:
-    static uint         global_h_pos_;
-    static uint         global_v_pos_;
-    static uint         global_col_num_;
-    static uint         global_row_num_;
-    static ConsoleState global_state_;
+    static uint        global_h_pos_;
+    static uint        global_v_pos_;
+    static uint        global_col_num_;
+    static uint        global_row_num_;
+    static ConsoleView global_view_;
 #ifdef WINDOWS
     static short        default_color_;
     static short        default_back_color_;
@@ -423,7 +423,7 @@ uint         Console::global_h_pos_   = 0;
 uint         Console::global_v_pos_   = 0;
 uint         Console::global_col_num_ = 0;
 uint         Console::global_row_num_ = 0;
-ConsoleState Console::global_state_;
+ConsoleView  Console::global_view_;
 #ifdef WINDOWS
 short        Console::default_color_      = 0;
 short        Console::default_back_color_ = 0;

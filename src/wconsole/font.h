@@ -39,10 +39,10 @@ enum class FontType : uchar {
 
 class Font final {
 public:
-    explicit Font(const FontType     & font_type = FontType::Monospace,
-                  const ConsoleState & state     = ConsoleState())
-        : font_type_(font_type),
-          state_    (state) {
+    explicit Font(const FontType    & font_type = FontType::Monospace,
+                  const ConsoleView & view      = ConsoleView())
+                : font_type_(font_type),
+                  view_     (view) {
     }
 
     void SetFontType(const FontType & font_type) noexcept {
@@ -50,32 +50,32 @@ public:
     }
 
     void SetForegroundColor(const Color & color) noexcept {
-        state_.foreground = color;
+        view_.foreground = color;
     }
 
     void SetBackgroundColor(const Color & color) noexcept {
-        state_.background = color;
+        view_.background = color;
     }
 
     void SetInverseColor(const bool is_inverse) noexcept {
-        state_.is_inverse = is_inverse;
+        view_.is_inverse = is_inverse;
     }
 
     void SetUnderline(const bool is_underline) noexcept {
-        state_.is_underline = is_underline;
+        view_.is_underline = is_underline;
     }
 
     FontType GetFontType() const noexcept {
         return font_type_;
     }
 
-    ConsoleState GetConsoleState() const noexcept {
-        return state_;
+    ConsoleView GetConsoleState() const noexcept {
+        return view_;
     }
 
 private:
-    FontType     font_type_;
-    ConsoleState state_;
+    FontType    font_type_;
+    ConsoleView view_;
 };
 
 } // namespace WConsole
