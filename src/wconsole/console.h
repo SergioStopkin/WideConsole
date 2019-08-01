@@ -54,8 +54,8 @@ class Console {
 public:
     static void NewLine() noexcept {
         Print("\n");
-        global_h_pos_ = 0;
-        global_v_pos_ = 0;
+        global_state_.h_pos = 0;
+        global_state_.v_pos = 0;
     }
 
     /*void NewLineInBlock() noexcept {
@@ -72,8 +72,8 @@ public:
 #else
         Print("\ec");
 #endif
-        global_h_pos_ = 0;
-        global_v_pos_ = 0;
+        global_state_.h_pos = 0;
+        global_state_.v_pos = 0;
     }
 
     /*void ClearLast() noexcept {
@@ -95,8 +95,7 @@ public:
     Console() = delete;
 
     static void ChangeColor(const Color color, const bool is_foreground = true) noexcept {
-//        std::wcout << "Color:  " << (int)color << " / " << (int)global_state_.foreground<< std::endl;
-        if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
+        if ((is_foreground && color != global_state_.view.foreground) || (!is_foreground && color != global_state_.view.background)) {
 #ifdef WINDOWS
             switch (color) {
 //                case Color::Normal:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);                                                          break;
@@ -152,16 +151,15 @@ public:
             }
 #endif
             if (is_foreground) {
-                global_view_.foreground = color;
+                global_state_.view.foreground = color;
             } else {
-                global_view_.background = color;
+                global_state_.view.background = color;
             }
         }
     }
 
     static void WriteColorToBuff(std::wstring & buff, const Color color, const bool is_foreground = true) noexcept {
-//        std::wcout << "Color:  " << (int)color << " / " << (int)foreground_color_<< std::endl;
-        if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
+        if ((is_foreground && color != global_state_.view.foreground) || (!is_foreground && color != global_state_.view.background)) {
 #ifdef WINDOWS
             Print(buff);
             ChangeColor(color);
@@ -189,9 +187,9 @@ public:
             }
 #endif
             if (is_foreground) {
-                global_view_.foreground = color;
+                global_state_.view.foreground = color;
             } else {
-                global_view_.background = color;
+                global_state_.view.background = color;
             }
         }
     }
@@ -348,25 +346,25 @@ public:
     }
 
     static void PreProcessing(const uint horizontal_size, const uint header_size) noexcept {
-        if (global_col_num_ > 0 && (global_h_pos_ + horizontal_size + header_size) > global_col_num_) {
+        if (global_state_.col_num > 0 && (global_state_.h_pos + horizontal_size + header_size) > global_state_.col_num) {
             NewLine();
         }
     }
 
     static const uint GlobalHPos() noexcept {
-        return global_h_pos_;
+        return global_state_.h_pos;
     }
 
     static const uint GlobalVPos() noexcept {
-        return global_v_pos_;
+        return global_state_.v_pos;
     }
 
     static void GlobalHPos(const uint h_pos) noexcept {
-        global_h_pos_ = h_pos;
+        global_state_.h_pos = h_pos;
     }
 
     static void GlobalVPos(const uint v_pos) noexcept {
-        global_v_pos_ = v_pos;
+        global_state_.v_pos = v_pos;
     }
 
     static void Start() noexcept {
@@ -381,8 +379,8 @@ public:
             default_color_      = 0x0F & info.wAttributes;
             default_back_color_ = 0xF0 & info.wAttributes;
 
-            global_col_num_     = info.dwSize.X;
-            global_row_num_     = info.dwSize.Y;
+            global_state_.col_num = info.dwSize.X;
+            global_state_.row_num = info.dwSize.Y;
         }
 #else
         std::ios_base::sync_with_stdio(false);
@@ -390,8 +388,8 @@ public:
 
         winsize wsize {};
         if (ioctl(STDIN_FILENO, TIOCGWINSZ, (char *)&wsize) != -1) {
-            global_col_num_ = wsize.ws_col;
-            global_row_num_ = wsize.ws_row;
+            global_state_.col_num = wsize.ws_col;
+            global_state_.row_num = wsize.ws_row;
         }
 #endif
         Console::ShowCursor(false);
@@ -406,24 +404,15 @@ public:
 #endif
     }
 
-
 private:
-    static uint        global_h_pos_;
-    static uint        global_v_pos_;
-    static uint        global_col_num_;
-    static uint        global_row_num_;
-    static ConsoleView global_view_;
+    static ConsoleState global_state_;
 #ifdef WINDOWS
     static short        default_color_;
     static short        default_back_color_;
 #endif
 };
 
-uint         Console::global_h_pos_   = 0;
-uint         Console::global_v_pos_   = 0;
-uint         Console::global_col_num_ = 0;
-uint         Console::global_row_num_ = 0;
-ConsoleView  Console::global_view_;
+ConsoleState Console::global_state_;
 #ifdef WINDOWS
 short        Console::default_color_      = 0;
 short        Console::default_back_color_ = 0;
