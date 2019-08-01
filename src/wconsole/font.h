@@ -69,7 +69,7 @@ public:
         return font_type_;
     }
 
-    ConsoleView GetConsoleState() const noexcept {
+    ConsoleView GetConsoleView() const noexcept {
         return view_;
     }
 
