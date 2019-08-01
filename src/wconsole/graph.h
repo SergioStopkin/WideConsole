@@ -69,8 +69,7 @@ class Graph final : public IObject, public IHeader, public IRange, public IGrid,
 public:
     explicit Graph(const Point point       = Point::Dot,
                    const Color point_color = Color::BrightRed)
-                 : IObject     (ObjectType::Graph),
-                   IHeader     (true, DataPosition::Left),
+                 : IHeader     (true, DataPosition::Left),
                    IRange      (-10, 10, -10, 10),
                    point_      ((wchar_t)point),
                    point_color_(point_color) {
@@ -86,6 +85,9 @@ public:
 
     template <typename T>
     void PrintObject(const std::vector<std::pair<T, T>> & data) {
+        // Pre-processing
+        Console::PreProcessing(horizontal_size_, HeaderSize());
+
         const double h_step        = (h_max_ - h_min_) / (double)(horizontal_size_ - 1);
         const double v_step        = (v_max_ - v_min_) / (double)(vertical_size_   - 1);
         const auto   v_alignment   = (uint)(std::max(std::to_string((int)v_min_).size(), std::to_string((int)v_max_).size())

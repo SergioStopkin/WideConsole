@@ -48,7 +48,7 @@ class Chart final : public IObject, public IHeader, public IRange, public IGrid,
 public:
     explicit Chart(const ChartType type    = ChartType::Column,
                    const Opacity   opacity = Opacity::OP_100)
-                 : IObject    (ObjectType::Chart, 4, 6),
+                 : IObject    (4, 6),
                    chart_type_(type),
                    brick_     (BrickCode::FF_OP100_) {
         SetOpacity(opacity);
@@ -75,6 +75,9 @@ public:
 
     template <typename T>
     void PrintObject(const std::vector<T> & data) {
+        // Pre-processing
+        Console::PreProcessing(horizontal_size_, HeaderSize());
+
         switch (chart_type_) {
             case ChartType::Column: PrintColumnChart(data); break;
             case ChartType::Bar:    PrintBarChart(data);    break;
@@ -697,11 +700,13 @@ private:
                     buff += GetOuterBrick(buff, hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
                     v_prev = vi;
                     ++coord_iterator;
+                } else if (coord_iterator != sort_coord.end() && hi == coord_iterator->first.first && vi == coord_iterator->first.second) {
                 } else if ((coord_iterator != sort_coord.end() && vi == v_prev && hi >= h_first && hi <= coord_iterator->first.first)
                     && (index = GetPieIndex(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1) {
                     Console::WriteColorToBuff(buff, colors_[index % colors_.size()]);
 //                    buff += (wchar_t)brick_;
-                    buff += L'#';
+                    buff += GetOuterBrick(buff, hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
+//                    buff += L'#';
                 } else {
                     buff += L' ';
                 }
@@ -723,7 +728,7 @@ private:
             return (left.first.second > right.first.second || (left.first.second == right.first.second && left.first.first < right.first.first));
         });
     }
-}; // class Chart
+};
 
 } // namespace WConsole
 

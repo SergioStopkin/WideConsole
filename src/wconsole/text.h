@@ -29,8 +29,7 @@ namespace WConsole {
 class Text final : public IObject {
 public:
     explicit Text(const FontType & font_type = FontType::Monospace)
-                : IObject(ObjectType::Text),
-                  font_  (font_type) {
+                : font_  (font_type) {
     }
 
     void SetColor(const Color & color) noexcept {
