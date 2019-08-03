@@ -95,7 +95,7 @@ public:
     Console() = delete;
 
     static void ChangeColor(const Color color, const bool is_foreground = true) noexcept {
-        if ((is_foreground && color != global_state_.view.foreground) || (!is_foreground && color != global_state_.view.background)) {
+        if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
             switch (color) {
 //                case Color::Normal:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);                                                          break;
@@ -151,15 +151,15 @@ public:
             }
 #endif
             if (is_foreground) {
-                global_state_.view.foreground = color;
+                global_view_.foreground = color;
             } else {
-                global_state_.view.background = color;
+                global_view_.background = color;
             }
         }
     }
 
     static void WriteColorToBuff(std::wstring & buff, const Color color, const bool is_foreground = true) noexcept {
-        if ((is_foreground && color != global_state_.view.foreground) || (!is_foreground && color != global_state_.view.background)) {
+        if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
             Print(buff);
             ChangeColor(color);
@@ -187,9 +187,9 @@ public:
             }
 #endif
             if (is_foreground) {
-                global_state_.view.foreground = color;
+                global_view_.foreground = color;
             } else {
-                global_state_.view.background = color;
+                global_view_.background = color;
             }
         }
     }
@@ -406,6 +406,7 @@ public:
 
 private:
     static ConsoleState global_state_;
+    static ConsoleView  global_view_;
 #ifdef WINDOWS
     static short        default_color_;
     static short        default_back_color_;
@@ -413,6 +414,7 @@ private:
 };
 
 ConsoleState Console::global_state_;
+ConsoleView  Console::global_view_;
 #ifdef WINDOWS
 short        Console::default_color_      = 0;
 short        Console::default_back_color_ = 0;
