@@ -351,11 +351,11 @@ public:
         }
     }
 
-    static const uint GlobalHPos() noexcept {
+    static uint GlobalHPos() noexcept {
         return global_state_.h_pos;
     }
 
-    static const uint GlobalVPos() noexcept {
+    static uint GlobalVPos() noexcept {
         return global_state_.v_pos;
     }
 
