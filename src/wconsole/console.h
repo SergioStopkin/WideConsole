@@ -50,7 +50,7 @@ enum class Position : uchar {
     Left
 };
 
-class Console {
+class Console final {
 public:
     static void NewLine() noexcept {
         Print("\n");
