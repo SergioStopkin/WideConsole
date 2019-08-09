@@ -13,7 +13,7 @@ abstract class IObject
 abstract class IPrecisionP1
 abstract class IPrecisionP2
 abstract class IRange
-class Console <<(S,#FFFF00)static>>
+class Console <<(S,#FFFF00)static final>>
 class Chart <<final>>
 class Graph <<final>>
 class Text <<final>>
