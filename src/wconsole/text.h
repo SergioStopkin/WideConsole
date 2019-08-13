@@ -60,7 +60,7 @@ public:
 
 //        ChangeColor(color_);
 //        Print(s);
-        Console::WriteStateToBuff(buff, font_.GetConsoleView());
+        Console::WriteViewToBuff(buff, font_.GetConsoleView());
         Console::Print(buff);
         Console::Print(s);
         Console::GlobalHPos(0);
@@ -86,7 +86,7 @@ public:
 //        std::wstring shift_pos = L"\e[0;0H";
 //        buff += shift_pos;
 
-        Console::WriteStateToBuff(buff, font.GetConsoleView());
+        Console::WriteViewToBuff(buff, font.GetConsoleView());
 
         for (auto & wc : str) {
             if (font.GetFontType() == FontType::FullWidth && wc >= 0x21 && wc <= 0x7E) {

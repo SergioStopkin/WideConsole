@@ -240,7 +240,7 @@ public:
         }
     }
 
-    static void WriteStateToBuff(std::wstring & buff, const ConsoleView & view) noexcept {
+    static void WriteViewToBuff(std::wstring & buff, const ConsoleView & view) noexcept {
         buff += L"\e[";
 
         if (view.foreground == Color::Default || view.background == Color::Default || view.background == Color::BrightDefault) {
