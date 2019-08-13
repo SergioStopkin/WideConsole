@@ -23,6 +23,7 @@
 namespace WConsole {
 
 enum class FontType : uchar {
+    Default,
     Serif,
     SerifItal,
     SerifBold,
@@ -39,7 +40,7 @@ enum class FontType : uchar {
 
 class Font final {
 public:
-    explicit Font(const FontType    & font_type = FontType::Monospace,
+    explicit Font(const FontType    & font_type = FontType::Default,
                   const ConsoleView & view      = ConsoleView())
                 : font_type_(font_type),
                   view_     (view) {
