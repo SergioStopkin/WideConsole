@@ -20,8 +20,8 @@
 
 namespace WConsole {
 
-typedef unsigned char uchar;
-typedef unsigned int  uint;
+using uchar = unsigned char;
+using uint  = unsigned int;
 
 enum class Color : uchar {
     Black,
