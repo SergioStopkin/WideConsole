@@ -37,6 +37,7 @@
 #include <unistd.h>
 #endif
 
+#include <algorithm>
 #include <string>
 
 #include "types.h"
@@ -53,9 +54,11 @@ enum class Position : uchar {
 class Console final {
 public:
     static void NewLine() noexcept {
+        ChangePosition(Position::Down, global_state_.max_v_pos - global_state_.v_pos);
         Print("\n");
-        global_state_.h_pos = 0;
-        global_state_.v_pos = 0;
+        global_state_.h_pos     = 0;
+        global_state_.v_pos     = 0;
+        global_state_.max_v_pos = 0;
     }
 
     /*void NewLineInBlock() noexcept {
@@ -365,6 +368,7 @@ public:
 
     static void GlobalVPos(const uint v_pos) noexcept {
         global_state_.v_pos = v_pos;
+        global_state_.max_v_pos = std::max(v_pos, global_state_.max_v_pos);
     }
 
     static void Start() noexcept {
