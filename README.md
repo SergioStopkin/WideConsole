@@ -35,7 +35,7 @@ C++ 14
 
 ## Platforms
 
-<img height=48 src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img height=43 src="https://upload.wikimedia.org/wikipedia/commons/d/df/Apple-Apple.svg"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img height=40 src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/1024px-Windows_logo_-_2012.svg.png">
+<img height=48 src="./doc/img/tux-logo.svg"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img height=43 src="./doc/img/apple-logo.svg"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img height=40 src="./doc/img/windows-logo.png">
 
 Linux &nbsp;&nbsp;&nbsp;&nbsp; macOS &nbsp;&nbsp;&nbsp;&nbsp; Windows
 
@@ -70,7 +70,7 @@ See the [INTERFACE.md](./doc/INTERFACE.md) file for more details.
 
 ## License
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/GPLv3_Logo.svg" height=80></img>
+<img src="./doc/img/gplv3-logo.svg" height=80></img>
 
 GNU General Public License version 3 or any later version. See the [COPYING](./COPYING) file for details.
 

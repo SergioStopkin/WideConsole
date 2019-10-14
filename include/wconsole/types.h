@@ -61,14 +61,16 @@ struct ConsoleView {
 struct ConsoleState {
     uint h_pos;
     uint v_pos;
+    uint max_v_pos;
     uint col_num;
     uint row_num;
 
     ConsoleState()
-               : h_pos  (0),
-                 v_pos  (0),
-                 col_num(0),
-                 row_num(0) {
+               : h_pos    (0),
+                 v_pos    (0),
+                 max_v_pos(0),
+                 col_num  (0),
+                 row_num  (0) {
     }
 };
 
