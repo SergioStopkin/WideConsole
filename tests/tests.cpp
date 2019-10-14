@@ -15,6 +15,18 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace WConsole {
+#include <sstream>
 
-} // namespace WConsole
+#include "wconsole/chart.h"
+#include "wconsole/graph.h"
+#include "wconsole/text.h"
+
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+
+namespace {
+    using namespace WConsole;
+} // namespace
+
+TEST_CASE("Size", "[size]") {
+}
