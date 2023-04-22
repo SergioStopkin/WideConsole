@@ -1,8 +1,5 @@
-cmake_minimum_required(VERSION 3.12)
-project(WConsole)
+#set(TARGET ${PROJECT_NAME})
+set(TARGET wconsole)
 
-set(CMAKE_CXX_STANDARD 14)
-
-add_executable(wconsole main.cpp)
-
-target_include_directories(wconsole PUBLIC ${CMAKE_HOME_DIRECTORY}/include)
+add_executable(${TARGET} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+target_include_directories(${TARGET} PUBLIC ${CMAKE_HOME_DIRECTORY}/include)

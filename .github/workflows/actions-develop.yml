@@ -1,0 +1,45 @@
+name: Develop
+
+on: [push, pull_request]
+
+jobs:
+  Main-Pipeline:
+    if:       github.ref != 'refs/heads/release'
+    runs-on:  ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Dependencies
+        run:  |
+              sudo apt-get install -y \
+                flatpak \
+                libgtest-dev \
+                cmake-format \
+                clang-tidy \
+                cppcheck \
+                lcov
+
+      - name: Format Check
+        run:  ${{github.workspace}}/format-check.sh
+
+      - name: CppCheck
+        run:  ${{github.workspace}}/cppcheck.sh
+
+      - name: Build Develop
+        run:  ${{github.workspace}}/build.sh dev
+
+      - name: Run with ASAN
+        run:  ${{github.workspace}}/run-asan.sh
+
+      - name: Clang Tidy
+        run:  ${{github.workspace}}/clang-tidy.sh
+
+      - name: Build Tests
+        run:  ${{github.workspace}}/build.sh test
+
+      - name: Run Tests
+        run:  ${{github.workspace}}/run-tests.sh
+
+      - name: Unit Tests Coverage
+        run:  ${{github.workspace}}/unit-tests-coverage.sh

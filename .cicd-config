@@ -1,0 +1,16 @@
+#!/bin/bash
+
+BUILD_DIR_DEV=cmake-build-develop
+BUILD_DIR_REL=cmake-build-release
+TARGET_SRC=wconsole
+TARGET_TEST="unit-tests component-tests"
+
+SOURCE_FILES=$(find -regex '.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$' -path './src/*')
+TEST_FILES=$(find -regex '.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$' -path './test/*')
+CMAKE_FILES=$(find \( -type f -iname CMakeLists.txt -o -iname *.cmake \) -not -path './cmake-build-*')
+
+CPPCHECK_SOURCE_DIR="src test"
+
+COV_MIN_LIMIT=50.0%
+COV_SOURCE_DIR=test/unit
+COV_RESULT_DIR=result-coverage

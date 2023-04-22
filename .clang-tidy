@@ -1,0 +1,6 @@
+---
+Checks:             '*, -llvmlibc-*, -modernize-use-trailing-return-type, -llvm-header-guard'
+WarningsAsErrors:   '*'
+FormatStyle:        webkit
+UseColor:           true
+...
