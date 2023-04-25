@@ -5,7 +5,7 @@ BUILD_DIR_REL=cmake-build-release
 TARGET_SRC=wconsole
 TARGET_TEST="unit-tests component-tests"
 
-SOURCE_FILES=$(find -regex '.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$' -path './src/*')
+SOURCE_FILES=$(find -regex '.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$' -path './include/*')
 TEST_FILES=$(find -regex '.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$' -path './test/*')
 CMAKE_FILES=$(find \( -type f -iname CMakeLists.txt -o -iname *.cmake \) -not -path './cmake-build-*')
 
