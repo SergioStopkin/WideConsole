@@ -101,56 +101,60 @@ public:
         if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
             switch (color) {
-//                case Color::Normal:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);                                                          break;
-//                case Color::Red:     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);                                             break;
-//                case Color::Green:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);                                           break;
-//                case Color::Blue:    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);                                            break;
-//                case Color::Magenta: SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED   | FOREGROUND_BLUE);                         break;
-//                case Color::Yellow:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED   | FOREGROUND_GREEN | FOREGROUND_INTENSITY); break;
-//                case Color::Cyan:    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_BLUE  | FOREGROUND_INTENSITY); break;
-//                case Color::White:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED   | FOREGROUND_GREEN | FOREGROUND_BLUE);      break;
+            // clang-format off
+            // case Color::Normal:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);                                                          break;
+            // case Color::Red:     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);                                             break;
+            // case Color::Green:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);                                           break;
+            // case Color::Blue:    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);                                            break;
+            // case Color::Magenta: SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED   | FOREGROUND_BLUE);                         break;
+            // case Color::Yellow:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED   | FOREGROUND_GREEN | FOREGROUND_INTENSITY); break;
+            // case Color::Cyan:    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_BLUE  | FOREGROUND_INTENSITY); break;
+            // case Color::White:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED   | FOREGROUND_GREEN | FOREGROUND_BLUE);      break;
 
-                case Color::Black:         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x00); break;
-                case Color::Blue:          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x01); break;
-                case Color::Green:         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x02); break;
-                case Color::Cyan:          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03); break;
-                case Color::Red:           SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x04); break;
-                case Color::Magenta:       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x05); break;
-                case Color::Yellow:        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x06); break;
-                case Color::White:         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07); break;
+            case Color::Black:         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x00); break;
+            case Color::Blue:          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x01); break;
+            case Color::Green:         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x02); break;
+            case Color::Cyan:          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03); break;
+            case Color::Red:           SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x04); break;
+            case Color::Magenta:       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x05); break;
+            case Color::Yellow:        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x06); break;
+            case Color::White:         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07); break;
 
-                case Color::BrightBlack:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x08); break;
-                case Color::BrightBlue:    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x09); break;
-                case Color::BrightGreen:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0A); break;
-                case Color::BrightCyan:    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0B); break;
-                case Color::BrightRed:     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C); break;
-                case Color::BrightMagenta: SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0D); break;
-                case Color::BrightYellow:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0E); break;
-                case Color::BrightWhite:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0F); break;
+            case Color::BrightBlack:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x08); break;
+            case Color::BrightBlue:    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x09); break;
+            case Color::BrightGreen:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0A); break;
+            case Color::BrightCyan:    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0B); break;
+            case Color::BrightRed:     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C); break;
+            case Color::BrightMagenta: SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0D); break;
+            case Color::BrightYellow:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0E); break;
+            case Color::BrightWhite:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0F); break;
 
-                case Color::Default:       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color_); break;
-                case Color::BrightDefault: SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color_); break;
+            case Color::Default:       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color_); break;
+            case Color::BrightDefault: SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color_); break;
+            // clang-format on
             }
 #else
             switch (color) {
-                case Color::Black:         Print("\e[0;30m"); break;
-                case Color::Red:           Print("\e[0;31m"); break;
-                case Color::Green:         Print("\e[0;32m"); break;
-                case Color::Yellow:        Print("\e[0;33m"); break;
-                case Color::Blue:          Print("\e[0;34m"); break;
-                case Color::Magenta:       Print("\e[0;35m"); break;
-                case Color::Cyan:          Print("\e[0;36m"); break;
-                case Color::White:         Print("\e[0;37m"); break;
-                case Color::BrightBlack:   Print("\e[1;30m"); break;
-                case Color::BrightRed:     Print("\e[1;31m"); break;
-                case Color::BrightGreen:   Print("\e[1;32m"); break;
-                case Color::BrightYellow:  Print("\e[1;33m"); break;
-                case Color::BrightBlue:    Print("\e[1;34m"); break;
-                case Color::BrightMagenta: Print("\e[1;35m"); break;
-                case Color::BrightCyan:    Print("\e[1;36m"); break;
-                case Color::BrightWhite:   Print("\e[1;37m"); break;
-                case Color::Default:       Print("\e[0m");    break;
-                case Color::BrightDefault: Print("\e[;1m");   break;
+            // clang-format off
+            case Color::Black:         Print("\e[0;30m"); break;
+            case Color::Red:           Print("\e[0;31m"); break;
+            case Color::Green:         Print("\e[0;32m"); break;
+            case Color::Yellow:        Print("\e[0;33m"); break;
+            case Color::Blue:          Print("\e[0;34m"); break;
+            case Color::Magenta:       Print("\e[0;35m"); break;
+            case Color::Cyan:          Print("\e[0;36m"); break;
+            case Color::White:         Print("\e[0;37m"); break;
+            case Color::BrightBlack:   Print("\e[1;30m"); break;
+            case Color::BrightRed:     Print("\e[1;31m"); break;
+            case Color::BrightGreen:   Print("\e[1;32m"); break;
+            case Color::BrightYellow:  Print("\e[1;33m"); break;
+            case Color::BrightBlue:    Print("\e[1;34m"); break;
+            case Color::BrightMagenta: Print("\e[1;35m"); break;
+            case Color::BrightCyan:    Print("\e[1;36m"); break;
+            case Color::BrightWhite:   Print("\e[1;37m"); break;
+            case Color::Default:       Print("\e[0m");    break;
+            case Color::BrightDefault: Print("\e[;1m");   break;
+            // clang-format on
             }
 #endif
             if (is_foreground) {
@@ -169,24 +173,26 @@ public:
             buff = L"";
 #else
             switch (color) {
-                case Color::Black:         buff += L"\e[0m\e[30m";   break;
-                case Color::Red:           buff += L"\e[0;31m";      break;
-                case Color::Green:         buff += L"\e[0m\e[32m";   break;
-                case Color::Yellow:        buff += L"\e[0m\e[33m";   break;
-                case Color::Blue:          buff += L"\e[0m\e[34m";   break;
-                case Color::Magenta:       buff += L"\e[0m\e[35m";   break;
-                case Color::Cyan:          buff += L"\e[0m\e[36m";   break;
-                case Color::White:         buff += L"\e[0m\e[37m";   break;
-                case Color::BrightBlack:   buff += L"\e[0;1m\e[30m"; break;
-                case Color::BrightRed:     buff += L"\e[0;1m\e[31m"; break;
-                case Color::BrightGreen:   buff += L"\e[0;1m\e[32m"; break;
-                case Color::BrightYellow:  buff += L"\e[0;1m\e[33m"; break;
-                case Color::BrightBlue:    buff += L"\e[0;1m\e[34m"; break;
-                case Color::BrightMagenta: buff += L"\e[0;1m\e[35m"; break;
-                case Color::BrightCyan:    buff += L"\e[0;1m\e[36m"; break;
-                case Color::BrightWhite:   buff += L"\e[0;1m\e[37m"; break;
-                case Color::Default:       buff += L"\e[;0m";        break;
-                case Color::BrightDefault: buff += L"\e[;1m";        break;
+            // clang-format off
+            case Color::Black:         buff += L"\e[0m\e[30m";   break;
+            case Color::Red:           buff += L"\e[0;31m";      break;
+            case Color::Green:         buff += L"\e[0m\e[32m";   break;
+            case Color::Yellow:        buff += L"\e[0m\e[33m";   break;
+            case Color::Blue:          buff += L"\e[0m\e[34m";   break;
+            case Color::Magenta:       buff += L"\e[0m\e[35m";   break;
+            case Color::Cyan:          buff += L"\e[0m\e[36m";   break;
+            case Color::White:         buff += L"\e[0m\e[37m";   break;
+            case Color::BrightBlack:   buff += L"\e[0;1m\e[30m"; break;
+            case Color::BrightRed:     buff += L"\e[0;1m\e[31m"; break;
+            case Color::BrightGreen:   buff += L"\e[0;1m\e[32m"; break;
+            case Color::BrightYellow:  buff += L"\e[0;1m\e[33m"; break;
+            case Color::BrightBlue:    buff += L"\e[0;1m\e[34m"; break;
+            case Color::BrightMagenta: buff += L"\e[0;1m\e[35m"; break;
+            case Color::BrightCyan:    buff += L"\e[0;1m\e[36m"; break;
+            case Color::BrightWhite:   buff += L"\e[0;1m\e[37m"; break;
+            case Color::Default:       buff += L"\e[;0m";        break;
+            case Color::BrightDefault: buff += L"\e[;1m";        break;
+            // clang-format on
             }
 #endif
             if (is_foreground) {
@@ -208,20 +214,24 @@ public:
         pos.Y = info.dwCursorPosition.Y;
 
         switch (position) {
-            case Position::Up    : pos.Y -= number; break;
-            case Position::Down  : pos.Y += number; break;
-            case Position::Right : pos.X += number; break;
-            case Position::Left  : pos.X -= number; break;
+        // clang-format off
+        case Position::Up    : pos.Y -= number; break;
+        case Position::Down  : pos.Y += number; break;
+        case Position::Right : pos.X += number; break;
+        case Position::Left  : pos.X -= number; break;
+        // clang-format on
         }
 
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 #else
 //        printf( "%s%d;%dH", CSI, fila + 1, columna + 1 );
         switch (position) {
-            case Position::Up    : Print("\e[" + std::to_string(number) + "A"); break;
-            case Position::Down  : Print("\e[" + std::to_string(number) + "B"); break;
-            case Position::Right : Print("\e[" + std::to_string(number) + "C"); break;
-            case Position::Left  : Print("\e[" + std::to_string(number) + "D"); break;
+        // clang-format off
+        case Position::Up    : Print("\e[" + std::to_string(number) + "A"); break;
+        case Position::Down  : Print("\e[" + std::to_string(number) + "B"); break;
+        case Position::Right : Print("\e[" + std::to_string(number) + "C"); break;
+        case Position::Left  : Print("\e[" + std::to_string(number) + "D"); break;
+        // clang-format on
         }
 #endif
     }
@@ -234,10 +244,12 @@ public:
             buff = L"";
 #else
             switch (position) {
-                case Position::Up    : buff += L"\e[" + std::to_wstring(number) + L'A'; break;
-                case Position::Down  : buff += L"\e[" + std::to_wstring(number) + L'B'; break;
-                case Position::Right : buff += L"\e[" + std::to_wstring(number) + L'C'; break;
-                case Position::Left  : buff += L"\e[" + std::to_wstring(number) + L'D'; break;
+            // clang-format off
+            case Position::Up    : buff += L"\e[" + std::to_wstring(number) + L'A'; break;
+            case Position::Down  : buff += L"\e[" + std::to_wstring(number) + L'B'; break;
+            case Position::Right : buff += L"\e[" + std::to_wstring(number) + L'C'; break;
+            case Position::Left  : buff += L"\e[" + std::to_wstring(number) + L'D'; break;
+            // clang-format on
             }
 #endif
         }
@@ -251,44 +263,48 @@ public:
         }
 
         switch (view.foreground) {
-            case Color::Black:         buff += L"21;30"; break;
-            case Color::Red:           buff += L"21;31"; break;
-            case Color::Green:         buff += L"21;32"; break;
-            case Color::Yellow:        buff += L"21;33"; break;
-            case Color::Blue:          buff += L"21;34"; break;
-            case Color::Magenta:       buff += L"21;35"; break;
-            case Color::Cyan:          buff += L"21;36"; break;
-            case Color::White:         buff += L"21;37"; break;
-            case Color::BrightBlack:   buff += L"1;30"; break;
-            case Color::BrightRed:     buff += L"1;31"; break;
-            case Color::BrightGreen:   buff += L"1;32"; break;
-            case Color::BrightYellow:  buff += L"1;33"; break;
-            case Color::BrightBlue:    buff += L"1;34"; break;
-            case Color::BrightMagenta: buff += L"1;35"; break;
-            case Color::BrightCyan:    buff += L"1;36"; break;
-            case Color::BrightWhite:   buff += L"1;37"; break;
-            case Color::BrightDefault: buff += L";1";   break;
-            default: break;
+        // clang-format off
+        case Color::Black:         buff += L"21;30"; break;
+        case Color::Red:           buff += L"21;31"; break;
+        case Color::Green:         buff += L"21;32"; break;
+        case Color::Yellow:        buff += L"21;33"; break;
+        case Color::Blue:          buff += L"21;34"; break;
+        case Color::Magenta:       buff += L"21;35"; break;
+        case Color::Cyan:          buff += L"21;36"; break;
+        case Color::White:         buff += L"21;37"; break;
+        case Color::BrightBlack:   buff += L"1;30"; break;
+        case Color::BrightRed:     buff += L"1;31"; break;
+        case Color::BrightGreen:   buff += L"1;32"; break;
+        case Color::BrightYellow:  buff += L"1;33"; break;
+        case Color::BrightBlue:    buff += L"1;34"; break;
+        case Color::BrightMagenta: buff += L"1;35"; break;
+        case Color::BrightCyan:    buff += L"1;36"; break;
+        case Color::BrightWhite:   buff += L"1;37"; break;
+        case Color::BrightDefault: buff += L";1";   break;
+        default: break;
+        // clang-format on
         }
 
         switch (view.background) {
-            case Color::Black:         buff += L";40"; break;
-            case Color::Red:           buff += L";41"; break;
-            case Color::Green:         buff += L";42"; break;
-            case Color::Yellow:        buff += L";43"; break;
-            case Color::Blue:          buff += L";44"; break;
-            case Color::Magenta:       buff += L";45"; break;
-            case Color::Cyan:          buff += L";46"; break;
-            case Color::White:         buff += L";47"; break;
-            case Color::BrightBlack:   buff += L";40"; break;
-            case Color::BrightRed:     buff += L";41"; break;
-            case Color::BrightGreen:   buff += L";42"; break;
-            case Color::BrightYellow:  buff += L";43"; break;
-            case Color::BrightBlue:    buff += L";44"; break;
-            case Color::BrightMagenta: buff += L";45"; break;
-            case Color::BrightCyan:    buff += L";46"; break;
-            case Color::BrightWhite:   buff += L";47"; break;
-            default: break;
+        // clang-format off
+        case Color::Black:         buff += L";40"; break;
+        case Color::Red:           buff += L";41"; break;
+        case Color::Green:         buff += L";42"; break;
+        case Color::Yellow:        buff += L";43"; break;
+        case Color::Blue:          buff += L";44"; break;
+        case Color::Magenta:       buff += L";45"; break;
+        case Color::Cyan:          buff += L";46"; break;
+        case Color::White:         buff += L";47"; break;
+        case Color::BrightBlack:   buff += L";40"; break;
+        case Color::BrightRed:     buff += L";41"; break;
+        case Color::BrightGreen:   buff += L";42"; break;
+        case Color::BrightYellow:  buff += L";43"; break;
+        case Color::BrightBlue:    buff += L";44"; break;
+        case Color::BrightMagenta: buff += L";45"; break;
+        case Color::BrightCyan:    buff += L";46"; break;
+        case Color::BrightWhite:   buff += L";47"; break;
+        default: break;
+        // clang-format on
         }
 
         if (view.is_underline) {

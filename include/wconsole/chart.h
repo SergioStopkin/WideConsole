@@ -62,10 +62,12 @@ public:
 
     void SetOpacity(const Opacity opacity) noexcept {
         switch (opacity) {
-            case Opacity::OP_100: brick_ = BrickCode::FF_OP100_; break;
-            case Opacity::OP_75:  brick_ = BrickCode::FF_OP75_;  break;
-            case Opacity::OP_50:  brick_ = BrickCode::FF_OP50_;  break;
-            case Opacity::OP_25:  brick_ = BrickCode::FF_OP25_;  break;
+        // clang-format off
+        case Opacity::OP_100: brick_ = BrickCode::FF_OP100_; break;
+        case Opacity::OP_75:  brick_ = BrickCode::FF_OP75_;  break;
+        case Opacity::OP_50:  brick_ = BrickCode::FF_OP50_;  break;
+        case Opacity::OP_25:  brick_ = BrickCode::FF_OP25_;  break;
+        // clang-format on
         }
     }
 
@@ -79,9 +81,11 @@ public:
         Console::PreProcessing(horizontal_size_, HeaderSize());
 
         switch (chart_type_) {
-            case ChartType::Column: PrintColumnChart(data); break;
-            case ChartType::Bar:    PrintBarChart(data);    break;
-            case ChartType::Pie:    PrintPieChart(data);    break;
+        // clang-format off
+        case ChartType::Column: PrintColumnChart(data); break;
+        case ChartType::Bar:    PrintBarChart(data);    break;
+        case ChartType::Pie:    PrintPieChart(data);    break;
+        // clang-format on
         }
     }
 
