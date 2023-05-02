@@ -50,14 +50,14 @@ public:
         , chart_type_(type)
         , brick_(BrickCode::FF_OP100_)
     {
-        SetOpacity(opacity);
+        setOpacity(opacity);
         // Default colors
-        SetChartColors({ Color::Red, Color::Yellow, Color::Black });
+        setChartColors({ Color::Red, Color::Yellow, Color::Black });
     }
 
-    void SetChartType(const ChartType type) noexcept { chart_type_ = type; }
+    void setChartType(const ChartType type) noexcept { chart_type_ = type; }
 
-    void SetOpacity(const Opacity opacity) noexcept
+    void setOpacity(const Opacity opacity) noexcept
     {
         switch (opacity) {
         // clang-format off
@@ -68,19 +68,19 @@ public:
         } // clang-format on
     }
 
-    void SetChartColors(const std::vector<Color> & colors) noexcept { colors_ = colors; }
+    void setChartColors(const std::vector<Color> & colors) noexcept { colors_ = colors; }
 
     template <typename T>
-    void PrintObject(const std::vector<T> & data)
+    void printObject(const std::vector<T> & data)
     {
         // Pre-processing
-        Console::PreProcessing(horizontal_size_, HeaderSize());
+        Console::preProcessing(horizontal_size_, headerSize());
 
         switch (chart_type_) {
         // clang-format off
-        case ChartType::Column: PrintColumnChart(data); break;
-        case ChartType::Bar:    PrintBarChart(data);    break;
-        case ChartType::Pie:    PrintPieChart(data);    break;
+        case ChartType::Column: printColumnChart(data); break;
+        case ChartType::Bar:    printBarChart(data);    break;
+        case ChartType::Pie:    printPieChart(data);    break;
         } // clang-format on
     }
 
@@ -103,24 +103,27 @@ private:
     std::vector<Color> colors_;
     BrickCode          brick_;
 
-    uint HeaderSize() const noexcept override { return ((chart_type_ == ChartType::Pie) ? (2 * GetHeaderSize()) : GetHeaderSize()); }
+    [[nodiscard]] uint headerSize() const noexcept override
+    {
+        return ((chart_type_ == ChartType::Pie) ? (2 * IHeader::headerSize()) : IHeader::headerSize());
+    }
 
-    void WriteBricksToBuff(std::wstring & buff, const BrickCode brick, const uint number = 1) const noexcept
+    void writeBricksToBuff(std::wstring & buff, const BrickCode brick, const uint number = 1) const noexcept
     {
         for (uint i = 0; i < number; ++i) {
             buff += (wchar_t)brick;
         }
     }
 
-    wchar_t GetOuterBrick(std::wstring & buff,
-                          const double   hs,
-                          const double   vs,
-                          const double   h_center,
-                          const double   v_center,
-                          const double   h_step,
-                          const double   v_step,
-                          const double   real_x,
-                          const double   real_y) noexcept
+    wchar_t outerBrick(std::wstring & buff,
+                       const double   hs,
+                       const double   vs,
+                       const double   h_center,
+                       const double   v_center,
+                       const double   h_step,
+                       const double   v_step,
+                       const double   real_x,
+                       const double   real_y) noexcept
     {
         BrickCode brick    = BrickCode::FF_OP100_;
         uint      quadrant = 0;
@@ -148,12 +151,12 @@ private:
         if (quadrant == 1 || quadrant == 2) {
             if ((real_y - vs) <= coef) {
                 brick = BrickCode::SF_;
-                //                WriteDataToBuff(buff, (real_y - vs), 1, 1);
+                //                writeDataToBuff(buff, (real_y - vs), 1, 1);
             }
         } else if (quadrant == 3 || quadrant == 4) {
             if ((1 - (real_y - vs)) < coef) {
                 brick = BrickCode::SFI_;
-                //                WriteDataToBuff(buff, 1 - (real_y - vs), 1, 1);
+                //                writeDataToBuff(buff, 1 - (real_y - vs), 1, 1);
             }
         }
 
@@ -162,7 +165,8 @@ private:
         return ((wchar_t)brick);
     }
 
-    int GetPieIndex(const double hs, const double vs, const double h_center, const double v_center, const std::vector<double> & angles) const
+    [[nodiscard]] int
+    pieIndex(const double hs, const double vs, const double h_center, const double v_center, const std::vector<double> & angles) const
     {
         if (hs == h_center && vs == v_center) {
             return 0;
@@ -200,7 +204,8 @@ private:
         return (-1);
     }
 
-    int GetPieIndexHeader(const double hs, const double vs, const double h_center, const double v_center, const std::vector<double> & angle) const
+    [[nodiscard]] int
+    pieIndexHeader(const double hs, const double vs, const double h_center, const double v_center, const std::vector<double> & angle) const
     {
         const double x     = (vs - v_center) / (hs - h_center);
         double       alpha = 180.0 * std::acos(x / std::sqrt(1 + x * x)) / Pi;
@@ -236,7 +241,7 @@ private:
     }
 
     template <typename T>
-    void PrintColumnChart(const std::vector<T> & data)
+    void printColumnChart(const std::vector<T> & data)
     {
         const T data_max = *std::max_element(std::begin(data), std::end(data));
         //        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
@@ -248,8 +253,8 @@ private:
 
         std::wstring buff;
 
-        if (Console::GlobalVPos() > 0) {
-            Console::WritePositionToBuff(buff, Position::Up, Console::GlobalVPos());
+        if (Console::globalVPos() > 0) {
+            Console::writePositionToBuff(buff, Position::Up, Console::globalVPos());
         }
 
         std::vector<bool> print_data_once(data.size(), false);
@@ -268,15 +273,15 @@ private:
         for (int vi = vertical_size_ + over; vi > 0; --vi) {
             uint space_diff = 0;
 
-            if (Console::GlobalHPos() > 0) {
-                Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
             }
 
             // Grid
             if (is_grid_) {
                 if (write_over) {
-                    Console::WriteColorToBuff(buff, Color::Default);
-                    WriteDataToBuff(buff, grid_value, grid_alignment, precision_);
+                    Console::writeColorToBuff(buff, Color::Default);
+                    writeDataToBuff(buff, grid_value, grid_alignment, precision_);
                 } else {
                     buff.append(grid_alignment, ' ');
                 }
@@ -287,12 +292,12 @@ private:
             }
 
             Color v_color = colors_[colors_.size() - cs];
-            Console::WriteColorToBuff(buff, v_color);*/
+            Console::writeColorToBuff(buff, v_color);*/
 
             // Data loop
             for (size_t di = 0; di < data.size(); ++di) {
                 Color v_color = colors_[di % colors_.size()];
-                Console::WriteColorToBuff(buff, v_color);
+                Console::writeColorToBuff(buff, v_color);
 
                 data_alignment = (uint)(std::to_string((int)data[di]).size());
 
@@ -302,43 +307,43 @@ private:
 
                 if (is_data_header_ && !print_data_once[di] && data[di] >= grid_value) {
                     /*if ((vi - 1) <= ((cs - 1) * clst)) {
-                        Console::WriteColorToBuff(buff, colors_[colors_.size() - cs + 1]);
+                        Console::writeColorToBuff(buff, colors_[colors_.size() - cs + 1]);
                     }*/
 
                     if (space_diff > 0) {
-                        Console::WritePositionToBuff(buff, Position::Left, space_diff);
+                        Console::writePositionToBuff(buff, Position::Left, space_diff);
                         space_diff = 0;
                     }
 
-                    WriteDataToBuff(buff, data[di], one_h_size, precision_);
+                    writeDataToBuff(buff, data[di], one_h_size, precision_);
 
                     space_diff          = ((data_alignment > one_h_size) ? (data_alignment - one_h_size) : 0);
                     print_data_once[di] = true;
-                    //                    Console::WriteColorToBuff(buff, v_color);
+                    //                    Console::writeColorToBuff(buff, v_color);
                 } else if (is_data_header_ && vi == 0 && !print_data_once[di]) {
                     if (space_diff > 0) {
-                        Console::WritePositionToBuff(buff, Position::Left, space_diff);
+                        Console::writePositionToBuff(buff, Position::Left, space_diff);
                         space_diff = 0;
                     }
 
-                    WriteDataToBuff(buff, data[di], one_h_size, precision_);
+                    writeDataToBuff(buff, data[di], one_h_size, precision_);
 
                     space_diff = ((data_alignment > one_h_size) ? (data_alignment - one_h_size) : 0);
                 } else if (data[di] >= grid_value) {
                     if (space_diff > 0) {
-                        Console::WritePositionToBuff(buff, Position::Left, space_diff);
+                        Console::writePositionToBuff(buff, Position::Left, space_diff);
                         space_diff = 0;
                     }
 
-                    WriteBricksToBuff(buff, brick_, one_h_size - 1);
-                    WriteBricksToBuff(buff, BrickCode::FS_);
+                    writeBricksToBuff(buff, brick_, one_h_size - 1);
+                    writeBricksToBuff(buff, BrickCode::FS_);
                 } else if (write_over) {
                     if (is_grid_) {
-                        Console::WriteColorToBuff(buff, grid_color_);
+                        Console::writeColorToBuff(buff, grid_color_);
                     }
 
                     buff.append(one_h_size, grid_);
-                    Console::WriteColorToBuff(buff, v_color);
+                    Console::writeColorToBuff(buff, v_color);
                 } else {
                     if (space_diff > one_h_size) {
                         space_diff -= one_h_size;
@@ -356,17 +361,17 @@ private:
             write_over = true;
         }
 
-        Console::GlobalVPos(vertical_size_ + over);
-        Console::GlobalHPos(
-            Console::GlobalHPos()
+        Console::globalVPos(vertical_size_ + over);
+        Console::globalHPos(
+            Console::globalHPos()
             + (one_h_size * data.size() + (is_grid_ ? grid_alignment : 0) + ((data_alignment > one_h_size) ? (data_alignment - one_h_size) : 0)));
 
-        Console::WriteColorToBuff(buff, Color::Default);
-        Console::Print(buff);
+        Console::writeColorToBuff(buff, Color::Default);
+        Console::print(buff);
     }
 
     template <typename T>
-    void PrintBarChart(const std::vector<T> & data)
+    void printBarChart(const std::vector<T> & data)
     {
         //        const T      data_max      = * std::max_element(std::begin(data), std::end(data));
         //        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
@@ -378,13 +383,13 @@ private:
 
         std::wstring buff;
 
-        if (Console::GlobalVPos() > 0) {
-            Console::WritePositionToBuff(buff, Position::Up, Console::GlobalVPos());
+        if (Console::globalVPos() > 0) {
+            Console::writePositionToBuff(buff, Position::Up, Console::globalVPos());
         }
 
         // Data loop
         for (size_t di = 0; di < data.size(); ++di) {
-            Console::WriteColorToBuff(buff, colors_[di % colors_.size()]);
+            Console::writeColorToBuff(buff, colors_[di % colors_.size()]);
 
             uint num_bricks      = 0;
             bool print_data_once = !is_data_header_;
@@ -396,25 +401,25 @@ private:
             }
 
             for (uint i = 0; i < one_v_size - 1; ++i) {
-                if (Console::GlobalHPos() > 0) {
-                    Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
+                if (Console::globalHPos() > 0) {
+                    Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
                 }
 
-                WriteBricksToBuff(buff, brick_, num_bricks);
+                writeBricksToBuff(buff, brick_, num_bricks);
                 if (!print_data_once && i == (one_v_size - 1) / 2) {
-                    WriteDataToBuff(buff, data[di], 1, precision_);
+                    writeDataToBuff(buff, data[di], 1, precision_);
                     print_data_once = true;
                 }
                 buff += L'\n';
             }
 
-            if (Console::GlobalHPos() > 0) {
-                Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
             }
 
-            WriteBricksToBuff(buff, BrickCode::SFI_, num_bricks);
+            writeBricksToBuff(buff, BrickCode::SFI_, num_bricks);
             if (!print_data_once) {
-                WriteDataToBuff(buff, data[di], 1, precision_);
+                writeDataToBuff(buff, data[di], 1, precision_);
                 print_data_once = true;
             }
 
@@ -423,11 +428,11 @@ private:
 
         // Grid
         if (is_grid_) {
-            if (Console::GlobalHPos() > 0) {
-                Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
             }
 
-            Console::WriteColorToBuff(buff, Color::Default);
+            Console::writeColorToBuff(buff, Color::Default);
 
             DataPosition data_pos   = data_pos_;
             T            grid_value = h_min_;
@@ -440,7 +445,7 @@ private:
                     alignment += ((precision_ > 0) ? (precision_ + 1) : 0);
                 }
 
-                WriteDataToBuff(buff, grid_value, alignment, precision_);
+                writeDataToBuff(buff, grid_value, alignment, precision_);
 
                 //                wprintf(L"V[%02d] A[%u] P[%d]\n", grid_value, alignment, precision_);
 
@@ -452,15 +457,15 @@ private:
             buff += L'\n';
         }
 
-        Console::GlobalVPos(one_v_size * (uint)data.size() + (is_grid_ ? 1 : 0));
-        Console::GlobalHPos(Console::GlobalHPos() + horizontal_size_ + over);
+        Console::globalVPos(one_v_size * (uint)data.size() + (is_grid_ ? 1 : 0));
+        Console::globalHPos(Console::globalHPos() + horizontal_size_ + over);
 
-        Console::WriteColorToBuff(buff, Color::Default);
-        Console::Print(buff);
+        Console::writeColorToBuff(buff, Color::Default);
+        Console::print(buff);
     }
 
     template <typename T>
-    void PrintPieChart(const std::vector<T> & data)
+    void printPieChart(const std::vector<T> & data)
     {
         bool is_data_empty = (data.begin() == data.end());
         uint alignment     = 0;
@@ -558,7 +563,7 @@ private:
             }
 
             // Sort coordinates by second value in pair
-            Sort(sort_coord);
+            sort(sort_coord);
 
             if (is_data_header_) {
                 for (const auto & coord_pair : header_coord) {
@@ -580,7 +585,7 @@ private:
                 }
 
                 // Sort header coordinates by second value in pair
-                Sort(sort_header);
+                sort(sort_header);
             }
         }
 
@@ -591,20 +596,20 @@ private:
         std::wstring buff;
         buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
 
-        if (Console::GlobalVPos() > 0) {
-            Console::WritePositionToBuff(buff, Position::Up, Console::GlobalVPos());
+        if (Console::globalVPos() > 0) {
+            Console::writePositionToBuff(buff, Position::Up, Console::globalVPos());
         }
 
-        if (Console::GlobalHPos() > 0) {
-            //            h_global_pos_ = Console::GlobalHPos();
+        if (Console::globalHPos() > 0) {
+            //            h_global_pos_ = Console::globalHPos();
         }
 
         // Vertical loop
         std::vector<int> write_header_indexes;
 
         for (uint vi = vertical_size_ + v_over; vi > 0; --vi) {
-            if (Console::GlobalHPos() > 0) {
-                Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
             }
 
             // Horizontal loop
@@ -616,10 +621,10 @@ private:
                 // Data header
                 if (is_data_header_ && !is_data_empty && header_iterator != sort_header.end() && hi == header_iterator->first.first
                     && vi == header_iterator->first.second) {
-                    if (((index = GetPieIndexHeader(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1)
+                    if (((index = pieIndexHeader(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1)
                         && (write_header_indexes.begin() == write_header_indexes.end()
                             || std::find(write_header_indexes.begin(), write_header_indexes.end(), index) == write_header_indexes.end())) {
-                        Console::WriteColorToBuff(buff, colors_[index % colors_.size()]);
+                        Console::writeColorToBuff(buff, colors_[index % colors_.size()]);
 
                         bool end_space = true;
                         int  shift     = 0;
@@ -655,8 +660,8 @@ private:
                             hi += (alignment - shift - 1);
                         }
 
-                        Console::WritePositionToBuff(buff, Position::Left, shift);
-                        WriteDataToBuff(buff, data[index], (alignment - 1), precision_);
+                        Console::writePositionToBuff(buff, Position::Left, shift);
+                        writeDataToBuff(buff, data[index], (alignment - 1), precision_);
                         if (end_space) {
                             buff += L' ';
                         }
@@ -673,19 +678,19 @@ private:
                         h_first = hi;
                     }
 
-                    if ((index = GetPieIndex(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1) {
-                        Console::WriteColorToBuff(buff, colors_[index % colors_.size()]);
+                    if ((index = pieIndex(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1) {
+                        Console::writeColorToBuff(buff, colors_[index % colors_.size()]);
                     }
 
-                    buff += GetOuterBrick(buff, hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
+                    buff += outerBrick(buff, hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
                     v_prev = vi;
                     ++coord_iterator;
                 } else if (coord_iterator != sort_coord.end() && hi == coord_iterator->first.first && vi == coord_iterator->first.second) {
                 } else if ((coord_iterator != sort_coord.end() && vi == v_prev && hi >= h_first && hi <= coord_iterator->first.first)
-                           && (index = GetPieIndex(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1) {
-                    Console::WriteColorToBuff(buff, colors_[index % colors_.size()]);
+                           && (index = pieIndex(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1) {
+                    Console::writeColorToBuff(buff, colors_[index % colors_.size()]);
                     //                    buff += (wchar_t)brick_;
-                    buff += GetOuterBrick(buff, hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
+                    buff += outerBrick(buff, hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
                     //                    buff += L'#';
                 } else {
                     buff += L' ';
@@ -695,15 +700,15 @@ private:
             buff += L'\n';
         }
 
-        Console::GlobalHPos(Console::GlobalHPos() + horizontal_size_ + h_over);
-        Console::GlobalVPos(vertical_size_ + v_over + 1);
+        Console::globalHPos(Console::globalHPos() + horizontal_size_ + h_over);
+        Console::globalVPos(vertical_size_ + v_over + 1);
 
-        Console::WriteColorToBuff(buff, Color::Default);
+        Console::writeColorToBuff(buff, Color::Default);
         buff += L'\n';
-        Console::Print(buff);
+        Console::print(buff);
     }
 
-    void Sort(sort_t & data) const noexcept
+    void sort(sort_t & data) const noexcept
     {
         std::sort(data.begin(), data.end(), [](const auto & left, const auto & right) {
             return (left.first.second > right.first.second || (left.first.second == right.first.second && left.first.first < right.first.first));

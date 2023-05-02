@@ -32,10 +32,10 @@ int main() {
 
     // GRAPH
     WConsole::Graph graph;
-    graph.SetSize(33, 17);
-    graph.SetHorizontalRange(-1.5, 1.5);
-    graph.SetVerticalRange(-1.5, 1.5);
-    graph.SetDataPosition(WConsole::DataPosition::Left);
+    graph.setSize(33, 17);
+    graph.setHorizontalRange(-1.5, 1.5);
+    graph.setVerticalRange(-1.5, 1.5);
+    graph.setDataPosition(WConsole::DataPosition::Left);
 
     // Colors
     std::vector<WConsole::Color> colors { WConsole::Color::Green,
@@ -50,11 +50,11 @@ int main() {
     const int max = 100;
 
     WConsole::Chart chart;
-    chart.SetChartColors(colors);
-    chart.SetHorizontalRange(0, max);
-    chart.SetVerticalRange(0, max);
-    chart.ShowDataHeader(false);
-    chart.ShowGrid(false);
+    chart.setChartColors(colors);
+    chart.setHorizontalRange(0, max);
+    chart.setVerticalRange(0, max);
+    chart.showDataHeader(false);
+    chart.showGrid(false);
 
     int count = 1;
     while (std::chrono::steady_clock::now() < g_start + g_duration) {
@@ -74,16 +74,16 @@ int main() {
                 if (!std::isnan(y3)) sin3.emplace_back(x, y3);
             }
 
-            WConsole::Console::Clear();
+            WConsole::Console::clear();
 
-            graph.SetPointColor(WConsole::Color::BrightBlue);
-            graph.PrintObject(sin1);
+            graph.setPointColor(WConsole::Color::BrightBlue);
+            graph.printObject(sin1);
 
-            graph.SetPointColor(WConsole::Color::BrightGreen);
-            graph.PrintObject(sin2);
+            graph.setPointColor(WConsole::Color::BrightGreen);
+            graph.printObject(sin2);
 
-            graph.SetPointColor(WConsole::Color::BrightRed);
-            graph.PrintObject(sin3);
+            graph.setPointColor(WConsole::Color::BrightRed);
+            graph.printObject(sin3);
 
             // Data for charts
             std::vector<int> data;
@@ -92,19 +92,19 @@ int main() {
             }
 
             // Column chart
-            chart.SetChartType(WConsole::ChartType::Column);
-            chart.SetSize(40, 16);
-            chart.PrintObject(data);
+            chart.setChartType(WConsole::ChartType::Column);
+            chart.setSize(40, 16);
+            chart.printObject(data);
 
             // Bar chart
-            chart.SetChartType(WConsole::ChartType::Bar);
-            chart.SetSize(40, 16);
-            chart.PrintObject(data);
+            chart.setChartType(WConsole::ChartType::Bar);
+            chart.setSize(40, 16);
+            chart.printObject(data);
 
             // Pie chart
-            chart.SetChartType(WConsole::ChartType::Pie);
-            chart.SetSize(35, 17);
-            chart.PrintObject(data);
+            chart.setChartType(WConsole::ChartType::Pie);
+            chart.setSize(35, 17);
+            chart.printObject(data);
 
             ++count;
             l_start = std::chrono::steady_clock::now();
@@ -113,44 +113,44 @@ int main() {
 
     // TEXT
     WConsole::Text text;
-    WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Black);         text.PrintObject("Black");         WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Default);       text.PrintObject("Default");       WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightBlack);   text.PrintObject("BrightBlack");   WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightDefault); text.PrintObject("BrightDefault"); WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::White);         text.PrintObject("White");         WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightWhite);   text.PrintObject("BrightWhite");   WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Red);           text.PrintObject("Red");           WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightRed);     text.PrintObject("BrightRed");     WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Blue);          text.PrintObject("Blue");          WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightBlue);    text.PrintObject("BrightBlue");    WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Cyan);          text.PrintObject("Cyan");          WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightCyan);    text.PrintObject("BrightCyan");    WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Magenta);       text.PrintObject("Magenta");       WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightMagenta); text.PrintObject("BrightMagenta"); WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Yellow);        text.PrintObject("Yellow");        WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightYellow);  text.PrintObject("BrightYellow");  WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Green);         text.PrintObject("Green");         WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::BrightGreen);   text.PrintObject("BrightGreen");   WConsole::Console::NewLine();
-    text.SetColor(WConsole::Color::Default);
+    WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Black);         text.printObject("Black");         WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Default);       text.printObject("Default");       WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightBlack);   text.printObject("BrightBlack");   WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightDefault); text.printObject("BrightDefault"); WConsole::Console::newLine();
+    text.setColor(WConsole::Color::White);         text.printObject("White");         WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightWhite);   text.printObject("BrightWhite");   WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Red);           text.printObject("Red");           WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightRed);     text.printObject("BrightRed");     WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Blue);          text.printObject("Blue");          WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightBlue);    text.printObject("BrightBlue");    WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Cyan);          text.printObject("Cyan");          WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightCyan);    text.printObject("BrightCyan");    WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Magenta);       text.printObject("Magenta");       WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightMagenta); text.printObject("BrightMagenta"); WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Yellow);        text.printObject("Yellow");        WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightYellow);  text.printObject("BrightYellow");  WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Green);         text.printObject("Green");         WConsole::Console::newLine();
+    text.setColor(WConsole::Color::BrightGreen);   text.printObject("BrightGreen");   WConsole::Console::newLine();
+    text.setColor(WConsole::Color::Default);
 
     std::string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789";
     WConsole::Font font;
 
-    font.SetForegroundColor(WConsole::Color::Yellow);
-    font.SetInverseColor(true);
-    font.SetFontType(WConsole::FontType::Monospace);         text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::SerifItal);         text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::SerifBold);         text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::SerifBoldItal);     text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::SansSerif);         text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifItal);     text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifBold);     text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::SansSerifBoldItal); text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::ScriptBold);        text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::FrakturBold);       text.PrintObject(str, font); WConsole::Console::NewLine();
-    font.SetFontType(WConsole::FontType::FullWidth);         text.PrintObject(str, font); WConsole::Console::NewLine();
-    text.ResetFont();
-    text.PrintObject("");
+    font.setForegroundColor(WConsole::Color::Yellow);
+    font.setInverseColor(true);
+    font.setFontType(WConsole::FontType::Monospace);         text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::SerifItal);         text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::SerifBold);         text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::SerifBoldItal);     text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::SansSerif);         text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::SansSerifItal);     text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::SansSerifBold);     text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::SansSerifBoldItal); text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::ScriptBold);        text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::FrakturBold);       text.printObject(str, font); WConsole::Console::newLine();
+    font.setFontType(WConsole::FontType::FullWidth);         text.printObject(str, font); WConsole::Console::newLine();
+    text.resetFont();
+    text.printObject("");
     return 0;
 }

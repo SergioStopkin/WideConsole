@@ -27,9 +27,9 @@ enum class DataPosition : uchar { Right, Left, Center };
 
 class IHeader {
 public:
-    void SetDataPosition(const DataPosition pos) noexcept { data_pos_ = pos; }
+    void setDataPosition(const DataPosition pos) noexcept { data_pos_ = pos; }
 
-    void ShowDataHeader(const bool show) noexcept { is_data_header_ = show; }
+    void showDataHeader(const bool show) noexcept { is_data_header_ = show; }
 
 protected:
     bool         is_data_header_;
@@ -44,12 +44,12 @@ protected:
 
     virtual ~IHeader() = default;
 
-    void SetHeaderSize(const uint header_size) noexcept { header_size_ = header_size; }
+    void setHeaderSize(const uint header_size) noexcept { header_size_ = header_size; }
 
-    uint GetHeaderSize() const noexcept { return header_size_; }
+    [[nodiscard]] uint headerSize() const noexcept { return header_size_; }
 
     template <typename T>
-    void WriteDataToBuff(std::wstring & buff, T value, uint alignment, int precision) noexcept
+    void writeDataToBuff(std::wstring & buff, T value, uint alignment, int precision) noexcept
     {
         std::wstring wvalue;
         header_size_ = alignment;

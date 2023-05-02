@@ -27,7 +27,7 @@ namespace WConsole {
 
 class IObject {
 public:
-    void SetSize(const uint horizontal_size, const uint vertical_size) noexcept
+    void setSize(const uint horizontal_size, const uint vertical_size) noexcept
     {
         horizontal_size_ = horizontal_size;
         vertical_size_   = vertical_size;
@@ -42,7 +42,7 @@ protected:
         , vertical_size_(vertical_size)
     {
         if (object_counter_ == 0) {
-            Console::Start();
+            Console::start();
         }
 
         ++object_counter_;
@@ -51,7 +51,7 @@ protected:
     virtual ~IObject()
     {
         if (object_counter_ == 1) {
-            Console::End();
+            Console::end();
         }
 
         --object_counter_;
@@ -60,7 +60,7 @@ protected:
 private:
     static int object_counter_;
 
-    virtual uint HeaderSize() const noexcept = 0;
+    [[nodiscard]] virtual uint headerSize() const noexcept = 0;
 };
 
 int IObject::object_counter_ = 0;

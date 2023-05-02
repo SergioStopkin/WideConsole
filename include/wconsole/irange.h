@@ -23,13 +23,13 @@ namespace WConsole {
 
 class IRange {
 public:
-    void SetVerticalRange(const double v_min, const double v_max) noexcept
+    void setVerticalRange(const double v_min, const double v_max) noexcept
     {
         v_min_ = std::min(v_min, v_max);
         v_max_ = std::max(v_min, v_max);
     }
 
-    void SetHorizontalRange(const double h_min, const double h_max) noexcept
+    void setHorizontalRange(const double h_min, const double h_max) noexcept
     {
         h_min_ = std::min(h_min, h_max);
         h_max_ = std::max(h_min, h_max);

@@ -74,15 +74,15 @@ public:
     {
     }
 
-    void SetPoint(const Point point) noexcept { point_ = (wchar_t)point; }
+    void setPoint(const Point point) noexcept { point_ = (wchar_t)point; }
 
-    void SetPointColor(const Color color) noexcept { point_color_ = color; }
+    void setPointColor(const Color color) noexcept { point_color_ = color; }
 
     template <typename T>
-    void PrintObject(const std::vector<std::pair<T, T>> & data)
+    void printObject(const std::vector<std::pair<T, T>> & data)
     {
         // Pre-processing
-        Console::PreProcessing(horizontal_size_, HeaderSize());
+        Console::preProcessing(horizontal_size_, headerSize());
 
         const double h_step        = (h_max_ - h_min_) / (double)(horizontal_size_ - 1);
         const double v_step        = (v_max_ - v_min_) / (double)(vertical_size_ - 1);
@@ -130,20 +130,20 @@ public:
         std::wstring buff;
         buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
 
-        if (Console::GlobalVPos() > 0) {
-            Console::WritePositionToBuff(buff, Position::Up, Console::GlobalVPos());
+        if (Console::globalVPos() > 0) {
+            Console::writePositionToBuff(buff, Position::Up, Console::globalVPos());
         }
 
-        if (Console::GlobalHPos() > 0) {
+        if (Console::globalHPos() > 0) {
             //            h_global_pos_ = h_pos_;
         }
 
         // Upper arrow
         if (is_arrow_) {
-            Console::WriteColorToBuff(buff, axis_color_);
+            Console::writeColorToBuff(buff, axis_color_);
 
-            if (Console::GlobalHPos() > 0) {
-                Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
             }
 
             if (is_data_header_) {
@@ -165,32 +165,32 @@ public:
         for (uint vi = vertical_size_ - 1; (int)vi >= 0; --vi) {
             const double vs = vi * v_step + v_min_;
 
-            if (Console::GlobalHPos() > 0) {
-                Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
             }
 
             // Vertical data header
             if (is_data_header_) {
-                Console::WriteColorToBuff(buff, Color::Default);
+                Console::writeColorToBuff(buff, Color::Default);
 
                 if (vi == v_zero) {
-                    WriteDataToBuff(buff, 0.0, v_alignment, v_precision_);
+                    writeDataToBuff(buff, 0.0, v_alignment, v_precision_);
                 } else {
-                    WriteDataToBuff(buff, vs, v_alignment, v_precision_);
+                    writeDataToBuff(buff, vs, v_alignment, v_precision_);
                 }
             }
 
             // Horizontal loop
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
                 if (data_iterator != sort_data.end() && vi == data_iterator->second && hi == data_iterator->first) {
-                    Console::WriteColorToBuff(buff, point_color_);
+                    Console::writeColorToBuff(buff, point_color_);
                     buff += point_;
 
                     while (data_iterator != sort_data.end() && hi == data_iterator->first && vi == data_iterator->second) {
                         ++data_iterator;
                     }
                 } else if (hi == h_zero) {
-                    Console::WriteColorToBuff(buff, axis_color_);
+                    Console::writeColorToBuff(buff, axis_color_);
 
                     if (vi == v_zero) {
                         buff += (wchar_t)GridCode::Cross_;
@@ -199,11 +199,11 @@ public:
                     }
                 } else {
                     if (vi == v_zero) {
-                        Console::WriteColorToBuff(buff, axis_color_);
+                        Console::writeColorToBuff(buff, axis_color_);
                         buff += (wchar_t)GridCode::HLine_;
                     } else {
                         if (is_grid_) {
-                            Console::WriteColorToBuff(buff, grid_color_);
+                            Console::writeColorToBuff(buff, grid_color_);
                         }
                         buff += grid_;
                     }
@@ -212,7 +212,7 @@ public:
 
             // Right arrow
             if (vi == v_zero && is_arrow_) {
-                Console::WriteColorToBuff(buff, axis_color_);
+                Console::writeColorToBuff(buff, axis_color_);
                 buff += (wchar_t)((arrow_ == Arrow::Big) ? GridCode::BigRArrow_ : GridCode::SmallRArrow_);
             }
 
@@ -224,11 +224,11 @@ public:
 
         // Horizontal data header
         if (is_data_header_) {
-            if (Console::GlobalHPos() > 0) {
-                Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
             }
 
-            Console::WriteColorToBuff(buff, Color::Default);
+            Console::writeColorToBuff(buff, Color::Default);
             buff.append(v_alignment, ' ');
             h_pos_header += v_alignment;
 
@@ -239,7 +239,7 @@ public:
                 const uint h_alignment = (uint)(std::to_string(std::abs((int)hs)).size() + ((hs < 0) ? 1 : 0)
                                                 + ((h_precision_ > 0) ? (h_precision_ + 1) : 0) + 1); // for one space
                 if (count % h_alignment == 0) {
-                    WriteDataToBuff(buff, hs, h_alignment, h_precision_);
+                    writeDataToBuff(buff, hs, h_alignment, h_precision_);
                     h_pos_header += h_alignment;
                     count = 0;
                 }
@@ -251,23 +251,23 @@ public:
         const uint h_pos_exp = horizontal_size_ + (is_arrow_ ? 1 : 0) + (is_data_header_ ? v_alignment : 0);
 
         if (is_data_header_ && h_pos_header > h_pos_exp) {
-            Console::GlobalHPos(Console::GlobalHPos() + h_pos_header);
+            Console::globalHPos(Console::globalHPos() + h_pos_header);
         } else {
-            Console::GlobalHPos(Console::GlobalHPos() + h_pos_exp);
+            Console::globalHPos(Console::globalHPos() + h_pos_exp);
         }
 
-        Console::GlobalVPos(vertical_size_ + ((is_arrow_) ? 1 : 0) + ((is_data_header_) ? 1 : 0));
+        Console::globalVPos(vertical_size_ + ((is_arrow_) ? 1 : 0) + ((is_data_header_) ? 1 : 0));
 
-        Console::WriteColorToBuff(buff, Color::Default);
+        Console::writeColorToBuff(buff, Color::Default);
         buff += L'\n';
-        Console::Print(buff);
+        Console::print(buff);
     }
 
 private:
     wchar_t point_;
     Color   point_color_;
 
-    uint HeaderSize() const noexcept override { return GetHeaderSize(); }
+    [[nodiscard]] uint headerSize() const noexcept override { return IHeader::headerSize(); }
 };
 
 } // namespace WConsole

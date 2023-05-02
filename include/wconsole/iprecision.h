@@ -21,7 +21,7 @@ namespace WConsole {
 
 class IPrecisionP1 {
 public:
-    void SetPrecision(const int precision) noexcept { precision_ = precision; }
+    void setPrecision(const int precision) noexcept { precision_ = precision; }
 
 protected:
     int precision_;
@@ -36,9 +36,9 @@ protected:
 
 class IPrecisionP2 {
 public:
-    void SetVerticalPrecision(const int v_precision) noexcept { v_precision_ = v_precision; }
+    void setVerticalPrecision(const int v_precision) noexcept { v_precision_ = v_precision; }
 
-    void SetHorizontalPrecision(const int h_precision) noexcept { h_precision_ = h_precision; }
+    void setHorizontalPrecision(const int h_precision) noexcept { h_precision_ = h_precision; }
 
 protected:
     int h_precision_;

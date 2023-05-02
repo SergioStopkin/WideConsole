@@ -25,15 +25,15 @@ class IGrid {
 public:
     enum class Arrow : uchar { Big, Small };
 
-    void SetAxisColor(const Color color) noexcept { axis_color_ = color; }
+    void setAxisColor(const Color color) noexcept { axis_color_ = color; }
 
-    void SetGridColor(const Color color) noexcept { grid_color_ = color; }
+    void setGridColor(const Color color) noexcept { grid_color_ = color; }
 
-    void SetArrow(const Arrow arrow) noexcept { arrow_ = arrow; }
+    void setArrow(const Arrow arrow) noexcept { arrow_ = arrow; }
 
-    void ShowArrow(const bool show) noexcept { is_arrow_ = show; }
+    void showArrow(const bool show) noexcept { is_arrow_ = show; }
 
-    void ShowGrid(const bool show) noexcept
+    void showGrid(const bool show) noexcept
     {
         is_grid_ = show;
         grid_    = ((show) ? (wchar_t)GridCode::SmallDot_ : ' ');
@@ -80,7 +80,7 @@ protected:
         , arrow_(arrow)
         , is_arrow_(show_arrow)
     {
-        ShowGrid(show_grid);
+        showGrid(show_grid);
     }
 
     virtual ~IGrid() = default;

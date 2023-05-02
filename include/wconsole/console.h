@@ -47,44 +47,44 @@ enum class Position : uchar { Up, Down, Right, Left };
 
 class Console final {
 public:
-    static void NewLine() noexcept
+    static void newLine() noexcept
     {
-        ChangePosition(Position::Down, global_state_.max_v_pos - global_state_.v_pos);
-        Print("\n");
+        changePosition(Position::Down, global_state_.max_v_pos - global_state_.v_pos);
+        print("\n");
         global_state_.h_pos     = 0;
         global_state_.v_pos     = 0;
         global_state_.max_v_pos = 0;
     }
 
     /*void NewLineInBlock() noexcept {
-        Print("\n");
+        print("\n");
         global_v_pos_ += (v_pos_ + 1);
         v_pos_ = 0;
         h_pos_ = global_h_pos_;
     }*/
 
-    static void Clear() noexcept
+    static void clear() noexcept
     {
 #ifdef WINDOWS
         COORD pos { 0, 0 };
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 #else
-        Print("\ec");
+        print("\ec");
 #endif
         global_state_.h_pos = 0;
         global_state_.v_pos = 0;
     }
 
     /*void ClearLast() noexcept {
-        Print("\n");
-        ChangePosition(Position::Up, v_pos_ + 1);
+        print("\n");
+        changePosition(Position::Up, v_pos_ + 1);
         v_pos_ = 0;
         h_pos_ = global_h_pos_;
     }
 
     void ClearFirst() noexcept {
-        Print("\n");
-        ChangePosition(Position::Up, global_v_pos_ + v_pos_ + 1);
+        print("\n");
+        changePosition(Position::Up, global_v_pos_ + v_pos_ + 1);
         h_pos_        = 0;
         v_pos_        = 0;
         global_h_pos_ = 0;
@@ -93,7 +93,7 @@ public:
 
     Console() = delete;
 
-    static void ChangeColor(const Color color, const bool is_foreground = true) noexcept
+    static void changeColor(const Color color, const bool is_foreground = true) noexcept
     {
         if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
@@ -131,24 +131,24 @@ public:
 #else
             switch (color) {
             // clang-format off
-            case Color::Black:         Print("\e[0;30m"); break;
-            case Color::Red:           Print("\e[0;31m"); break;
-            case Color::Green:         Print("\e[0;32m"); break;
-            case Color::Yellow:        Print("\e[0;33m"); break;
-            case Color::Blue:          Print("\e[0;34m"); break;
-            case Color::Magenta:       Print("\e[0;35m"); break;
-            case Color::Cyan:          Print("\e[0;36m"); break;
-            case Color::White:         Print("\e[0;37m"); break;
-            case Color::BrightBlack:   Print("\e[1;30m"); break;
-            case Color::BrightRed:     Print("\e[1;31m"); break;
-            case Color::BrightGreen:   Print("\e[1;32m"); break;
-            case Color::BrightYellow:  Print("\e[1;33m"); break;
-            case Color::BrightBlue:    Print("\e[1;34m"); break;
-            case Color::BrightMagenta: Print("\e[1;35m"); break;
-            case Color::BrightCyan:    Print("\e[1;36m"); break;
-            case Color::BrightWhite:   Print("\e[1;37m"); break;
-            case Color::Default:       Print("\e[0m");    break;
-            case Color::BrightDefault: Print("\e[;1m");   break;
+            case Color::Black:         print("\e[0;30m"); break;
+            case Color::Red:           print("\e[0;31m"); break;
+            case Color::Green:         print("\e[0;32m"); break;
+            case Color::Yellow:        print("\e[0;33m"); break;
+            case Color::Blue:          print("\e[0;34m"); break;
+            case Color::Magenta:       print("\e[0;35m"); break;
+            case Color::Cyan:          print("\e[0;36m"); break;
+            case Color::White:         print("\e[0;37m"); break;
+            case Color::BrightBlack:   print("\e[1;30m"); break;
+            case Color::BrightRed:     print("\e[1;31m"); break;
+            case Color::BrightGreen:   print("\e[1;32m"); break;
+            case Color::BrightYellow:  print("\e[1;33m"); break;
+            case Color::BrightBlue:    print("\e[1;34m"); break;
+            case Color::BrightMagenta: print("\e[1;35m"); break;
+            case Color::BrightCyan:    print("\e[1;36m"); break;
+            case Color::BrightWhite:   print("\e[1;37m"); break;
+            case Color::Default:       print("\e[0m");    break;
+            case Color::BrightDefault: print("\e[;1m");   break;
             } // clang-format on
 #endif
             if (is_foreground) {
@@ -159,12 +159,12 @@ public:
         }
     }
 
-    static void WriteColorToBuff(std::wstring & buff, const Color color, const bool is_foreground = true) noexcept
+    static void writeColorToBuff(std::wstring & buff, const Color color, const bool is_foreground = true) noexcept
     {
         if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
-            Print(buff);
-            ChangeColor(color);
+            print(buff);
+            changeColor(color);
             buff = L"";
 #else
             switch (color) {
@@ -197,7 +197,7 @@ public:
         }
     }
 
-    static void ChangePosition(const Position position, const uint number) noexcept
+    static void changePosition(const Position position, const uint number) noexcept
     {
 #ifdef WINDOWS
         COORD                      pos;
@@ -221,20 +221,20 @@ public:
         //        printf( "%s%d;%dH", CSI, fila + 1, columna + 1 );
         switch (position) {
         // clang-format off
-        case Position::Up    : Print("\e[" + std::to_string(number) + "A"); break;
-        case Position::Down  : Print("\e[" + std::to_string(number) + "B"); break;
-        case Position::Right : Print("\e[" + std::to_string(number) + "C"); break;
-        case Position::Left  : Print("\e[" + std::to_string(number) + "D"); break;
+        case Position::Up    : print("\e[" + std::to_string(number) + "A"); break;
+        case Position::Down  : print("\e[" + std::to_string(number) + "B"); break;
+        case Position::Right : print("\e[" + std::to_string(number) + "C"); break;
+        case Position::Left  : print("\e[" + std::to_string(number) + "D"); break;
         } // clang-format on
 #endif
     }
 
-    static void WritePositionToBuff(std::wstring & buff, const Position position, const int number) noexcept
+    static void writePositionToBuff(std::wstring & buff, const Position position, const int number) noexcept
     {
         if (number > 0) {
 #ifdef WINDOWS
-            Print(buff);
-            ChangePosition(position, number);
+            print(buff);
+            changePosition(position, number);
             buff = L"";
 #else
             switch (position) {
@@ -248,7 +248,7 @@ public:
         }
     }
 
-    static void WriteViewToBuff(std::wstring & buff, const ConsoleView & view) noexcept
+    static void writeViewToBuff(std::wstring & buff, const ConsoleView & view) noexcept
     {
         buff += L"\e[";
 
@@ -314,7 +314,7 @@ public:
         buff += L"m";
     }
 
-    static void Print(const char * s) noexcept
+    static void print(const char * s) noexcept
     {
 #ifdef WINDOWS
         std::wprintf(L"%s", s);
@@ -323,7 +323,7 @@ public:
 #endif
     }
 
-    static void Print(const std::string & str) noexcept
+    static void print(const std::string & str) noexcept
     {
 #ifdef WINDOWS
         std::wprintf(L"%s", str.c_str());
@@ -332,7 +332,7 @@ public:
 #endif
     }
 
-    static void Print(const wchar_t * ws) noexcept
+    static void print(const wchar_t * ws) noexcept
     {
 #ifdef WINDOWS
         std::wprintf(L"%ls", ws);
@@ -341,7 +341,7 @@ public:
 #endif
     }
 
-    static void Print(const std::wstring & wstr) noexcept
+    static void print(const std::wstring & wstr) noexcept
     {
 #ifdef WINDOWS
         std::wprintf(L"%ls", wstr.c_str());
@@ -350,37 +350,37 @@ public:
 #endif
     }
 
-    static void ShowCursor(const bool show) noexcept
+    static void showCursor(const bool show) noexcept
     {
 #ifdef WINDOWS
         CONSOLE_CURSOR_INFO info;
         info.bVisible = (BOOL)show;
         SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 #else
-        Print(std::string("\e[?25") + ((show) ? "h" : "l"));
+        print(std::string("\e[?25") + ((show) ? "h" : "l"));
 #endif
     }
 
-    static void PreProcessing(const uint horizontal_size, const uint header_size) noexcept
+    static void preProcessing(const uint horizontal_size, const uint header_size) noexcept
     {
         if (global_state_.col_num > 0 && (global_state_.h_pos + horizontal_size + header_size) > global_state_.col_num) {
-            NewLine();
+            newLine();
         }
     }
 
-    static uint GlobalHPos() noexcept { return global_state_.h_pos; }
+    static uint globalHPos() noexcept { return global_state_.h_pos; }
 
-    static uint GlobalVPos() noexcept { return global_state_.v_pos; }
+    static uint globalVPos() noexcept { return global_state_.v_pos; }
 
-    static void GlobalHPos(const uint h_pos) noexcept { global_state_.h_pos = h_pos; }
+    static void globalHPos(const uint h_pos) noexcept { global_state_.h_pos = h_pos; }
 
-    static void GlobalVPos(const uint v_pos) noexcept
+    static void globalVPos(const uint v_pos) noexcept
     {
         global_state_.v_pos     = v_pos;
         global_state_.max_v_pos = std::max(v_pos, global_state_.max_v_pos);
     }
 
-    static void Start() noexcept
+    static void start() noexcept
     {
 #ifdef WINDOWS
         _setmode(_fileno(stdout), _O_WTEXT);
@@ -406,13 +406,13 @@ public:
             global_state_.row_num = wsize.ws_row;
         }
 #endif
-        Console::ShowCursor(false);
+        Console::showCursor(false);
     }
 
-    static void End() noexcept
+    static void end() noexcept
     {
-        Console::ChangeColor(Color::Default);
-        Console::ShowCursor(true);
+        Console::changeColor(Color::Default);
+        Console::showCursor(true);
 #ifdef UNIX
         std::ios_base::sync_with_stdio(true);
         std::wcout.imbue(std::locale());

@@ -1,5 +1,26 @@
 ---
-Checks:             '*, -llvmlibc-*, -modernize-use-trailing-return-type, -llvm-header-guard'
+Checks:             '*,
+-llvmlibc-*,
+-llvm-header-guard,
+-modernize-use-trailing-return-type,
+-fuchsia-default-arguments-calls,
+-fuchsia-default-arguments-declarations,
+-fuchsia-multiple-inheritance,
+-cppcoreguidelines-avoid-magic-numbers,
+-readability-magic-numbers,
+-bugprone-narrowing-conversions,
+-cppcoreguidelines-narrowing-conversions,
+-cppcoreguidelines-non-private-member-variables-in-classes,
+-misc-non-private-member-variables-in-classes,
+-bugprone-string-integer-assignment,
+-cppcoreguidelines-special-member-functions,
+-hicpp-special-member-functions,
+-cppcoreguidelines-avoid-non-const-global-variables,
+-hicpp-use-nullptr,
+-modernize-use-nullptr,
+-cppcoreguidelines-macro-usage
+'
+
 WarningsAsErrors:   '*'
 FormatStyle:        webkit
 UseColor:           true

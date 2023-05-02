@@ -45,19 +45,19 @@ public:
     {
     }
 
-    void SetFontType(const FontType & font_type) noexcept { font_type_ = font_type; }
+    void setFontType(const FontType & font_type) noexcept { font_type_ = font_type; }
 
-    void SetForegroundColor(const Color & color) noexcept { view_.foreground = color; }
+    void setForegroundColor(const Color & color) noexcept { view_.foreground = color; }
 
-    void SetBackgroundColor(const Color & color) noexcept { view_.background = color; }
+    void setBackgroundColor(const Color & color) noexcept { view_.background = color; }
 
-    void SetInverseColor(const bool is_inverse) noexcept { view_.is_inverse = is_inverse; }
+    void setInverseColor(const bool is_inverse) noexcept { view_.is_inverse = is_inverse; }
 
-    void SetUnderline(const bool is_underline) noexcept { view_.is_underline = is_underline; }
+    void setUnderline(const bool is_underline) noexcept { view_.is_underline = is_underline; }
 
-    FontType GetFontType() const noexcept { return font_type_; }
+    [[nodiscard]] FontType fontType() const noexcept { return font_type_; }
 
-    ConsoleView GetConsoleView() const noexcept { return view_; }
+    [[nodiscard]] ConsoleView consoleView() const noexcept { return view_; }
 
 private:
     FontType    font_type_;

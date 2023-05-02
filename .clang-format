@@ -45,6 +45,8 @@ BraceWrapping:
   SplitEmptyFunction: false
   SplitEmptyRecord: false
   SplitEmptyNamespace: true
+# BreakAfterAttributes: Leave
+BreakAfterJavaFieldAnnotations: false
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeBraces: WebKit
 BreakBeforeInheritanceComma: false
@@ -52,7 +54,6 @@ BreakBeforeTernaryOperators: true
 BreakInheritanceList: BeforeColon
 BreakConstructorInitializersBeforeComma: false
 BreakConstructorInitializers: BeforeComma
-BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
 ColumnLimit: 150
 CommentPragmas:  ''
@@ -111,7 +112,7 @@ PenaltyBreakFirstLessLess: 150
 PenaltyBreakString: 1000
 PenaltyBreakTemplateDeclaration: 10
 PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 60
+PenaltyReturnTypeOnItsOwnLine: 80
 PointerAlignment: Middle
 ReflowComments: true
 SortIncludes: true
