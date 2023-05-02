@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_FONT_H_
-#define WCONSOLE_FONT_H_ 1
+#pragma once
 
 #include "types.h"
 
@@ -66,5 +65,3 @@ private:
 };
 
 } // namespace WConsole
-
-#endif // WCONSOLE_FONT_H_

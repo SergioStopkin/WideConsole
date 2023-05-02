@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_IHEADER_H_
-#define WCONSOLE_IHEADER_H_ 1
+#pragma once
 
 #include <iomanip>
 #include <sstream>
@@ -92,5 +91,3 @@ private:
 };
 
 } // namespace WConsole
-
-#endif // WCONSOLE_IHEADER_H_

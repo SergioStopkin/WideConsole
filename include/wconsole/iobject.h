@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_IOBJECT_H_
-#define WCONSOLE_IOBJECT_H_ 1
+#pragma once
 
 #include "console.h"
 #include "types.h"
@@ -67,5 +66,3 @@ private:
 int IObject::object_counter_ = 0;
 
 } // namespace WConsole
-
-#endif // WCONSOLE_IOBJECT_H_

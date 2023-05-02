@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_CONSOLE_H_
-#define WCONSOLE_CONSOLE_H_ 1
+#pragma once
 
 #if (defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__))
 #define WINDOWS  1
@@ -437,5 +436,3 @@ short Console::default_back_color_ = 0;
 #endif
 
 } // namespace WConsole
-
-#endif // WCONSOLE_CONSOLE_H_

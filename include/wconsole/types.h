@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_TYPES_H_
-#define WCONSOLE_TYPES_H_ 1
+#pragma once
 
 namespace WConsole {
 
@@ -77,5 +76,3 @@ struct ConsoleState {
 };
 
 } // namespace WConsole
-
-#endif // WCONSOLE_TYPES_H_

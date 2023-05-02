@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_IGRID_H_
-#define WCONSOLE_IGRID_H_ 1
+#pragma once
 
 #include "types.h"
 
@@ -88,5 +87,3 @@ protected:
 };
 
 } // namespace WConsole
-
-#endif // WCONSOLE_IGRID_H_

@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_IRANGE_H_
-#define WCONSOLE_IRANGE_H_ 1
+#pragma once
 
 #include <algorithm>
 
@@ -54,5 +53,3 @@ protected:
 };
 
 } // namespace WConsole
-
-#endif // WCONSOLE_IRANGE_H_

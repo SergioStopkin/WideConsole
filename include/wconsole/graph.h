@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_GRAPH_H_
-#define WCONSOLE_GRAPH_H_ 1
+#pragma once
 
 #include "console.h"
 #include "igrid.h"
@@ -272,5 +271,3 @@ private:
 };
 
 } // namespace WConsole
-
-#endif // WCONSOLE_GRAPH_H_

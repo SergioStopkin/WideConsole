@@ -15,8 +15,7 @@
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WCONSOLE_IPRECISION_H_
-#define WCONSOLE_IPRECISION_H_ 1
+#pragma once
 
 namespace WConsole {
 
@@ -55,5 +54,3 @@ protected:
 };
 
 } // namespace WConsole
-
-#endif // WCONSOLE_IPRECISION_H_
