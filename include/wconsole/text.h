@@ -5,12 +5,12 @@
  * you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * WConsole is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
@@ -18,60 +18,55 @@
 #ifndef WCONSOLE_TEXT_H_
 #define WCONSOLE_TEXT_H_ 1
 
-#include <cstring>
-
 #include "console.h"
 #include "font.h"
 #include "iobject.h"
+
+#include <cstring>
 
 namespace WConsole {
 
 class Text final : public IObject {
 public:
     explicit Text(const FontType & font_type = FontType::Monospace)
-                : font_  (font_type) {
+        : font_(font_type)
+    {
     }
 
-    void SetColor(const Color & color) noexcept {
-        font_.SetForegroundColor(color);
-    }
+    void SetColor(const Color & color) noexcept { font_.SetForegroundColor(color); }
 
-    void SetFont(const Font & font) noexcept {
-        font_ = font;
-    }
+    void SetFont(const Font & font) noexcept { font_ = font; }
 
-    void ResetFont() noexcept {
-        font_ = Font();
-    }
+    void ResetFont() noexcept { font_ = Font(); }
 
-    void PrintObject(const char * s) noexcept {
+    void PrintObject(const char * s) noexcept
+    {
         std::wstring buff;
 
         if (Console::GlobalVPos() > 0) {
-//            ChangePosition(Position::Up, Console::GlobalVPos());
+            //            ChangePosition(Position::Up, Console::GlobalVPos());
             Console::WritePositionToBuff(buff, Position::Up, Console::GlobalVPos());
         }
 
         if (Console::GlobalHPos() > 0) {
-//            h_global_pos_ = Console::GlobalHPos();
-//            ChangePosition(Position::Right, Console::GlobalHPos   ());
+            //            h_global_pos_ = Console::GlobalHPos();
+            //            ChangePosition(Position::Right, Console::GlobalHPos   ());
             Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
         }
 
-//        ChangeColor(color_);
-//        Print(s);
+        //        ChangeColor(color_);
+        //        Print(s);
         Console::WriteViewToBuff(buff, font_.GetConsoleView());
         Console::Print(buff);
         Console::Print(s);
         Console::GlobalHPos(0);
-//        h_global_pos_ += std::strlen(s);
+        //        h_global_pos_ += std::strlen(s);
     }
 
-    void PrintObject(const std::string & str) noexcept {
-        PrintObject(str, font_);
-    }
+    void PrintObject(const std::string & str) noexcept { PrintObject(str, font_); }
 
-    void PrintObject(const std::string & str, const Font & font) noexcept {
+    void PrintObject(const std::string & str, const Font & font) noexcept
+    {
         std::wstring buff;
 
         if (Console::GlobalVPos() > 0) {
@@ -79,12 +74,12 @@ public:
         }
 
         if (Console::GlobalHPos() > 0) {
-//            h_global_pos_ = Console::GlobalHPos();
+            //            h_global_pos_ = Console::GlobalHPos();
             Console::WritePositionToBuff(buff, Position::Right, Console::GlobalHPos());
         }
 
-//        std::wstring shift_pos = L"\e[0;0H";
-//        buff += shift_pos;
+        //        std::wstring shift_pos = L"\e[0;0H";
+        //        buff += shift_pos;
 
         Console::WriteViewToBuff(buff, font.GetConsoleView());
 
@@ -110,8 +105,7 @@ public:
                     case FontType::ScriptBold:        buff += (wc + 0x1D4D0 - 'A'); break;
                     case FontType::FrakturBold:       buff += (wc + 0x1D56C - 'A'); break;
                     default: break;
-                    // clang-format on
-                    }
+                    } // clang-format on
                 } else if (wc >= 'a' && wc <= 'z') {
                     switch (font.GetFontType()) {
                     // clang-format off
@@ -127,8 +121,7 @@ public:
                     case FontType::ScriptBold:        buff += (wc + 0x1D4EA - 'a'); break;
                     case FontType::FrakturBold:       buff += (wc + 0x1D586 - 'a'); break;
                     default: break;
-                    // clang-format on
-                    }
+                    } // clang-format on
                 } else if (wc >= '0' && wc <= '9') {
                     switch (font.GetFontType()) {
                     // clang-format off
@@ -144,8 +137,7 @@ public:
                     case FontType::SansSerifBold:     buff += (wc + 0x1D7EC - '0'); break;
                     case FontType::Monospace:         buff += (wc + 0x1D7F6 - '0'); break;
                     default: break;
-                    // clang-format on
-                    }
+                    } // clang-format on
                 } else {
                     buff += wc;
                 }
@@ -153,17 +145,15 @@ public:
             Console::Print(buff);
         }
 
-//        Console::GlobalVPos() = 0;
-//        Console::GlobalHPos() = 0;
-//        h_global_pos_ += str.length();
+        //        Console::GlobalVPos() = 0;
+        //        Console::GlobalHPos() = 0;
+        //        h_global_pos_ += str.length();
     }
 
 private:
     Font font_;
 
-    uint HeaderSize() const noexcept override {
-        return 0;
-    }
+    uint HeaderSize() const noexcept override { return 0; }
 };
 
 } // namespace WConsole

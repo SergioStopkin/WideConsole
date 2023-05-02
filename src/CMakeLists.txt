@@ -1,4 +1,4 @@
-#set(TARGET ${PROJECT_NAME})
+# set(TARGET ${PROJECT_NAME})
 set(TARGET wconsole)
 
 add_executable(${TARGET} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)

@@ -5,12 +5,12 @@
  * you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * WConsole is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
@@ -51,10 +51,11 @@ struct ConsoleView {
     bool  is_underline;
 
     ConsoleView()
-              : foreground  (Color::Default),
-                background  (Color::Default),
-                is_inverse  (false),
-                is_underline(false) {
+        : foreground(Color::Default)
+        , background(Color::Default)
+        , is_inverse(false)
+        , is_underline(false)
+    {
     }
 };
 
@@ -66,11 +67,12 @@ struct ConsoleState {
     uint row_num;
 
     ConsoleState()
-               : h_pos    (0),
-                 v_pos    (0),
-                 max_v_pos(0),
-                 col_num  (0),
-                 row_num  (0) {
+        : h_pos(0)
+        , v_pos(0)
+        , max_v_pos(0)
+        , col_num(0)
+        , row_num(0)
+    {
     }
 };
 

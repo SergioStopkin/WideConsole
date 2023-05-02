@@ -5,22 +5,18 @@
  * you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * WConsole is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef WCONSOLE_GRAPH_H_
 #define WCONSOLE_GRAPH_H_ 1
-
-#include <string>
-#include <utility>
-#include <vector>
 
 #include "console.h"
 #include "igrid.h"
@@ -29,10 +25,14 @@
 #include "iprecision.h"
 #include "irange.h"
 
+#include <string>
+#include <utility>
+#include <vector>
+
 namespace WConsole {
 
 enum class Point : wchar_t {
-    Dot           = 0x2022, //0x2981
+    Dot           = 0x2022, // 0x2981
     Triangle      = 0x25B2,
     SmallTriangle = 0x25B4,
     Rhombus       = 0x25C6,
@@ -67,44 +67,42 @@ enum class Point : wchar_t {
 
 class Graph final : public IObject, public IHeader, public IRange, public IGrid, public IPrecisionP2 {
 public:
-    explicit Graph(const Point point       = Point::Dot,
-                   const Color point_color = Color::BrightRed)
-                 : IHeader     (true, DataPosition::Left),
-                   IRange      (-10, 10, -10, 10),
-                   point_      ((wchar_t)point),
-                   point_color_(point_color) {
+    explicit Graph(const Point point = Point::Dot, const Color point_color = Color::BrightRed)
+        : IHeader(true, DataPosition::Left)
+        , IRange(-10, 10, -10, 10)
+        , point_((wchar_t)point)
+        , point_color_(point_color)
+    {
     }
 
-    void SetPoint(const Point point) noexcept {
-        point_ = (wchar_t)point;
-    }
+    void SetPoint(const Point point) noexcept { point_ = (wchar_t)point; }
 
-    void SetPointColor(const Color color) noexcept {
-        point_color_ = color;
-    }
+    void SetPointColor(const Color color) noexcept { point_color_ = color; }
 
     template <typename T>
-    void PrintObject(const std::vector<std::pair<T, T>> & data) {
+    void PrintObject(const std::vector<std::pair<T, T>> & data)
+    {
         // Pre-processing
         Console::PreProcessing(horizontal_size_, HeaderSize());
 
         const double h_step        = (h_max_ - h_min_) / (double)(horizontal_size_ - 1);
-        const double v_step        = (v_max_ - v_min_) / (double)(vertical_size_   - 1);
+        const double v_step        = (v_max_ - v_min_) / (double)(vertical_size_ - 1);
         const auto   v_alignment   = (uint)(std::max(std::to_string((int)v_min_).size(), std::to_string((int)v_max_).size())
-                                            + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
+                                        + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
         const bool   is_data_empty = (data.begin() == data.end());
         const uint   h_zero        = horizontal_size_ / 2;
-        const uint   v_zero        = vertical_size_   / 2;
+        const uint   v_zero        = vertical_size_ / 2;
 
         std::vector<std::pair<uint, uint>> sort_data;
 
         if (!is_data_empty) {
             for (const auto & pair : data) {
-                if (pair.first > (h_max_ + h_step) || pair.first < (h_min_ - h_step) || pair.second > (v_max_ + v_step) || pair.second < (v_min_ - v_step)) {
+                if (pair.first > (h_max_ + h_step) || pair.first < (h_min_ - h_step) || pair.second > (v_max_ + v_step)
+                    || pair.second < (v_min_ - v_step)) {
                     continue;
                 }
 
-                const auto h = (uint)((pair.first  - h_min_) / h_step + 0.5);
+                const auto h = (uint)((pair.first - h_min_) / h_step + 0.5);
                 const auto v = (uint)((pair.second - v_min_) / v_step + 0.5);
 
                 /// todo: optimize
@@ -138,7 +136,7 @@ public:
         }
 
         if (Console::GlobalHPos() > 0) {
-//            h_global_pos_ = h_pos_;
+            //            h_global_pos_ = h_pos_;
         }
 
         // Upper arrow
@@ -211,7 +209,6 @@ public:
                         buff += grid_;
                     }
                 }
-
             }
 
             // Right arrow
@@ -223,7 +220,7 @@ public:
             buff += L'\n';
         }
 
-//        uint h_pos        = (horizontal_size_ + ((is_data_header_) ? v_alignment : 0) + ((is_arrow_) ? 1 : 0));
+        //        uint h_pos        = (horizontal_size_ + ((is_data_header_) ? v_alignment : 0) + ((is_arrow_) ? 1 : 0));
         uint h_pos_header = 0;
 
         // Horizontal data header
@@ -240,10 +237,8 @@ public:
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
                 const double hs = hi * h_step + h_min_;
 
-                const uint h_alignment = (uint)(std::to_string(std::abs((int)hs)).size()
-                                                + ((hs < 0) ? 1 : 0)
-                                                + ((h_precision_ > 0) ? (h_precision_ + 1) : 0)
-                                                + 1); // for one space
+                const uint h_alignment = (uint)(std::to_string(std::abs((int)hs)).size() + ((hs < 0) ? 1 : 0)
+                                                + ((h_precision_ > 0) ? (h_precision_ + 1) : 0) + 1); // for one space
                 if (count % h_alignment == 0) {
                     WriteDataToBuff(buff, hs, h_alignment, h_precision_);
                     h_pos_header += h_alignment;
@@ -273,9 +268,7 @@ private:
     wchar_t point_;
     Color   point_color_;
 
-    uint HeaderSize() const noexcept override {
-        return GetHeaderSize();
-    }
+    uint HeaderSize() const noexcept override { return GetHeaderSize(); }
 };
 
 } // namespace WConsole

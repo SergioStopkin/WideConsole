@@ -5,12 +5,12 @@
  * you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * WConsole is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
@@ -24,28 +24,18 @@ namespace WConsole {
 
 class IGrid {
 public:
-    enum class Arrow : uchar {
-        Big,
-        Small
-    };
+    enum class Arrow : uchar { Big, Small };
 
-    void SetAxisColor(const Color color) noexcept {
-        axis_color_ = color;
-    }
+    void SetAxisColor(const Color color) noexcept { axis_color_ = color; }
 
-    void SetGridColor(const Color color) noexcept {
-        grid_color_ = color;
-    }
+    void SetGridColor(const Color color) noexcept { grid_color_ = color; }
 
-    void SetArrow(const Arrow arrow) noexcept {
-        arrow_ = arrow;
-    }
+    void SetArrow(const Arrow arrow) noexcept { arrow_ = arrow; }
 
-    void ShowArrow(const bool show) noexcept {
-        is_arrow_ = show;
-    }
+    void ShowArrow(const bool show) noexcept { is_arrow_ = show; }
 
-    void ShowGrid(const bool show) noexcept {
+    void ShowGrid(const bool show) noexcept
+    {
         is_grid_ = show;
         grid_    = ((show) ? (wchar_t)GridCode::SmallDot_ : ' ');
     }
@@ -71,7 +61,7 @@ protected:
         RT_          = 0x2524,
         UT_          = 0x252C,
         DT_          = 0x2534,
-        SmallDot_    = 0x00b7, //0x0387
+        SmallDot_    = 0x00b7, // 0x0387
     };
 
     Color   axis_color_;
@@ -86,10 +76,11 @@ protected:
                    const Arrow arrow      = Arrow::Small,
                    const bool  show_arrow = true,
                    const bool  show_grid  = true)
-                 : axis_color_(axis_color),
-                   grid_color_(grid_color),
-                   arrow_     (arrow),
-                   is_arrow_  (show_arrow) {
+        : axis_color_(axis_color)
+        , grid_color_(grid_color)
+        , arrow_(arrow)
+        , is_arrow_(show_arrow)
+    {
         ShowGrid(show_grid);
     }
 

@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "ForGTest.hpp"
+
+#include <gtest/gtest.h>
 
 TEST(TestOne, TestOne)
 {

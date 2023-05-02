@@ -5,12 +5,12 @@
  * you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * WConsole is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
@@ -19,7 +19,7 @@
 #define WCONSOLE_CONSOLE_H_ 1
 
 #if (defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__))
-#define WINDOWS 1
+#define WINDOWS  1
 #define NOMINMAX 1
 #else
 #define UNIX 1
@@ -37,23 +37,19 @@
 #include <unistd.h>
 #endif
 
+#include "types.h"
+
 #include <algorithm>
 #include <string>
 
-#include "types.h"
-
 namespace WConsole {
 
-enum class Position : uchar {
-    Up,
-    Down,
-    Right,
-    Left
-};
+enum class Position : uchar { Up, Down, Right, Left };
 
 class Console final {
 public:
-    static void NewLine() noexcept {
+    static void NewLine() noexcept
+    {
         ChangePosition(Position::Down, global_state_.max_v_pos - global_state_.v_pos);
         Print("\n");
         global_state_.h_pos     = 0;
@@ -68,9 +64,10 @@ public:
         h_pos_ = global_h_pos_;
     }*/
 
-    static void Clear() noexcept {
+    static void Clear() noexcept
+    {
 #ifdef WINDOWS
-        COORD pos {0, 0};
+        COORD pos { 0, 0 };
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 #else
         Print("\ec");
@@ -97,11 +94,11 @@ public:
 
     Console() = delete;
 
-    static void ChangeColor(const Color color, const bool is_foreground = true) noexcept {
+    static void ChangeColor(const Color color, const bool is_foreground = true) noexcept
+    {
         if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
-            switch (color) {
-            // clang-format off
+            switch (color) { // clang-format off
             // case Color::Normal:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);                                                          break;
             // case Color::Red:     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);                                             break;
             // case Color::Green:   SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);                                           break;
@@ -131,8 +128,7 @@ public:
 
             case Color::Default:       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color_); break;
             case Color::BrightDefault: SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color_); break;
-            // clang-format on
-            }
+            } // clang-format on
 #else
             switch (color) {
             // clang-format off
@@ -154,8 +150,7 @@ public:
             case Color::BrightWhite:   Print("\e[1;37m"); break;
             case Color::Default:       Print("\e[0m");    break;
             case Color::BrightDefault: Print("\e[;1m");   break;
-            // clang-format on
-            }
+            } // clang-format on
 #endif
             if (is_foreground) {
                 global_view_.foreground = color;
@@ -165,7 +160,8 @@ public:
         }
     }
 
-    static void WriteColorToBuff(std::wstring & buff, const Color color, const bool is_foreground = true) noexcept {
+    static void WriteColorToBuff(std::wstring & buff, const Color color, const bool is_foreground = true) noexcept
+    {
         if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
             Print(buff);
@@ -192,8 +188,7 @@ public:
             case Color::BrightWhite:   buff += L"\e[0;1m\e[37m"; break;
             case Color::Default:       buff += L"\e[;0m";        break;
             case Color::BrightDefault: buff += L"\e[;1m";        break;
-            // clang-format on
-            }
+            } // clang-format on
 #endif
             if (is_foreground) {
                 global_view_.foreground = color;
@@ -203,9 +198,10 @@ public:
         }
     }
 
-    static void ChangePosition(const Position position, const uint number) noexcept {
+    static void ChangePosition(const Position position, const uint number) noexcept
+    {
 #ifdef WINDOWS
-        COORD pos;
+        COORD                      pos;
         CONSOLE_SCREEN_BUFFER_INFO info;
 
         GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
@@ -219,24 +215,23 @@ public:
         case Position::Down  : pos.Y += number; break;
         case Position::Right : pos.X += number; break;
         case Position::Left  : pos.X -= number; break;
-        // clang-format on
-        }
+        } // clang-format on
 
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 #else
-//        printf( "%s%d;%dH", CSI, fila + 1, columna + 1 );
+        //        printf( "%s%d;%dH", CSI, fila + 1, columna + 1 );
         switch (position) {
         // clang-format off
         case Position::Up    : Print("\e[" + std::to_string(number) + "A"); break;
         case Position::Down  : Print("\e[" + std::to_string(number) + "B"); break;
         case Position::Right : Print("\e[" + std::to_string(number) + "C"); break;
         case Position::Left  : Print("\e[" + std::to_string(number) + "D"); break;
-        // clang-format on
-        }
+        } // clang-format on
 #endif
     }
 
-    static void WritePositionToBuff(std::wstring & buff, const Position position, const int number) noexcept {
+    static void WritePositionToBuff(std::wstring & buff, const Position position, const int number) noexcept
+    {
         if (number > 0) {
 #ifdef WINDOWS
             Print(buff);
@@ -249,13 +244,13 @@ public:
             case Position::Down  : buff += L"\e[" + std::to_wstring(number) + L'B'; break;
             case Position::Right : buff += L"\e[" + std::to_wstring(number) + L'C'; break;
             case Position::Left  : buff += L"\e[" + std::to_wstring(number) + L'D'; break;
-            // clang-format on
-            }
+            } // clang-format on
 #endif
         }
     }
 
-    static void WriteViewToBuff(std::wstring & buff, const ConsoleView & view) noexcept {
+    static void WriteViewToBuff(std::wstring & buff, const ConsoleView & view) noexcept
+    {
         buff += L"\e[";
 
         if (view.foreground == Color::Default || view.background == Color::Default || view.background == Color::BrightDefault) {
@@ -282,8 +277,7 @@ public:
         case Color::BrightWhite:   buff += L"1;37"; break;
         case Color::BrightDefault: buff += L";1";   break;
         default: break;
-        // clang-format on
-        }
+        } // clang-format on
 
         switch (view.background) {
         // clang-format off
@@ -304,8 +298,7 @@ public:
         case Color::BrightCyan:    buff += L";46"; break;
         case Color::BrightWhite:   buff += L";47"; break;
         default: break;
-        // clang-format on
-        }
+        } // clang-format on
 
         if (view.is_underline) {
             buff += L";4";
@@ -322,7 +315,8 @@ public:
         buff += L"m";
     }
 
-    static void Print(const char * s) noexcept {
+    static void Print(const char * s) noexcept
+    {
 #ifdef WINDOWS
         std::wprintf(L"%s", s);
 #else
@@ -330,7 +324,8 @@ public:
 #endif
     }
 
-    static void Print(const std::string & str) noexcept {
+    static void Print(const std::string & str) noexcept
+    {
 #ifdef WINDOWS
         std::wprintf(L"%s", str.c_str());
 #else
@@ -338,7 +333,8 @@ public:
 #endif
     }
 
-    static void Print(const wchar_t * ws) noexcept {
+    static void Print(const wchar_t * ws) noexcept
+    {
 #ifdef WINDOWS
         std::wprintf(L"%ls", ws);
 #else
@@ -346,7 +342,8 @@ public:
 #endif
     }
 
-    static void Print(const std::wstring & wstr) noexcept {
+    static void Print(const std::wstring & wstr) noexcept
+    {
 #ifdef WINDOWS
         std::wprintf(L"%ls", wstr.c_str());
 #else
@@ -354,7 +351,8 @@ public:
 #endif
     }
 
-    static void ShowCursor(const bool show) noexcept {
+    static void ShowCursor(const bool show) noexcept
+    {
 #ifdef WINDOWS
         CONSOLE_CURSOR_INFO info;
         info.bVisible = (BOOL)show;
@@ -364,30 +362,27 @@ public:
 #endif
     }
 
-    static void PreProcessing(const uint horizontal_size, const uint header_size) noexcept {
+    static void PreProcessing(const uint horizontal_size, const uint header_size) noexcept
+    {
         if (global_state_.col_num > 0 && (global_state_.h_pos + horizontal_size + header_size) > global_state_.col_num) {
             NewLine();
         }
     }
 
-    static uint GlobalHPos() noexcept {
-        return global_state_.h_pos;
-    }
+    static uint GlobalHPos() noexcept { return global_state_.h_pos; }
 
-    static uint GlobalVPos() noexcept {
-        return global_state_.v_pos;
-    }
+    static uint GlobalVPos() noexcept { return global_state_.v_pos; }
 
-    static void GlobalHPos(const uint h_pos) noexcept {
-        global_state_.h_pos = h_pos;
-    }
+    static void GlobalHPos(const uint h_pos) noexcept { global_state_.h_pos = h_pos; }
 
-    static void GlobalVPos(const uint v_pos) noexcept {
-        global_state_.v_pos = v_pos;
+    static void GlobalVPos(const uint v_pos) noexcept
+    {
+        global_state_.v_pos     = v_pos;
         global_state_.max_v_pos = std::max(v_pos, global_state_.max_v_pos);
     }
 
-    static void Start() noexcept {
+    static void Start() noexcept
+    {
 #ifdef WINDOWS
         _setmode(_fileno(stdout), _O_WTEXT);
 
@@ -415,7 +410,8 @@ public:
         Console::ShowCursor(false);
     }
 
-    static void End() noexcept {
+    static void End() noexcept
+    {
         Console::ChangeColor(Color::Default);
         Console::ShowCursor(true);
 #ifdef UNIX
@@ -428,16 +424,16 @@ private:
     static ConsoleState global_state_;
     static ConsoleView  global_view_;
 #ifdef WINDOWS
-    static short        default_color_;
-    static short        default_back_color_;
+    static short default_color_;
+    static short default_back_color_;
 #endif
 };
 
 ConsoleState Console::global_state_;
 ConsoleView  Console::global_view_;
 #ifdef WINDOWS
-short        Console::default_color_      = 0;
-short        Console::default_back_color_ = 0;
+short Console::default_color_      = 0;
+short Console::default_back_color_ = 0;
 #endif
 
 } // namespace WConsole
