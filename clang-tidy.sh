@@ -14,4 +14,4 @@ echo $TEST_FILES | xargs clang-tidy --quiet -p $BUILD_DIR_DEV \
         -fuchsia-statically-constructed-objects'
 let "RESULT+=$?"
 
-echo "RESULT=$RESULT"
+return $RESULT
