@@ -44,19 +44,19 @@ enum class Color : uchar {
 };
 
 struct ConsoleView {
-    Color foreground{Color::Default};
-    Color background{Color::Default};
-    bool  is_inverse{false};
-    bool  is_underline{false};
-};
+    Color foreground { Color::Default };
+    Color background { Color::Default };
+    bool  is_inverse { false };
+    bool  is_underline { false };
+} __attribute__((packed)) __attribute__((aligned(4)));
 
 struct ConsoleState {
-    uint h_pos{0};
-    uint v_pos{0};
-    uint max_v_pos{0};
-    uint col_num{0};
-    uint row_num{0};
-};
+    uint h_pos { 0 };
+    uint v_pos { 0 };
+    uint max_v_pos { 0 };
+    uint col_num { 0 };
+    uint row_num { 0 };
+} __attribute__((packed)) __attribute__((aligned(32)));
 
 // template<typename T>
 // static uint integerPartSize(T value)

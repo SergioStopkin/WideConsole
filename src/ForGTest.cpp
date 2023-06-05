@@ -2,6 +2,7 @@
 
 #include "ForGTest.hpp"
 
+// cppcheck-suppress unusedFunction
 int TestingClass::Func1()
 {
     return 1;

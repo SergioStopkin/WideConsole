@@ -357,7 +357,7 @@ public:
         info.bVisible = (BOOL)show;
         SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 #else
-        std::string str{"\e[?25"};
+        std::string str { "\e[?25" };
         if (show) {
             str.append("h");
         } else {

@@ -6,4 +6,4 @@ RESULT=$?
 echo $CMAKE_FILES | xargs -n 1 cmake-format --check
 let "RESULT+=$?"
 
-return $RESULT
+exit $RESULT

@@ -18,7 +18,15 @@ Checks:             '*,
 -cppcoreguidelines-avoid-non-const-global-variables,
 -hicpp-use-nullptr,
 -modernize-use-nullptr,
--cppcoreguidelines-macro-usage
+-modernize-use-using,
+-cppcoreguidelines-macro-usage,
+-clang-diagnostic-ignored-optimization-argument,
+-readability-identifier-length,
+-readability-function-cognitive-complexity,
+-bugprone-easily-swappable-parameters,
+-altera-unroll-loops,
+-altera-id-dependent-backward-branch,
+-cppcoreguidelines-virtual-class-destructor
 '
 
 WarningsAsErrors:   '*'

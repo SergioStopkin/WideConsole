@@ -1,5 +1,6 @@
 set(TARGET unit-tests)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -O0 -fno-inline -fno-inline-small-functions -fno-elide-constructors")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -O0 -fno-inline -fno-inline-small-functions -fno-elide-constructors"
+)# NOLINT
 
 add_executable(
     ${TARGET} ${CMAKE_CURRENT_SOURCE_DIR}/TestOne.cpp ${CMAKE_CURRENT_SOURCE_DIR}/TestTwo.cpp

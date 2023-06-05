@@ -84,13 +84,14 @@ public:
         // Pre-processing
         Console::preProcessing(horizontal_size_, headerSize());
 
-        const double h_step        = (h_max_ - h_min_) / static_cast<double>(horizontal_size_ - 1);
-        const double v_step        = (v_max_ - v_min_) / static_cast<double>(vertical_size_ - 1);
-        const auto   v_alignment   = static_cast<uint>(std::max(std::to_string(static_cast<int>(v_min_)).size(), std::to_string(static_cast<int>(v_max_)).size())
-                                        + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
-        const bool   is_data_empty = (data.begin() == data.end());
-        const uint   h_zero        = horizontal_size_ / 2;
-        const uint   v_zero        = vertical_size_ / 2;
+        const double h_step      = (h_max_ - h_min_) / static_cast<double>(horizontal_size_ - 1);
+        const double v_step      = (v_max_ - v_min_) / static_cast<double>(vertical_size_ - 1);
+        const auto   v_alignment = static_cast<uint>(
+            std::max(std::to_string(static_cast<int>(v_min_)).size(), std::to_string(static_cast<int>(v_max_)).size())
+            + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
+        const bool is_data_empty = (data.begin() == data.end());
+        const uint h_zero        = horizontal_size_ / 2;
+        const uint v_zero        = vertical_size_ / 2;
 
         std::vector<std::pair<uint, uint>> sort_data;
 
@@ -128,7 +129,7 @@ public:
         auto data_iterator = sort_data.cbegin();
 
         std::wstring buff;
-        buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
+        buff.reserve(static_cast<std::basic_string<wchar_t>::size_type>(vertical_size_ * horizontal_size_ * 8)); // magic eight (hateful :)
 
         if (Console::globalVPos() > 0) {
             Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());
@@ -237,7 +238,7 @@ public:
                 const double hs = hi * h_step + h_min_;
 
                 const uint h_alignment = static_cast<uint>(std::to_string(std::abs(static_cast<int>(hs))).size() + ((hs < 0) ? 1 : 0)
-                                                + ((h_precision_ > 0) ? (h_precision_ + 1) : 0) + 1); // for one space
+                                                           + ((h_precision_ > 0) ? (h_precision_ + 1) : 0) + 1); // for one space
                 if (count % h_alignment == 0) {
                     writeDataToBuff(&buff, hs, h_alignment, h_precision_);
                     h_pos_header += h_alignment;

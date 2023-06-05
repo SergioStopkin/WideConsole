@@ -2,7 +2,7 @@
 
 if [[ $# -eq 0 ]]; then
     echo "Use ./build.sh <dev/rel/test>"
-    return 1
+    exit 1
 elif [[ $1 == "dev" ]]; then
     BUILD_DIR=$BUILD_DIR_DEV
     CMAKE_PARAMS="-DASAN=ON"
@@ -15,7 +15,7 @@ elif [[ $1 == "test" ]]; then
     TARGET=$TARGET_TEST
 else
     echo "Use ./build.sh <dev/rel/test>"
-    return 1
+    exit 1
 fi
 
 cmake -H. -B$BUILD_DIR $CMAKE_PARAMS

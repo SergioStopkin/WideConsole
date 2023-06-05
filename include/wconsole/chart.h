@@ -108,21 +108,22 @@ private:
         return ((chart_type_ == ChartType::Pie) ? (2 * IHeader::headerSize()) : IHeader::headerSize());
     }
 
-    static void writeBricksToBuff(std::wstring * buff, const BrickCode brick, const uint number = 1) noexcept
+    static void writeBricksToBuff(std::wstring * buff, const BrickCode brick, const uint number = 1)
     {
-        for (uint i = 0; i < number; ++i) {
-            *buff += static_cast<wchar_t>(brick);
-        }
+        // for (uint i = 0; i < number; ++i) {
+        //     *buff += static_cast<wchar_t>(brick);
+        // }
+        buff->append(number, static_cast<wchar_t>(brick));
     }
 
-    static wchar_t outerBrick([[maybe_unused]]const double hs,
-                              const double vs,
-                              const double h_center,
-                              const double v_center,
-                              [[maybe_unused]]const double h_step,
-                              [[maybe_unused]]const double v_step,
-                              const double real_x,
-                              const double real_y) noexcept
+    static wchar_t outerBrick([[maybe_unused]] const double hs,
+                              const double                  vs,
+                              const double                  h_center,
+                              const double                  v_center,
+                              [[maybe_unused]] const double h_step,
+                              [[maybe_unused]] const double v_step,
+                              const double                  real_x,
+                              const double                  real_y) noexcept
     {
         BrickCode brick    = BrickCode::FF_OP100_;
         uint      quadrant = 0;
@@ -255,7 +256,8 @@ private:
         //        size_t cs             = colors_.size();
         bool write_over     = (over == 0);
         T    grid_value     = v_max_;
-        uint grid_alignment = static_cast<uint>(std::max(std::to_string(static_cast<int>(v_max_)).size(), std::to_string(static_cast<int>(v_min_)).size()));
+        uint grid_alignment = static_cast<uint>(
+            std::max(std::to_string(static_cast<int>(v_max_)).size(), std::to_string(static_cast<int>(v_min_)).size()));
         uint data_alignment = 0;
 
         if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
@@ -508,7 +510,7 @@ private:
         std::vector<std::pair<double, double>> coord;
         std::vector<std::pair<double, double>> header_coord;
         // const double                           coef_alpha = 0.01; // >= 0.5 && < 0.005 => segfault
-        const size_t                           multiplier = 100;
+        const size_t multiplier = 100;
 
         // Alpha
         double alpha = PiRad / 2.0;
@@ -597,7 +599,7 @@ private:
         auto header_iterator = sort_header.cbegin();
 
         std::wstring buff;
-        buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
+        buff.reserve(static_cast<std::basic_string<wchar_t>::size_type>(vertical_size_ * horizontal_size_ * 8)); // magic eight (hateful :)
 
         if (Console::globalVPos() > 0) {
             Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());

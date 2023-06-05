@@ -26,8 +26,8 @@ done
 
 if [[ $(echo $COVERAGE $COV_MIN_LIMIT | awk '{ if ($1 >= $2) print 1; }') ]]; then
     echo "Unit tests coverage $COVERAGE"
-    return 0
+    exit 0
 else
     echo "Unit tests coverage $COVERAGE less then $COV_MIN_LIMIT"
-    return 1
+    exit 1
 fi
