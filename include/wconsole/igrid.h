@@ -36,7 +36,7 @@ public:
     void showGrid(const bool show) noexcept
     {
         is_grid_ = show;
-        grid_    = ((show) ? (wchar_t)GridCode::SmallDot_ : ' ');
+        grid_    = (show ? static_cast<wchar_t>(GridCode::SmallDot_) : ' ');
     }
 
 protected:
@@ -70,7 +70,7 @@ protected:
     bool    is_arrow_;
     bool    is_grid_;
 
-    explicit IGrid(const Color axis_color = Color::Default,
+    explicit IGrid(const Color axis_color = Color::Default, // NOLINT(cppcoreguidelines-pro-type-member-init, hicpp-member-init)
                    const Color grid_color = Color::White,
                    const Arrow arrow      = Arrow::Small,
                    const bool  show_arrow = true,

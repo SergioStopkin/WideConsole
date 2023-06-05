@@ -44,35 +44,24 @@ enum class Color : uchar {
 };
 
 struct ConsoleView {
-    Color foreground;
-    Color background;
-    bool  is_inverse;
-    bool  is_underline;
-
-    ConsoleView()
-        : foreground(Color::Default)
-        , background(Color::Default)
-        , is_inverse(false)
-        , is_underline(false)
-    {
-    }
+    Color foreground{Color::Default};
+    Color background{Color::Default};
+    bool  is_inverse{false};
+    bool  is_underline{false};
 };
 
 struct ConsoleState {
-    uint h_pos;
-    uint v_pos;
-    uint max_v_pos;
-    uint col_num;
-    uint row_num;
-
-    ConsoleState()
-        : h_pos(0)
-        , v_pos(0)
-        , max_v_pos(0)
-        , col_num(0)
-        , row_num(0)
-    {
-    }
+    uint h_pos{0};
+    uint v_pos{0};
+    uint max_v_pos{0};
+    uint col_num{0};
+    uint row_num{0};
 };
+
+// template<typename T>
+// static uint integerPartSize(T value)
+// {
+//     return static_cast<uint>(std::to_string(static_cast<int>(value)).size());
+// }
 
 } // namespace WConsole

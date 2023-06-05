@@ -53,8 +53,8 @@ int main() {
     chart.setChartColors(colors);
     chart.setHorizontalRange(0, max);
     chart.setVerticalRange(0, max);
-    chart.showDataHeader(false);
-    chart.showGrid(false);
+    // chart.showDataHeader(false);
+    // chart.showGrid(false);
 
     int count = 1;
     while (std::chrono::steady_clock::now() < g_start + g_duration) {
@@ -152,5 +152,6 @@ int main() {
     font.setFontType(WConsole::FontType::FullWidth);         text.printObject(str, font); WConsole::Console::newLine();
     text.resetFont();
     text.printObject("");
+
     return 0;
 }

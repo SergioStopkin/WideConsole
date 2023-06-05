@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include "types.h"
+
 #include <iomanip>
 #include <sstream>
 #include <typeinfo>
@@ -49,7 +51,7 @@ protected:
     [[nodiscard]] uint headerSize() const noexcept { return header_size_; }
 
     template <typename T>
-    void writeDataToBuff(std::wstring & buff, T value, uint alignment, int precision) noexcept
+    void writeDataToBuff(std::wstring * buff, T value, uint alignment, int precision) noexcept
     {
         std::wstring wvalue;
         header_size_ = alignment;
@@ -70,19 +72,19 @@ protected:
             case DataPosition::Left: diff = alignment - str_len; break;
             case DataPosition::Right:
                 diff = 0; // alignment - str_len - (alignment - str_len);
-                buff.append(alignment - str_len, ' ');
+                buff->append(alignment - str_len, ' ');
                 break;
             case DataPosition::Center:
                 diff = alignment - str_len - ((alignment - str_len) / 2);
-                buff.append(((alignment - str_len) / 2), ' ');
+                buff->append(((alignment - str_len) / 2), ' ');
                 break;
             }
         }
 
-        buff += wvalue;
+        *buff += wvalue;
 
         if (alignment > str_len) {
-            buff.append(diff, ' ');
+            buff->append(diff, ' ');
         }
     }
 

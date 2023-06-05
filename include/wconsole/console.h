@@ -47,6 +47,8 @@ enum class Position : uchar { Up, Down, Right, Left };
 
 class Console final {
 public:
+    Console() = delete;
+
     static void newLine() noexcept
     {
         changePosition(Position::Down, global_state_.max_v_pos - global_state_.v_pos);
@@ -90,8 +92,6 @@ public:
         global_h_pos_ = 0;
         global_v_pos_ = 0;
     }*/
-
-    Console() = delete;
 
     static void changeColor(const Color color, const bool is_foreground = true) noexcept
     {
@@ -159,34 +159,34 @@ public:
         }
     }
 
-    static void writeColorToBuff(std::wstring & buff, const Color color, const bool is_foreground = true) noexcept
+    static void writeColorToBuff(std::wstring * buff, const Color color, const bool is_foreground = true) noexcept
     {
         if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
 #ifdef WINDOWS
-            print(buff);
+            print(*buff);
             changeColor(color);
-            buff = L"";
+            *buff = L"";
 #else
             switch (color) {
             // clang-format off
-            case Color::Black:         buff += L"\e[0m\e[30m";   break;
-            case Color::Red:           buff += L"\e[0;31m";      break;
-            case Color::Green:         buff += L"\e[0m\e[32m";   break;
-            case Color::Yellow:        buff += L"\e[0m\e[33m";   break;
-            case Color::Blue:          buff += L"\e[0m\e[34m";   break;
-            case Color::Magenta:       buff += L"\e[0m\e[35m";   break;
-            case Color::Cyan:          buff += L"\e[0m\e[36m";   break;
-            case Color::White:         buff += L"\e[0m\e[37m";   break;
-            case Color::BrightBlack:   buff += L"\e[0;1m\e[30m"; break;
-            case Color::BrightRed:     buff += L"\e[0;1m\e[31m"; break;
-            case Color::BrightGreen:   buff += L"\e[0;1m\e[32m"; break;
-            case Color::BrightYellow:  buff += L"\e[0;1m\e[33m"; break;
-            case Color::BrightBlue:    buff += L"\e[0;1m\e[34m"; break;
-            case Color::BrightMagenta: buff += L"\e[0;1m\e[35m"; break;
-            case Color::BrightCyan:    buff += L"\e[0;1m\e[36m"; break;
-            case Color::BrightWhite:   buff += L"\e[0;1m\e[37m"; break;
-            case Color::Default:       buff += L"\e[;0m";        break;
-            case Color::BrightDefault: buff += L"\e[;1m";        break;
+            case Color::Black:         *buff += L"\e[0m\e[30m";   break;
+            case Color::Red:           *buff += L"\e[0;31m";      break;
+            case Color::Green:         *buff += L"\e[0m\e[32m";   break;
+            case Color::Yellow:        *buff += L"\e[0m\e[33m";   break;
+            case Color::Blue:          *buff += L"\e[0m\e[34m";   break;
+            case Color::Magenta:       *buff += L"\e[0m\e[35m";   break;
+            case Color::Cyan:          *buff += L"\e[0m\e[36m";   break;
+            case Color::White:         *buff += L"\e[0m\e[37m";   break;
+            case Color::BrightBlack:   *buff += L"\e[0;1m\e[30m"; break;
+            case Color::BrightRed:     *buff += L"\e[0;1m\e[31m"; break;
+            case Color::BrightGreen:   *buff += L"\e[0;1m\e[32m"; break;
+            case Color::BrightYellow:  *buff += L"\e[0;1m\e[33m"; break;
+            case Color::BrightBlue:    *buff += L"\e[0;1m\e[34m"; break;
+            case Color::BrightMagenta: *buff += L"\e[0;1m\e[35m"; break;
+            case Color::BrightCyan:    *buff += L"\e[0;1m\e[36m"; break;
+            case Color::BrightWhite:   *buff += L"\e[0;1m\e[37m"; break;
+            case Color::Default:       *buff += L"\e[;0m";        break;
+            case Color::BrightDefault: *buff += L"\e[;1m";        break;
             } // clang-format on
 #endif
             if (is_foreground) {
@@ -229,89 +229,89 @@ public:
 #endif
     }
 
-    static void writePositionToBuff(std::wstring & buff, const Position position, const int number) noexcept
+    static void writePositionToBuff(std::wstring * buff, const Position position, const int number) noexcept
     {
         if (number > 0) {
 #ifdef WINDOWS
-            print(buff);
+            print(*buff);
             changePosition(position, number);
-            buff = L"";
+            *buff = L"";
 #else
             switch (position) {
             // clang-format off
-            case Position::Up    : buff += L"\e[" + std::to_wstring(number) + L'A'; break;
-            case Position::Down  : buff += L"\e[" + std::to_wstring(number) + L'B'; break;
-            case Position::Right : buff += L"\e[" + std::to_wstring(number) + L'C'; break;
-            case Position::Left  : buff += L"\e[" + std::to_wstring(number) + L'D'; break;
+            case Position::Up    : *buff += L"\e[" + std::to_wstring(number) + L'A'; break;
+            case Position::Down  : *buff += L"\e[" + std::to_wstring(number) + L'B'; break;
+            case Position::Right : *buff += L"\e[" + std::to_wstring(number) + L'C'; break;
+            case Position::Left  : *buff += L"\e[" + std::to_wstring(number) + L'D'; break;
             } // clang-format on
 #endif
         }
     }
 
-    static void writeViewToBuff(std::wstring & buff, const ConsoleView & view) noexcept
+    static void writeViewToBuff(std::wstring * buff, const ConsoleView & view) noexcept
     {
-        buff += L"\e[";
+        *buff += L"\e[";
 
         if (view.foreground == Color::Default || view.background == Color::Default || view.background == Color::BrightDefault) {
-            buff += L"0;";
+            *buff += L"0;";
         }
 
         switch (view.foreground) {
         // clang-format off
-        case Color::Black:         buff += L"21;30"; break;
-        case Color::Red:           buff += L"21;31"; break;
-        case Color::Green:         buff += L"21;32"; break;
-        case Color::Yellow:        buff += L"21;33"; break;
-        case Color::Blue:          buff += L"21;34"; break;
-        case Color::Magenta:       buff += L"21;35"; break;
-        case Color::Cyan:          buff += L"21;36"; break;
-        case Color::White:         buff += L"21;37"; break;
-        case Color::BrightBlack:   buff += L"1;30"; break;
-        case Color::BrightRed:     buff += L"1;31"; break;
-        case Color::BrightGreen:   buff += L"1;32"; break;
-        case Color::BrightYellow:  buff += L"1;33"; break;
-        case Color::BrightBlue:    buff += L"1;34"; break;
-        case Color::BrightMagenta: buff += L"1;35"; break;
-        case Color::BrightCyan:    buff += L"1;36"; break;
-        case Color::BrightWhite:   buff += L"1;37"; break;
-        case Color::BrightDefault: buff += L";1";   break;
+        case Color::Black:         *buff += L"21;30"; break;
+        case Color::Red:           *buff += L"21;31"; break;
+        case Color::Green:         *buff += L"21;32"; break;
+        case Color::Yellow:        *buff += L"21;33"; break;
+        case Color::Blue:          *buff += L"21;34"; break;
+        case Color::Magenta:       *buff += L"21;35"; break;
+        case Color::Cyan:          *buff += L"21;36"; break;
+        case Color::White:         *buff += L"21;37"; break;
+        case Color::BrightBlack:   *buff += L"1;30"; break;
+        case Color::BrightRed:     *buff += L"1;31"; break;
+        case Color::BrightGreen:   *buff += L"1;32"; break;
+        case Color::BrightYellow:  *buff += L"1;33"; break;
+        case Color::BrightBlue:    *buff += L"1;34"; break;
+        case Color::BrightMagenta: *buff += L"1;35"; break;
+        case Color::BrightCyan:    *buff += L"1;36"; break;
+        case Color::BrightWhite:   *buff += L"1;37"; break;
+        case Color::BrightDefault: *buff += L";1";   break;
         default: break;
         } // clang-format on
 
         switch (view.background) {
         // clang-format off
-        case Color::Black:         buff += L";40"; break;
-        case Color::Red:           buff += L";41"; break;
-        case Color::Green:         buff += L";42"; break;
-        case Color::Yellow:        buff += L";43"; break;
-        case Color::Blue:          buff += L";44"; break;
-        case Color::Magenta:       buff += L";45"; break;
-        case Color::Cyan:          buff += L";46"; break;
-        case Color::White:         buff += L";47"; break;
-        case Color::BrightBlack:   buff += L";40"; break;
-        case Color::BrightRed:     buff += L";41"; break;
-        case Color::BrightGreen:   buff += L";42"; break;
-        case Color::BrightYellow:  buff += L";43"; break;
-        case Color::BrightBlue:    buff += L";44"; break;
-        case Color::BrightMagenta: buff += L";45"; break;
-        case Color::BrightCyan:    buff += L";46"; break;
-        case Color::BrightWhite:   buff += L";47"; break;
+        case Color::Black:         *buff += L";40"; break;
+        case Color::Red:           *buff += L";41"; break;
+        case Color::Green:         *buff += L";42"; break;
+        case Color::Yellow:        *buff += L";43"; break;
+        case Color::Blue:          *buff += L";44"; break;
+        case Color::Magenta:       *buff += L";45"; break;
+        case Color::Cyan:          *buff += L";46"; break;
+        case Color::White:         *buff += L";47"; break;
+        case Color::BrightBlack:   *buff += L";40"; break;
+        case Color::BrightRed:     *buff += L";41"; break;
+        case Color::BrightGreen:   *buff += L";42"; break;
+        case Color::BrightYellow:  *buff += L";43"; break;
+        case Color::BrightBlue:    *buff += L";44"; break;
+        case Color::BrightMagenta: *buff += L";45"; break;
+        case Color::BrightCyan:    *buff += L";46"; break;
+        case Color::BrightWhite:   *buff += L";47"; break;
         default: break;
         } // clang-format on
 
         if (view.is_underline) {
-            buff += L";4";
+            *buff += L";4";
         } else {
-            buff += L";24";
+            *buff += L";24";
         }
 
         if (view.is_inverse) {
-            buff += L";7";
+            *buff += L";7";
         } else {
-            buff += L";27";
+            *buff += L";27";
         }
 
-        buff += L"m";
+        *buff += L"m";
     }
 
     static void print(const char * s) noexcept
@@ -357,7 +357,13 @@ public:
         info.bVisible = (BOOL)show;
         SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 #else
-        print(std::string("\e[?25") + ((show) ? "h" : "l"));
+        std::string str{"\e[?25"};
+        if (show) {
+            str.append("h");
+        } else {
+            str.append("l");
+        }
+        print(str);
 #endif
     }
 
@@ -401,7 +407,9 @@ public:
         std::wcout.imbue(std::locale(""));
 
         winsize wsize {};
-        if (ioctl(STDIN_FILENO, TIOCGWINSZ, (char *)&wsize) != -1) {
+        // char * pWSize = &wsize;
+        // if (ioctl(STDIN_FILENO, TIOCGWINSZ, reinterpret_cast<char *>(&wsize)) != -1) {
+        if (ioctl(STDIN_FILENO, TIOCGWINSZ, &wsize) != -1) { // NOLINT(cppcoreguidelines-pro-type-vararg, hicpp-vararg)
             global_state_.col_num = wsize.ws_col;
             global_state_.row_num = wsize.ws_row;
         }
@@ -420,19 +428,12 @@ public:
     }
 
 private:
-    static ConsoleState global_state_;
-    static ConsoleView  global_view_;
+    inline static ConsoleState global_state_;
+    inline static ConsoleView  global_view_;
 #ifdef WINDOWS
-    static short default_color_;
-    static short default_back_color_;
+    inline static short default_color_      = 0;
+    inline static short default_back_color_ = 0;
 #endif
 };
-
-ConsoleState Console::global_state_;
-ConsoleView  Console::global_view_;
-#ifdef WINDOWS
-short Console::default_color_      = 0;
-short Console::default_back_color_ = 0;
-#endif
 
 } // namespace WConsole

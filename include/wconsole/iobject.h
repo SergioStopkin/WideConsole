@@ -58,11 +58,9 @@ protected:
     }
 
 private:
-    static int object_counter_;
+    inline static int object_counter_ = 0;
 
     [[nodiscard]] virtual uint headerSize() const noexcept = 0;
 };
-
-int IObject::object_counter_ = 0;
 
 } // namespace WConsole

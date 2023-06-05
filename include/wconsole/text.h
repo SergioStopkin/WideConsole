@@ -44,18 +44,18 @@ public:
 
         if (Console::globalVPos() > 0) {
             //            ChangePosition(Position::Up, Console::globalVPos());
-            Console::writePositionToBuff(buff, Position::Up, Console::globalVPos());
+            Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());
         }
 
         if (Console::globalHPos() > 0) {
             //            h_global_pos_ = Console::globalHPos();
             //            ChangePosition(Position::Right, Console::globalHPos   ());
-            Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
+            Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
         }
 
         //        changeColor(color_);
         //        print(s);
-        Console::writeViewToBuff(buff, font_.consoleView());
+        Console::writeViewToBuff(&buff, font_.consoleView());
         Console::print(buff);
         Console::print(s);
         Console::globalHPos(0);
@@ -64,29 +64,29 @@ public:
 
     void printObject(const std::string & str) noexcept { printObject(str, font_); }
 
-    void printObject(const std::string & str, const Font & font) noexcept
+    void printObject(const std::string & str, const Font & font) noexcept // NOLINT(readability-convert-member-functions-to-static)
     {
         std::wstring buff;
 
         if (Console::globalVPos() > 0) {
-            Console::writePositionToBuff(buff, Position::Up, Console::globalVPos());
+            Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());
         }
 
         if (Console::globalHPos() > 0) {
             //            h_global_pos_ = Console::globalHPos();
-            Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
+            Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
         }
 
         //        std::wstring shift_pos = L"\e[0;0H";
         //        buff += shift_pos;
 
-        Console::writeViewToBuff(buff, font.consoleView());
+        Console::writeViewToBuff(&buff, font.consoleView());
 
         if (font.fontType() == FontType::Default) {
             Console::print(buff);
             Console::print(str);
         } else {
-            for (auto & wc : str) {
+            for (const auto & wc : str) {
                 if (font.fontType() == FontType::FullWidth && wc >= 0x21 && wc <= 0x7E) {
                     buff += (wc + 0xFF01 - 0x21);
                 } else if (wc >= 'A' && wc <= 'Z') {
@@ -124,12 +124,12 @@ public:
                 } else if (wc >= '0' && wc <= '9') {
                     switch (font.fontType()) {
                     // clang-format off
-                    case FontType::Serif:             buff += wc;                   break;
-                    case FontType::SerifItal:         buff += wc;                   break;
-                    case FontType::SerifBoldItal:     buff += wc;                   break;
-                    case FontType::SansSerifItal:     buff += wc;                   break;
-                    case FontType::SansSerifBoldItal: buff += wc;                   break;
-                    case FontType::ScriptBold:        buff += wc;                   break;
+                    case FontType::Serif:
+                    case FontType::SerifItal:
+                    case FontType::SerifBoldItal:
+                    case FontType::SansSerifItal:
+                    case FontType::SansSerifBoldItal:
+                    case FontType::ScriptBold:
                     case FontType::FrakturBold:       buff += wc;                   break;
                     case FontType::SerifBold:         buff += (wc + 0x1D7CE - '0'); break;
                     case FontType::SansSerif:         buff += (wc + 0x1D7E2 - '0'); break;

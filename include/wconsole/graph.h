@@ -69,12 +69,12 @@ public:
     explicit Graph(const Point point = Point::Dot, const Color point_color = Color::BrightRed)
         : IHeader(true, DataPosition::Left)
         , IRange(-10, 10, -10, 10)
-        , point_((wchar_t)point)
+        , point_(static_cast<wchar_t>(point))
         , point_color_(point_color)
     {
     }
 
-    void setPoint(const Point point) noexcept { point_ = (wchar_t)point; }
+    void setPoint(const Point point) noexcept { point_ = static_cast<wchar_t>(point); }
 
     void setPointColor(const Color color) noexcept { point_color_ = color; }
 
@@ -84,9 +84,9 @@ public:
         // Pre-processing
         Console::preProcessing(horizontal_size_, headerSize());
 
-        const double h_step        = (h_max_ - h_min_) / (double)(horizontal_size_ - 1);
-        const double v_step        = (v_max_ - v_min_) / (double)(vertical_size_ - 1);
-        const auto   v_alignment   = (uint)(std::max(std::to_string((int)v_min_).size(), std::to_string((int)v_max_).size())
+        const double h_step        = (h_max_ - h_min_) / static_cast<double>(horizontal_size_ - 1);
+        const double v_step        = (v_max_ - v_min_) / static_cast<double>(vertical_size_ - 1);
+        const auto   v_alignment   = static_cast<uint>(std::max(std::to_string(static_cast<int>(v_min_)).size(), std::to_string(static_cast<int>(v_max_)).size())
                                         + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
         const bool   is_data_empty = (data.begin() == data.end());
         const uint   h_zero        = horizontal_size_ / 2;
@@ -101,8 +101,8 @@ public:
                     continue;
                 }
 
-                const auto h = (uint)((pair.first - h_min_) / h_step + 0.5);
-                const auto v = (uint)((pair.second - v_min_) / v_step + 0.5);
+                const auto h = static_cast<uint>((pair.first - h_min_) / h_step + 0.5);
+                const auto v = static_cast<uint>((pair.second - v_min_) / v_step + 0.5);
 
                 /// todo: optimize
                 bool duplicate = false;
@@ -131,7 +131,7 @@ public:
         buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
 
         if (Console::globalVPos() > 0) {
-            Console::writePositionToBuff(buff, Position::Up, Console::globalVPos());
+            Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());
         }
 
         if (Console::globalHPos() > 0) {
@@ -140,10 +140,10 @@ public:
 
         // Upper arrow
         if (is_arrow_) {
-            Console::writeColorToBuff(buff, axis_color_);
+            Console::writeColorToBuff(&buff, axis_color_);
 
             if (Console::globalHPos() > 0) {
-                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
+                Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
             }
 
             if (is_data_header_) {
@@ -152,7 +152,7 @@ public:
 
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
                 if (hi == h_zero) {
-                    buff += (wchar_t)((arrow_ == Arrow::Big) ? GridCode::BigUArrow_ : GridCode::SmallUArrow_);
+                    buff += static_cast<wchar_t>(arrow_ == Arrow::Big ? GridCode::BigUArrow_ : GridCode::SmallUArrow_);
                 } else {
                     buff += L' ';
                 }
@@ -162,48 +162,48 @@ public:
         }
 
         // Vertical loop
-        for (uint vi = vertical_size_ - 1; (int)vi >= 0; --vi) {
+        for (uint vi = vertical_size_ - 1; static_cast<int>(vi) >= 0; --vi) {
             const double vs = vi * v_step + v_min_;
 
             if (Console::globalHPos() > 0) {
-                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
+                Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
             }
 
             // Vertical data header
             if (is_data_header_) {
-                Console::writeColorToBuff(buff, Color::Default);
+                Console::writeColorToBuff(&buff, Color::Default);
 
                 if (vi == v_zero) {
-                    writeDataToBuff(buff, 0.0, v_alignment, v_precision_);
+                    writeDataToBuff(&buff, 0.0, v_alignment, v_precision_);
                 } else {
-                    writeDataToBuff(buff, vs, v_alignment, v_precision_);
+                    writeDataToBuff(&buff, vs, v_alignment, v_precision_);
                 }
             }
 
             // Horizontal loop
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
                 if (data_iterator != sort_data.end() && vi == data_iterator->second && hi == data_iterator->first) {
-                    Console::writeColorToBuff(buff, point_color_);
+                    Console::writeColorToBuff(&buff, point_color_);
                     buff += point_;
 
                     while (data_iterator != sort_data.end() && hi == data_iterator->first && vi == data_iterator->second) {
                         ++data_iterator;
                     }
                 } else if (hi == h_zero) {
-                    Console::writeColorToBuff(buff, axis_color_);
+                    Console::writeColorToBuff(&buff, axis_color_);
 
                     if (vi == v_zero) {
-                        buff += (wchar_t)GridCode::Cross_;
+                        buff += static_cast<wchar_t>(GridCode::Cross_);
                     } else {
-                        buff += (wchar_t)GridCode::VLine_;
+                        buff += static_cast<wchar_t>(GridCode::VLine_);
                     }
                 } else {
                     if (vi == v_zero) {
-                        Console::writeColorToBuff(buff, axis_color_);
-                        buff += (wchar_t)GridCode::HLine_;
+                        Console::writeColorToBuff(&buff, axis_color_);
+                        buff += static_cast<wchar_t>(GridCode::HLine_);
                     } else {
                         if (is_grid_) {
-                            Console::writeColorToBuff(buff, grid_color_);
+                            Console::writeColorToBuff(&buff, grid_color_);
                         }
                         buff += grid_;
                     }
@@ -212,8 +212,8 @@ public:
 
             // Right arrow
             if (vi == v_zero && is_arrow_) {
-                Console::writeColorToBuff(buff, axis_color_);
-                buff += (wchar_t)((arrow_ == Arrow::Big) ? GridCode::BigRArrow_ : GridCode::SmallRArrow_);
+                Console::writeColorToBuff(&buff, axis_color_);
+                buff += static_cast<wchar_t>(arrow_ == Arrow::Big ? GridCode::BigRArrow_ : GridCode::SmallRArrow_);
             }
 
             buff += L'\n';
@@ -225,10 +225,10 @@ public:
         // Horizontal data header
         if (is_data_header_) {
             if (Console::globalHPos() > 0) {
-                Console::writePositionToBuff(buff, Position::Right, Console::globalHPos());
+                Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
             }
 
-            Console::writeColorToBuff(buff, Color::Default);
+            Console::writeColorToBuff(&buff, Color::Default);
             buff.append(v_alignment, ' ');
             h_pos_header += v_alignment;
 
@@ -236,10 +236,10 @@ public:
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
                 const double hs = hi * h_step + h_min_;
 
-                const uint h_alignment = (uint)(std::to_string(std::abs((int)hs)).size() + ((hs < 0) ? 1 : 0)
+                const uint h_alignment = static_cast<uint>(std::to_string(std::abs(static_cast<int>(hs))).size() + ((hs < 0) ? 1 : 0)
                                                 + ((h_precision_ > 0) ? (h_precision_ + 1) : 0) + 1); // for one space
                 if (count % h_alignment == 0) {
-                    writeDataToBuff(buff, hs, h_alignment, h_precision_);
+                    writeDataToBuff(&buff, hs, h_alignment, h_precision_);
                     h_pos_header += h_alignment;
                     count = 0;
                 }
@@ -258,7 +258,7 @@ public:
 
         Console::globalVPos(vertical_size_ + ((is_arrow_) ? 1 : 0) + ((is_data_header_) ? 1 : 0));
 
-        Console::writeColorToBuff(buff, Color::Default);
+        Console::writeColorToBuff(&buff, Color::Default);
         buff += L'\n';
         Console::print(buff);
     }
