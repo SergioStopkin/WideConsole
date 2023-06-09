@@ -26,7 +26,8 @@ Checks:             '*,
 -bugprone-easily-swappable-parameters,
 -altera-unroll-loops,
 -altera-id-dependent-backward-branch,
--cppcoreguidelines-virtual-class-destructor
+-cppcoreguidelines-virtual-class-destructor,
+-bugprone-implicit-widening-of-multiplication-result
 '
 
 WarningsAsErrors:   '*'

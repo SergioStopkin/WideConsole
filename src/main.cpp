@@ -5,23 +5,24 @@
  * you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * WConsole is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with WConsole. See the file COPYING. If not, see <https://www.gnu.org/licenses/>.
  */
-
-#include <chrono>
 
 #include "wconsole/chart.h"
 #include "wconsole/graph.h"
 #include "wconsole/text.h"
 
-int main() {
+#include <chrono>
+
+int main()
+{
     // Global timer
     auto g_start    = std::chrono::steady_clock::now();
     auto g_duration = std::chrono::milliseconds(2600);
@@ -38,14 +39,9 @@ int main() {
     graph.setDataPosition(WConsole::DataPosition::Left);
 
     // Colors
-    std::vector<WConsole::Color> colors { WConsole::Color::Green,
-                                          WConsole::Color::BrightGreen,
-                                          WConsole::Color::Yellow,
-                                          WConsole::Color::BrightYellow,
-                                          WConsole::Color::Red,
-                                          WConsole::Color::BrightRed,
-                                          WConsole::Color::Magenta,
-                                          WConsole::Color::BrightMagenta };
+    std::vector<WConsole::Color> colors { WConsole::Color::Green,        WConsole::Color::BrightGreen,  WConsole::Color::Yellow,
+                                          WConsole::Color::BrightYellow, WConsole::Color::Red,          WConsole::Color::BrightRed,
+                                          WConsole::Color::Magenta,      WConsole::Color::BrightMagenta };
     // CHART
     const int max = 100;
 
@@ -64,14 +60,23 @@ int main() {
             std::vector<std::pair<double, double>> sin2;
             std::vector<std::pair<double, double>> sin3;
 
-            for (double x = -1.5; x <= 1.5; x += 0.01) {
+            double x = -1.5;
+            for (size_t i = 0; i < 300; ++i) {
                 const double y1 = std::sin(2.0 * x + count);
                 const double y2 = std::sin(4.0 * x + count);
                 const double y3 = std::sin(8.0 * x + count);
 
-                if (!std::isnan(y1)) sin1.emplace_back(x, y1);
-                if (!std::isnan(y2)) sin2.emplace_back(x, y2);
-                if (!std::isnan(y3)) sin3.emplace_back(x, y3);
+                if (!std::isnan(y1)) {
+                    sin1.emplace_back(x, y1);
+                }
+                if (!std::isnan(y2)) {
+                    sin2.emplace_back(x, y2);
+                }
+                if (!std::isnan(y3)) {
+                    sin3.emplace_back(x, y3);
+                }
+
+                x += 0.01;
             }
 
             WConsole::Console::clear();
@@ -114,6 +119,7 @@ int main() {
     // TEXT
     WConsole::Text text;
     WConsole::Console::newLine();
+    // clang-format off
     text.setColor(WConsole::Color::Black);         text.printObject("Black");         WConsole::Console::newLine();
     text.setColor(WConsole::Color::Default);       text.printObject("Default");       WConsole::Console::newLine();
     text.setColor(WConsole::Color::BrightBlack);   text.printObject("BrightBlack");   WConsole::Console::newLine();
@@ -132,13 +138,15 @@ int main() {
     text.setColor(WConsole::Color::BrightYellow);  text.printObject("BrightYellow");  WConsole::Console::newLine();
     text.setColor(WConsole::Color::Green);         text.printObject("Green");         WConsole::Console::newLine();
     text.setColor(WConsole::Color::BrightGreen);   text.printObject("BrightGreen");   WConsole::Console::newLine();
+    // clang-format on
     text.setColor(WConsole::Color::Default);
 
-    std::string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789";
+    std::string    str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789";
     WConsole::Font font;
 
     font.setForegroundColor(WConsole::Color::Yellow);
     font.setInverseColor(true);
+    // clang-format off
     font.setFontType(WConsole::FontType::Monospace);         text.printObject(str, font); WConsole::Console::newLine();
     font.setFontType(WConsole::FontType::SerifItal);         text.printObject(str, font); WConsole::Console::newLine();
     font.setFontType(WConsole::FontType::SerifBold);         text.printObject(str, font); WConsole::Console::newLine();
@@ -150,6 +158,7 @@ int main() {
     font.setFontType(WConsole::FontType::ScriptBold);        text.printObject(str, font); WConsole::Console::newLine();
     font.setFontType(WConsole::FontType::FrakturBold);       text.printObject(str, font); WConsole::Console::newLine();
     font.setFontType(WConsole::FontType::FullWidth);         text.printObject(str, font); WConsole::Console::newLine();
+    // clang-format on
     text.resetFont();
     text.printObject("");
 

@@ -129,7 +129,7 @@ public:
         auto data_iterator = sort_data.cbegin();
 
         std::wstring buff;
-        buff.reserve(static_cast<std::basic_string<wchar_t>::size_type>(vertical_size_ * horizontal_size_ * 8)); // magic eight (hateful :)
+        buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
 
         if (Console::globalVPos() > 0) {
             Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());

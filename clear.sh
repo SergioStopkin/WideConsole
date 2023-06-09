@@ -1,2 +1,4 @@
-rm -rf cmake-build-*
-rm -rf result-*
+. .cicd-config
+
+rm -rf $BUILD_PREFIX-*
+rm -rf $RESULT_PREFIX-*

@@ -1,16 +1,22 @@
 #!/bin/bash
 
-BUILD_DIR_DEV=cmake-build-develop
-BUILD_DIR_REL=cmake-build-release
 TARGET_SRC=wconsole
 TARGET_TEST="unit-tests component-tests"
 
-SOURCE_FILES=$(find -regex '.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$' -path './include/*')
-TEST_FILES=$(find -regex '.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$' -path './test/*')
-CMAKE_FILES=$(find \( -type f -iname CMakeLists.txt -o -iname *.cmake \) -not -path './cmake-build-*')
+BUILD_PREFIX=cmake-build
+BUILD_DIR_DEV=$BUILD_PREFIX-develop
+BUILD_DIR_REL=$BUILD_PREFIX-release
 
-CPPCHECK_SOURCE_DIR="include src"
+SOURCE_DIR="include src"
+TEST_DIR="test"
+FILES_REGEX='.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$'
+SOURCE_FILES=$(find $SOURCE_DIR -regex $FILES_REGEX)
+TEST_FILES=$(find $TEST_DIR -regex $FILES_REGEX)
+CMAKE_FILES=$(find \( -type f -iname CMakeLists.txt -o -iname *.cmake \) -not -path './$BUILD_PREFIX-*')
 
+CPPCHECK_SOURCE_DIR=$SOURCE_DIR
+
+RESULT_PREFIX=result
 COV_MIN_LIMIT=50.0%
 COV_SOURCE_DIR=test/unit
-COV_RESULT_DIR=result-coverage
+COV_RESULT_DIR=$RESULT_PREFIX-coverage
