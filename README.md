@@ -7,17 +7,14 @@
 </p>
 
 <p align="center">
-    <a href="https://travis-ci.org/SergioStopkin/WConsole">
-        <img src="https://img.shields.io/travis/SergioStopkin/WConsole.svg?style=flat-square&label=gcc/clang">
+    <a href="https://github.com/sergiostopkin/wconsole/actions/workflows/actions-develop.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/sergiostopkin/wconsole/actions-develop.yml?style=flat-square&label=develop">
     </a>
-    <a href="https://ci.appveyor.com/project/SergioStopkin/WConsole">
-        <img src="https://img.shields.io/appveyor/ci/SergioStopkin/WConsole.svg?style=flat-square&logo=appveyor&label=msvc">
+    <a href="https://github.com/sergiostopkin/wconsole/blob/release/COPYING">
+        <img src="https://img.shields.io/github/license/sergiostopkin/wconsole?style=flat-square"/>
     </a>
-    <a href="https://github.com/SergioStopkin/WConsole/blob/master/COPYING">
-        <img src="https://img.shields.io/github/license/SergioStopkin/Wconsole.svg?style=flat-square"/>
-    </a>
-    <a href="https://github.com/SergioStopkin/WConsole/archive/master.zip">
-        <img src="https://img.shields.io/github/repo-size/sergiostopkin/wconsole.svg?style=flat-square"/>
+    <a href="https://github.com/SergioStopkin/WConsole/archive/release.zip">
+        <img src="https://img.shields.io/github/repo-size/sergiostopkin/wconsole?style=flat-square"/>
     </a>
 </p>
 
