@@ -17,39 +17,10 @@
 
 #pragma once
 
-#include <algorithm>
+#include "wconsole/type/base.h"
 
 namespace WConsole {
 
-class IRange {
-public:
-    void setVerticalRange(const double v_min, const double v_max) noexcept
-    {
-        v_min_ = std::min(v_min, v_max);
-        v_max_ = std::max(v_min, v_max);
-    }
-
-    void setHorizontalRange(const double h_min, const double h_max) noexcept
-    {
-        h_min_ = std::min(h_min, h_max);
-        h_max_ = std::max(h_min, h_max);
-    }
-
-protected:
-    explicit IRange(const double v_min = 0, const double v_max = 100, const double h_min = 0, const double h_max = 100)
-        : v_min_(v_min)
-        , v_max_(v_max)
-        , h_min_(h_min)
-        , h_max_(h_max)
-    {
-    }
-
-    virtual ~IRange() = default;
-
-    double v_min_;
-    double v_max_;
-    double h_min_;
-    double h_max_;
-};
+enum class Arrow : uchar { Big, Small };
 
 } // namespace WConsole

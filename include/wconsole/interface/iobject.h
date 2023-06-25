@@ -17,15 +17,14 @@
 
 #pragma once
 
-#include "console.h"
-#include "types.h"
+#include "wconsole/unit/console.h"
 
 #include <utility>
 #include <vector>
 
 namespace WConsole {
 
-class IObject {
+class IObject { // TODO(sergio): Maybe derived from class Interface
 public:
     void setSize(const uint horizontal_size, const uint vertical_size) noexcept
     {

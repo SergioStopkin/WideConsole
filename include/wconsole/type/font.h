@@ -17,11 +17,11 @@
 
 #pragma once
 
-#include "types.h"
+#include "wconsole/type/base.h"
 
 namespace WConsole {
 
-enum class FontType : uchar {
+enum class Font : uchar {
     Default,
     Serif,
     SerifItal,
@@ -35,33 +35,6 @@ enum class FontType : uchar {
     ScriptBold,
     FrakturBold,
     FullWidth,
-};
-
-class Font final {
-public:
-    explicit Font(const FontType & font_type = FontType::Default, const ConsoleView & view = ConsoleView())
-        : font_type_(font_type)
-        , view_(view)
-    {
-    }
-
-    void setFontType(const FontType & font_type) noexcept { font_type_ = font_type; }
-
-    void setForegroundColor(const Color & color) noexcept { view_.foreground = color; }
-
-    void setBackgroundColor(const Color & color) noexcept { view_.background = color; }
-
-    void setInverseColor(const bool is_inverse) noexcept { view_.is_inverse = is_inverse; }
-
-    void setUnderline(const bool is_underline) noexcept { view_.is_underline = is_underline; }
-
-    [[nodiscard]] FontType fontType() const noexcept { return font_type_; }
-
-    [[nodiscard]] ConsoleView consoleView() const noexcept { return view_; }
-
-private:
-    FontType    font_type_;
-    ConsoleView view_;
 };
 
 } // namespace WConsole

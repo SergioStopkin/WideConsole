@@ -17,10 +17,9 @@
 
 #pragma once
 
-namespace WConsole {
+#include "wconsole/type/base.h"
 
-using uchar = unsigned char;
-using uint  = unsigned int;
+namespace WConsole {
 
 enum class Color : uchar {
     Black,
@@ -42,26 +41,5 @@ enum class Color : uchar {
     Default,
     BrightDefault
 };
-
-struct ConsoleView {
-    Color foreground { Color::Default };
-    Color background { Color::Default };
-    bool  is_inverse { false };
-    bool  is_underline { false };
-} __attribute__((packed)) __attribute__((aligned(4)));
-
-struct ConsoleState {
-    uint h_pos { 0 };
-    uint v_pos { 0 };
-    uint max_v_pos { 0 };
-    uint col_num { 0 };
-    uint row_num { 0 };
-} __attribute__((packed)) __attribute__((aligned(32)));
-
-// template<typename T>
-// static uint integerPartSize(T value)
-// {
-//     return static_cast<uint>(std::to_string(static_cast<int>(value)).size());
-// }
 
 } // namespace WConsole

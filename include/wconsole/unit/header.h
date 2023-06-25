@@ -17,7 +17,8 @@
 
 #pragma once
 
-#include "types.h"
+#include "wconsole/interface/iheader.h"
+#include "wconsole/type/dataposition.h"
 
 #include <iomanip>
 #include <sstream>
@@ -25,28 +26,14 @@
 
 namespace WConsole {
 
-enum class DataPosition : uchar { Right, Left, Center };
-
-class IHeader {
+class Header final : public IHeader {
 public:
-    void setDataPosition(const DataPosition pos) noexcept { data_pos_ = pos; }
+    void setDataPosition(const DataPosition pos) noexcept override { data_pos_ = pos; }
+    void showDataHeader(const bool show) noexcept override { is_data_header_ = show; }
 
-    void showDataHeader(const bool show) noexcept { is_data_header_ = show; }
-
-protected:
-    bool         is_data_header_;
-    DataPosition data_pos_;
-
-    explicit IHeader(const bool is_data_header = true, const DataPosition data_position = DataPosition::Center, const uint header_size = 0)
-        : is_data_header_(is_data_header)
-        , data_pos_(data_position)
-        , header_size_(header_size)
-    {
-    }
-
-    virtual ~IHeader() = default;
-
-    void setHeaderSize(const uint header_size) noexcept { header_size_ = header_size; }
+    void                       setHeaderSize(const uint header_size) noexcept { header_size_ = header_size; }
+    [[nodiscard]] bool         isDataHeader() const noexcept { return is_data_header_; }
+    [[nodiscard]] DataPosition dataPosition() const noexcept { return data_pos_; }
 
     [[nodiscard]] uint headerSize() const noexcept { return header_size_; }
 
@@ -89,7 +76,9 @@ protected:
     }
 
 private:
-    uint header_size_;
+    bool         is_data_header_ { true };
+    DataPosition data_pos_ { DataPosition::Center };
+    uint         header_size_ { 0 };
 };
 
 } // namespace WConsole

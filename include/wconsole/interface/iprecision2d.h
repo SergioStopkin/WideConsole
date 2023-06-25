@@ -17,40 +17,14 @@
 
 #pragma once
 
+#include "wconsole/interface/interface.h"
+
 namespace WConsole {
 
-class IPrecisionP1 {
+class IPrecision2D : public Interface {
 public:
-    void setPrecision(const int precision) noexcept { precision_ = precision; }
-
-protected:
-    int precision_;
-
-    explicit IPrecisionP1(const int precision = 1)
-        : precision_(precision)
-    {
-    }
-
-    virtual ~IPrecisionP1() = default;
-};
-
-class IPrecisionP2 {
-public:
-    void setVerticalPrecision(const int v_precision) noexcept { v_precision_ = v_precision; }
-
-    void setHorizontalPrecision(const int h_precision) noexcept { h_precision_ = h_precision; }
-
-protected:
-    int h_precision_;
-    int v_precision_;
-
-    explicit IPrecisionP2(const int h_precision = 1, const int v_precision = 1)
-        : h_precision_(h_precision)
-        , v_precision_(v_precision)
-    {
-    }
-
-    virtual ~IPrecisionP2() = default;
+    virtual void setVerticalPrecision(int v_precision) noexcept   = 0;
+    virtual void setHorizontalPrecision(int h_precision) noexcept = 0;
 };
 
 } // namespace WConsole

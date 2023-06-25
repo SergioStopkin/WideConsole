@@ -36,14 +36,15 @@
 #include <unistd.h>
 #endif
 
-#include "types.h"
+#include "wconsole/type/color.h"
+#include "wconsole/type/position.h"
+#include "wconsole/unit/consolestate.h"
+#include "wconsole/unit/consoleview.h"
 
 #include <algorithm>
 #include <string>
 
 namespace WConsole {
-
-enum class Position : uchar { Up, Down, Right, Left };
 
 class Console final {
 public:
@@ -51,11 +52,11 @@ public:
 
     static void newLine() noexcept
     {
-        changePosition(Position::Down, global_state_.max_v_pos - global_state_.v_pos);
+        changePosition(Position::Down, _globalState.maxVPos() - _globalState.vPos());
         print("\n");
-        global_state_.h_pos     = 0;
-        global_state_.v_pos     = 0;
-        global_state_.max_v_pos = 0;
+        _globalState.setHPos(0);
+        _globalState.setVPos(0);
+        _globalState.setMaxVPos(0);
     }
 
     /*void NewLineInBlock() noexcept {
@@ -73,8 +74,8 @@ public:
 #else
         print("\ec");
 #endif
-        global_state_.h_pos = 0;
-        global_state_.v_pos = 0;
+        _globalState.setHPos(0);
+        _globalState.setVPos(0);
     }
 
     /*void ClearLast() noexcept {
@@ -95,7 +96,7 @@ public:
 
     static void changeColor(const Color color, const bool is_foreground = true) noexcept
     {
-        if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
+        if ((is_foreground && color != _globalView.foreground()) || (!is_foreground && color != _globalView.background())) {
 #ifdef WINDOWS
             switch (color) { // clang-format off
             // case Color::Normal:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);                                                          break;
@@ -152,16 +153,16 @@ public:
             } // clang-format on
 #endif
             if (is_foreground) {
-                global_view_.foreground = color;
+                _globalView.setColor(color);
             } else {
-                global_view_.background = color;
+                _globalView.setBackgroundColor(color);
             }
         }
     }
 
     static void writeColorToBuff(std::wstring * buff, const Color color, const bool is_foreground = true) noexcept
     {
-        if ((is_foreground && color != global_view_.foreground) || (!is_foreground && color != global_view_.background)) {
+        if ((is_foreground && color != _globalView.foreground()) || (!is_foreground && color != _globalView.background())) {
 #ifdef WINDOWS
             print(*buff);
             changeColor(color);
@@ -190,9 +191,9 @@ public:
             } // clang-format on
 #endif
             if (is_foreground) {
-                global_view_.foreground = color;
+                _globalView.setColor(color);
             } else {
-                global_view_.background = color;
+                _globalView.setBackgroundColor(color);
             }
         }
     }
@@ -246,72 +247,6 @@ public:
             } // clang-format on
 #endif
         }
-    }
-
-    static void writeViewToBuff(std::wstring * buff, const ConsoleView & view) noexcept
-    {
-        *buff += L"\e[";
-
-        if (view.foreground == Color::Default || view.background == Color::Default || view.background == Color::BrightDefault) {
-            *buff += L"0;";
-        }
-
-        switch (view.foreground) {
-        // clang-format off
-        case Color::Black:         *buff += L"21;30"; break;
-        case Color::Red:           *buff += L"21;31"; break;
-        case Color::Green:         *buff += L"21;32"; break;
-        case Color::Yellow:        *buff += L"21;33"; break;
-        case Color::Blue:          *buff += L"21;34"; break;
-        case Color::Magenta:       *buff += L"21;35"; break;
-        case Color::Cyan:          *buff += L"21;36"; break;
-        case Color::White:         *buff += L"21;37"; break;
-        case Color::BrightBlack:   *buff += L"1;30"; break;
-        case Color::BrightRed:     *buff += L"1;31"; break;
-        case Color::BrightGreen:   *buff += L"1;32"; break;
-        case Color::BrightYellow:  *buff += L"1;33"; break;
-        case Color::BrightBlue:    *buff += L"1;34"; break;
-        case Color::BrightMagenta: *buff += L"1;35"; break;
-        case Color::BrightCyan:    *buff += L"1;36"; break;
-        case Color::BrightWhite:   *buff += L"1;37"; break;
-        case Color::BrightDefault: *buff += L";1";   break;
-        default: break;
-        } // clang-format on
-
-        switch (view.background) {
-        // clang-format off
-        case Color::Black:         *buff += L";40"; break;
-        case Color::Red:           *buff += L";41"; break;
-        case Color::Green:         *buff += L";42"; break;
-        case Color::Yellow:        *buff += L";43"; break;
-        case Color::Blue:          *buff += L";44"; break;
-        case Color::Magenta:       *buff += L";45"; break;
-        case Color::Cyan:          *buff += L";46"; break;
-        case Color::White:         *buff += L";47"; break;
-        case Color::BrightBlack:   *buff += L";40"; break;
-        case Color::BrightRed:     *buff += L";41"; break;
-        case Color::BrightGreen:   *buff += L";42"; break;
-        case Color::BrightYellow:  *buff += L";43"; break;
-        case Color::BrightBlue:    *buff += L";44"; break;
-        case Color::BrightMagenta: *buff += L";45"; break;
-        case Color::BrightCyan:    *buff += L";46"; break;
-        case Color::BrightWhite:   *buff += L";47"; break;
-        default: break;
-        } // clang-format on
-
-        if (view.is_underline) {
-            *buff += L";4";
-        } else {
-            *buff += L";24";
-        }
-
-        if (view.is_inverse) {
-            *buff += L";7";
-        } else {
-            *buff += L";27";
-        }
-
-        *buff += L"m";
     }
 
     static void print(const char * s) noexcept
@@ -369,21 +304,21 @@ public:
 
     static void preProcessing(const uint horizontal_size, const uint header_size) noexcept
     {
-        if (global_state_.col_num > 0 && (global_state_.h_pos + horizontal_size + header_size) > global_state_.col_num) {
+        if (_globalState.colNum() > 0 && (_globalState.hPos() + horizontal_size + header_size) > _globalState.colNum()) {
             newLine();
         }
     }
 
-    static uint globalHPos() noexcept { return global_state_.h_pos; }
+    static uint globalHPos() noexcept { return _globalState.hPos(); }
 
-    static uint globalVPos() noexcept { return global_state_.v_pos; }
+    static uint globalVPos() noexcept { return _globalState.vPos(); }
 
-    static void globalHPos(const uint h_pos) noexcept { global_state_.h_pos = h_pos; }
+    static void globalHPos(const uint h_pos) noexcept { _globalState.setHPos(h_pos); }
 
     static void globalVPos(const uint v_pos) noexcept
     {
-        global_state_.v_pos     = v_pos;
-        global_state_.max_v_pos = std::max(v_pos, global_state_.max_v_pos);
+        _globalState.setVPos(v_pos);
+        _globalState.setMaxVPos(std::max(v_pos, _globalState.maxVPos()));
     }
 
     static void start() noexcept
@@ -399,8 +334,8 @@ public:
             default_color_      = 0x0F & info.wAttributes;
             default_back_color_ = 0xF0 & info.wAttributes;
 
-            global_state_.col_num = info.dwSize.X;
-            global_state_.row_num = info.dwSize.Y;
+            _globalState.setColNum(info.dwSize.X);
+            _globalState.setRowNum(info.dwSize.Y);
         }
 #else
         std::ios_base::sync_with_stdio(false);
@@ -410,8 +345,8 @@ public:
         // char * pWSize = &wsize;
         // if (ioctl(STDIN_FILENO, TIOCGWINSZ, reinterpret_cast<char *>(&wsize)) != -1) {
         if (ioctl(STDIN_FILENO, TIOCGWINSZ, &wsize) != -1) { // NOLINT(cppcoreguidelines-pro-type-vararg, hicpp-vararg)
-            global_state_.col_num = wsize.ws_col;
-            global_state_.row_num = wsize.ws_row;
+            _globalState.setColNum(wsize.ws_col);
+            _globalState.setRowNum(wsize.ws_row);
         }
 #endif
         Console::showCursor(false);
@@ -428,8 +363,8 @@ public:
     }
 
 private:
-    inline static ConsoleState global_state_;
-    inline static ConsoleView  global_view_;
+    inline static ConsoleState _globalState;
+    inline static ConsoleView  _globalView;
 #ifdef WINDOWS
     inline static short default_color_      = 0;
     inline static short default_back_color_ = 0;

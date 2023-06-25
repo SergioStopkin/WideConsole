@@ -27,7 +27,8 @@ Checks:             '*,
 -altera-unroll-loops,
 -altera-id-dependent-backward-branch,
 -cppcoreguidelines-virtual-class-destructor,
--bugprone-implicit-widening-of-multiplication-result
+-bugprone-implicit-widening-of-multiplication-result,
+-fuchsia-statically-constructed-objects
 '
 
 WarningsAsErrors:   '*'

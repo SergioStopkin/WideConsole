@@ -17,28 +17,27 @@
 
 #pragma once
 
-#include "console.h"
-#include "font.h"
-#include "iobject.h"
+#include "wconsole/interface/iobject.h"
+#include "wconsole/interface/itext.h"
 
 #include <cstring>
 
 namespace WConsole {
 
-class Text final : public IObject {
+class Text final : public IObject, public IText {
 public:
-    explicit Text(const FontType & font_type = FontType::Monospace)
-        : font_(font_type)
+    void setFont(const Font font) noexcept override { _font = font; }
+    void setConsoleView(const ConsoleView & view) noexcept override { _view = view; }
+
+    void reset() noexcept override
     {
+        _font = Font {};
+        _view = ConsoleView {};
     }
 
-    void setColor(const Color & color) noexcept { font_.setForegroundColor(color); }
+    [[nodiscard]] IConsoleView & consoleView() noexcept override { return _view; }
 
-    void setFont(const Font & font) noexcept { font_ = font; }
-
-    void resetFont() noexcept { font_ = Font(); }
-
-    void printObject(const char * s) noexcept
+    void printObject(const char * s) noexcept override
     {
         std::wstring buff;
 
@@ -55,16 +54,14 @@ public:
 
         //        changeColor(color_);
         //        print(s);
-        Console::writeViewToBuff(&buff, font_.consoleView());
+        _view.writeViewToBuff(&buff);
         Console::print(buff);
         Console::print(s);
         Console::globalHPos(0);
         //        h_global_pos_ += std::strlen(s);
     }
 
-    void printObject(const std::string & str) noexcept { printObject(str, font_); }
-
-    void printObject(const std::string & str, const Font & font) noexcept // NOLINT(readability-convert-member-functions-to-static)
+    void printObject(const std::string & str) noexcept override // NOLINT(readability-convert-member-functions-to-static)
     {
         std::wstring buff;
 
@@ -80,61 +77,61 @@ public:
         //        std::wstring shift_pos = L"\e[0;0H";
         //        buff += shift_pos;
 
-        Console::writeViewToBuff(&buff, font.consoleView());
+        _view.writeViewToBuff(&buff);
 
-        if (font.fontType() == FontType::Default) {
+        if (_font == Font::Default) {
             Console::print(buff);
             Console::print(str);
         } else {
             for (const auto & wc : str) {
-                if (font.fontType() == FontType::FullWidth && wc >= 0x21 && wc <= 0x7E) {
+                if (_font == Font::FullWidth && wc >= 0x21 && wc <= 0x7E) {
                     buff += (wc + 0xFF01 - 0x21);
                 } else if (wc >= 'A' && wc <= 'Z') {
-                    switch (font.fontType()) {
+                    switch (_font) {
                     // clang-format off
-                    case FontType::Serif:             buff += wc;                   break;
-                    case FontType::SerifItal:         buff += (wc + 0x1D434 - 'A'); break;
-                    case FontType::SerifBold:         buff += (wc + 0x1D400 - 'A'); break;
-                    case FontType::SerifBoldItal:     buff += (wc + 0x1D468 - 'A'); break;
-                    case FontType::SansSerif:         buff += (wc + 0x1D5A0 - 'A'); break;
-                    case FontType::SansSerifItal:     buff += (wc + 0x1D608 - 'A'); break;
-                    case FontType::SansSerifBold:     buff += (wc + 0x1D5D4 - 'A'); break;
-                    case FontType::SansSerifBoldItal: buff += (wc + 0x1D63C - 'A'); break;
-                    case FontType::Monospace:         buff += (wc + 0x1D670 - 'A'); break;
-                    case FontType::ScriptBold:        buff += (wc + 0x1D4D0 - 'A'); break;
-                    case FontType::FrakturBold:       buff += (wc + 0x1D56C - 'A'); break;
+                    case Font::Serif:             buff += wc;                   break;
+                    case Font::SerifItal:         buff += (wc + 0x1D434 - 'A'); break;
+                    case Font::SerifBold:         buff += (wc + 0x1D400 - 'A'); break;
+                    case Font::SerifBoldItal:     buff += (wc + 0x1D468 - 'A'); break;
+                    case Font::SansSerif:         buff += (wc + 0x1D5A0 - 'A'); break;
+                    case Font::SansSerifItal:     buff += (wc + 0x1D608 - 'A'); break;
+                    case Font::SansSerifBold:     buff += (wc + 0x1D5D4 - 'A'); break;
+                    case Font::SansSerifBoldItal: buff += (wc + 0x1D63C - 'A'); break;
+                    case Font::Monospace:         buff += (wc + 0x1D670 - 'A'); break;
+                    case Font::ScriptBold:        buff += (wc + 0x1D4D0 - 'A'); break;
+                    case Font::FrakturBold:       buff += (wc + 0x1D56C - 'A'); break;
                     default: break;
                     } // clang-format on
                 } else if (wc >= 'a' && wc <= 'z') {
-                    switch (font.fontType()) {
+                    switch (_font) {
                     // clang-format off
-                    case FontType::Serif:             buff += wc;                   break;
-                    case FontType::SerifItal:         buff += ((wc == 'h') ? 0x1D489 : (wc + 0x1D44E - 'a')); break;
-                    case FontType::SerifBold:         buff += (wc + 0x1D41A - 'a'); break;
-                    case FontType::SerifBoldItal:     buff += (wc + 0x1D482 - 'a'); break;
-                    case FontType::SansSerif:         buff += (wc + 0x1D5BA - 'a'); break;
-                    case FontType::SansSerifItal:     buff += (wc + 0x1D622 - 'a'); break;
-                    case FontType::SansSerifBold:     buff += (wc + 0x1D5EE - 'a'); break;
-                    case FontType::SansSerifBoldItal: buff += (wc + 0x1D656 - 'a'); break;
-                    case FontType::Monospace:         buff += (wc + 0x1D68A - 'a'); break;
-                    case FontType::ScriptBold:        buff += (wc + 0x1D4EA - 'a'); break;
-                    case FontType::FrakturBold:       buff += (wc + 0x1D586 - 'a'); break;
+                    case Font::Serif:             buff += wc;                   break;
+                    case Font::SerifItal:         buff += ((wc == 'h') ? 0x1D489 : (wc + 0x1D44E - 'a')); break;
+                    case Font::SerifBold:         buff += (wc + 0x1D41A - 'a'); break;
+                    case Font::SerifBoldItal:     buff += (wc + 0x1D482 - 'a'); break;
+                    case Font::SansSerif:         buff += (wc + 0x1D5BA - 'a'); break;
+                    case Font::SansSerifItal:     buff += (wc + 0x1D622 - 'a'); break;
+                    case Font::SansSerifBold:     buff += (wc + 0x1D5EE - 'a'); break;
+                    case Font::SansSerifBoldItal: buff += (wc + 0x1D656 - 'a'); break;
+                    case Font::Monospace:         buff += (wc + 0x1D68A - 'a'); break;
+                    case Font::ScriptBold:        buff += (wc + 0x1D4EA - 'a'); break;
+                    case Font::FrakturBold:       buff += (wc + 0x1D586 - 'a'); break;
                     default: break;
                     } // clang-format on
                 } else if (wc >= '0' && wc <= '9') {
-                    switch (font.fontType()) {
+                    switch (_font) {
                     // clang-format off
-                    case FontType::Serif:
-                    case FontType::SerifItal:
-                    case FontType::SerifBoldItal:
-                    case FontType::SansSerifItal:
-                    case FontType::SansSerifBoldItal:
-                    case FontType::ScriptBold:
-                    case FontType::FrakturBold:       buff += wc;                   break;
-                    case FontType::SerifBold:         buff += (wc + 0x1D7CE - '0'); break;
-                    case FontType::SansSerif:         buff += (wc + 0x1D7E2 - '0'); break;
-                    case FontType::SansSerifBold:     buff += (wc + 0x1D7EC - '0'); break;
-                    case FontType::Monospace:         buff += (wc + 0x1D7F6 - '0'); break;
+                    case Font::Serif:
+                    case Font::SerifItal:
+                    case Font::SerifBoldItal:
+                    case Font::SansSerifItal:
+                    case Font::SansSerifBoldItal:
+                    case Font::ScriptBold:
+                    case Font::FrakturBold:       buff += wc;                   break;
+                    case Font::SerifBold:         buff += (wc + 0x1D7CE - '0'); break;
+                    case Font::SansSerif:         buff += (wc + 0x1D7E2 - '0'); break;
+                    case Font::SansSerifBold:     buff += (wc + 0x1D7EC - '0'); break;
+                    case Font::Monospace:         buff += (wc + 0x1D7F6 - '0'); break;
                     default: break;
                     } // clang-format on
                 } else {
@@ -150,7 +147,8 @@ public:
     }
 
 private:
-    Font font_;
+    Font        _font { Font::Monospace };
+    ConsoleView _view {};
 
     [[nodiscard]] uint headerSize() const noexcept override { return 0; }
 };

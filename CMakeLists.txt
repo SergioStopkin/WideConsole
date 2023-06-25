@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.12)
 
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
@@ -18,6 +18,8 @@ if(ASAN)
 endif()
 
 option(ENABLE_CLANG_FORMATTER "Use clang-formatter to format source code?" ON)
+
+include_directories(${CMAKE_HOME_DIRECTORY}/include)
 
 add_subdirectory(src)
 add_subdirectory(test)

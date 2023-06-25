@@ -34,9 +34,9 @@ int main()
     // GRAPH
     WConsole::Graph graph;
     graph.setSize(33, 17);
-    graph.setHorizontalRange(-1.5, 1.5);
-    graph.setVerticalRange(-1.5, 1.5);
-    graph.setDataPosition(WConsole::DataPosition::Left);
+    graph.range().setHorizontalRange(-1.5, 1.5);
+    graph.range().setVerticalRange(-1.5, 1.5);
+    graph.header().setDataPosition(WConsole::DataPosition::Left);
 
     // Colors
     std::vector<WConsole::Color> colors { WConsole::Color::Green,        WConsole::Color::BrightGreen,  WConsole::Color::Yellow,
@@ -47,10 +47,10 @@ int main()
 
     WConsole::Chart chart;
     chart.setChartColors(colors);
-    chart.setHorizontalRange(0, max);
-    chart.setVerticalRange(0, max);
-    // chart.showDataHeader(false);
-    // chart.showGrid(false);
+    chart.range().setHorizontalRange(0, max);
+    chart.range().setVerticalRange(0, max);
+    // chart.header().showDataHeader(false);
+    // chart.grid().showGrid(false);
 
     int count = 1;
     while (std::chrono::steady_clock::now() < g_start + g_duration) {
@@ -120,46 +120,44 @@ int main()
     WConsole::Text text;
     WConsole::Console::newLine();
     // clang-format off
-    text.setColor(WConsole::Color::Black);         text.printObject("Black");         WConsole::Console::newLine();
-    text.setColor(WConsole::Color::Default);       text.printObject("Default");       WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightBlack);   text.printObject("BrightBlack");   WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightDefault); text.printObject("BrightDefault"); WConsole::Console::newLine();
-    text.setColor(WConsole::Color::White);         text.printObject("White");         WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightWhite);   text.printObject("BrightWhite");   WConsole::Console::newLine();
-    text.setColor(WConsole::Color::Red);           text.printObject("Red");           WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightRed);     text.printObject("BrightRed");     WConsole::Console::newLine();
-    text.setColor(WConsole::Color::Blue);          text.printObject("Blue");          WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightBlue);    text.printObject("BrightBlue");    WConsole::Console::newLine();
-    text.setColor(WConsole::Color::Cyan);          text.printObject("Cyan");          WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightCyan);    text.printObject("BrightCyan");    WConsole::Console::newLine();
-    text.setColor(WConsole::Color::Magenta);       text.printObject("Magenta");       WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightMagenta); text.printObject("BrightMagenta"); WConsole::Console::newLine();
-    text.setColor(WConsole::Color::Yellow);        text.printObject("Yellow");        WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightYellow);  text.printObject("BrightYellow");  WConsole::Console::newLine();
-    text.setColor(WConsole::Color::Green);         text.printObject("Green");         WConsole::Console::newLine();
-    text.setColor(WConsole::Color::BrightGreen);   text.printObject("BrightGreen");   WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::Black);         text.printObject("Black");         WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::Default);       text.printObject("Default");       WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightBlack);   text.printObject("BrightBlack");   WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightDefault); text.printObject("BrightDefault"); WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::White);         text.printObject("White");         WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightWhite);   text.printObject("BrightWhite");   WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::Red);           text.printObject("Red");           WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightRed);     text.printObject("BrightRed");     WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::Blue);          text.printObject("Blue");          WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightBlue);    text.printObject("BrightBlue");    WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::Cyan);          text.printObject("Cyan");          WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightCyan);    text.printObject("BrightCyan");    WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::Magenta);       text.printObject("Magenta");       WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightMagenta); text.printObject("BrightMagenta"); WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::Yellow);        text.printObject("Yellow");        WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightYellow);  text.printObject("BrightYellow");  WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::Green);         text.printObject("Green");         WConsole::Console::newLine();
+    text.consoleView().setColor(WConsole::Color::BrightGreen);   text.printObject("BrightGreen");   WConsole::Console::newLine();
     // clang-format on
-    text.setColor(WConsole::Color::Default);
 
-    std::string    str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789";
-    WConsole::Font font;
+    const std::string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789";
 
-    font.setForegroundColor(WConsole::Color::Yellow);
-    font.setInverseColor(true);
+    text.consoleView().setColor(WConsole::Color::Yellow);
+    text.consoleView().setInverseColor(true);
     // clang-format off
-    font.setFontType(WConsole::FontType::Monospace);         text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::SerifItal);         text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::SerifBold);         text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::SerifBoldItal);     text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::SansSerif);         text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::SansSerifItal);     text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::SansSerifBold);     text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::SansSerifBoldItal); text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::ScriptBold);        text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::FrakturBold);       text.printObject(str, font); WConsole::Console::newLine();
-    font.setFontType(WConsole::FontType::FullWidth);         text.printObject(str, font); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::Monospace);         text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::SerifItal);         text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::SerifBold);         text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::SerifBoldItal);     text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::SansSerif);         text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::SansSerifItal);     text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::SansSerifBold);     text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::SansSerifBoldItal); text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::ScriptBold);        text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::FrakturBold);       text.printObject(str); WConsole::Console::newLine();
+    text.setFont(WConsole::Font::FullWidth);         text.printObject(str); WConsole::Console::newLine();
     // clang-format on
-    text.resetFont();
+    text.reset();
     text.printObject("");
 
     return 0;

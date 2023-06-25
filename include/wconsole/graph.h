@@ -17,12 +17,12 @@
 
 #pragma once
 
-#include "console.h"
-#include "igrid.h"
-#include "iheader.h"
-#include "iobject.h"
-#include "iprecision.h"
-#include "irange.h"
+#include "wconsole/interface/igraph.h"
+#include "wconsole/interface/iobject.h"
+#include "wconsole/unit/grid.h"
+#include "wconsole/unit/header.h"
+#include "wconsole/unit/precision2d.h"
+#include "wconsole/unit/range.h"
 
 #include <string>
 #include <utility>
@@ -30,53 +30,20 @@
 
 namespace WConsole {
 
-enum class Point : wchar_t {
-    Dot           = 0x2022, // 0x2981
-    Triangle      = 0x25B2,
-    SmallTriangle = 0x25B4,
-    Rhombus       = 0x25C6,
-    SmallSquare   = 0x25FE,
-    Star          = 0x2605,
-    Clover        = 0x2618,
-    Scythe        = 0x262D,
-    YinYang       = 0x262F,
-    Smile         = 0x263B,
-    SpadeSuit     = 0x2660,
-    ClubSuit      = 0x2663,
-    HeartSuit     = 0x2665,
-    DiamondSuit   = 0x2666,
-    Flag          = 0x2691,
-    Flower        = 0x2698,
-    Zeus          = 0x26A1,
-    CheckMarkItal = 0x2714,
-    CrossX        = 0x2716,
-    CrossXItal    = 0x2718,
-    Cross         = 0x271A,
-    StarInCircle  = 0x272A,
-    Asterisk      = 0x2731,
-    BigCrossX     = 0x274C,
-    Heart         = 0x2764,
-    Square        = 0x2B1B,
-    Pentagon      = 0x2B1F,
-    Hexagon       = 0x2B22,
-    Circle        = 0x2B24,
-    SmallRhombus  = 0x2B25,
-    Beaver        = 0xF800,
-};
-
-class Graph final : public IObject, public IHeader, public IRange, public IGrid, public IPrecisionP2 {
+class Graph final : public IObject, public IGraph {
 public:
-    explicit Graph(const Point point = Point::Dot, const Color point_color = Color::BrightRed)
-        : IHeader(true, DataPosition::Left)
-        , IRange(-10, 10, -10, 10)
-        , point_(static_cast<wchar_t>(point))
-        , point_color_(point_color)
-    {
-    }
+    // explicit Graph()
+    // : IHeader(true, DataPosition::Left)
+    // , IRange(-10, 10, -10, 10)
+    // {
+    // }
 
-    void setPoint(const Point point) noexcept { point_ = static_cast<wchar_t>(point); }
-
-    void setPointColor(const Color color) noexcept { point_color_ = color; }
+    IGrid &        grid() noexcept override { return _grid; }
+    IHeader &      header() noexcept override { return _header; }
+    IPrecision2D & precision() noexcept override { return _precision; }
+    IRange &       range() noexcept override { return _range; }
+    void           setPoint(const Point point) noexcept override { point_ = static_cast<wchar_t>(point); }
+    void           setPointColor(const Color color) noexcept override { point_color_ = color; }
 
     template <typename T>
     void printObject(const std::vector<std::pair<T, T>> & data)
@@ -84,11 +51,11 @@ public:
         // Pre-processing
         Console::preProcessing(horizontal_size_, headerSize());
 
-        const double h_step      = (h_max_ - h_min_) / static_cast<double>(horizontal_size_ - 1);
-        const double v_step      = (v_max_ - v_min_) / static_cast<double>(vertical_size_ - 1);
+        const double h_step      = (_range.horizontalMax() - _range.horizontalMin()) / static_cast<double>(horizontal_size_ - 1);
+        const double v_step      = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(vertical_size_ - 1);
         const auto   v_alignment = static_cast<uint>(
-            std::max(std::to_string(static_cast<int>(v_min_)).size(), std::to_string(static_cast<int>(v_max_)).size())
-            + ((v_precision_ > 0) ? (v_precision_ + 1) : 0));
+            std::max(std::to_string(static_cast<int>(_range.verticalMin())).size(), std::to_string(static_cast<int>(_range.verticalMax())).size())
+            + ((_precision.verticalPrecision() > 0) ? (_precision.verticalPrecision() + 1) : 0));
         const bool is_data_empty = (data.begin() == data.end());
         const uint h_zero        = horizontal_size_ / 2;
         const uint v_zero        = vertical_size_ / 2;
@@ -97,13 +64,13 @@ public:
 
         if (!is_data_empty) {
             for (const auto & pair : data) {
-                if (pair.first > (h_max_ + h_step) || pair.first < (h_min_ - h_step) || pair.second > (v_max_ + v_step)
-                    || pair.second < (v_min_ - v_step)) {
+                if (pair.first > (_range.horizontalMax() + h_step) || pair.first < (_range.horizontalMin() - h_step)
+                    || pair.second > (_range.verticalMax() + v_step) || pair.second < (_range.verticalMin() - v_step)) {
                     continue;
                 }
 
-                const auto h = static_cast<uint>((pair.first - h_min_) / h_step + 0.5);
-                const auto v = static_cast<uint>((pair.second - v_min_) / v_step + 0.5);
+                const auto h = static_cast<uint>((pair.first - _range.horizontalMin()) / h_step + 0.5);
+                const auto v = static_cast<uint>((pair.second - _range.verticalMin()) / v_step + 0.5);
 
                 /// todo: optimize
                 bool duplicate = false;
@@ -140,20 +107,20 @@ public:
         }
 
         // Upper arrow
-        if (is_arrow_) {
-            Console::writeColorToBuff(&buff, axis_color_);
+        if (_grid.isArrow()) {
+            Console::writeColorToBuff(&buff, _grid.axisColor());
 
             if (Console::globalHPos() > 0) {
                 Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
             }
 
-            if (is_data_header_) {
+            if (_header.isDataHeader()) {
                 buff.append(v_alignment, ' ');
             }
 
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
                 if (hi == h_zero) {
-                    buff += static_cast<wchar_t>(arrow_ == Arrow::Big ? GridCode::BigUArrow_ : GridCode::SmallUArrow_);
+                    buff += static_cast<wchar_t>(_grid.arrow() == Arrow::Big ? GridCode::BigUArrow_ : GridCode::SmallUArrow_);
                 } else {
                     buff += L' ';
                 }
@@ -164,20 +131,20 @@ public:
 
         // Vertical loop
         for (uint vi = vertical_size_ - 1; static_cast<int>(vi) >= 0; --vi) {
-            const double vs = vi * v_step + v_min_;
+            const double vs = vi * v_step + _range.verticalMin();
 
             if (Console::globalHPos() > 0) {
                 Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
             }
 
             // Vertical data header
-            if (is_data_header_) {
+            if (_header.isDataHeader()) {
                 Console::writeColorToBuff(&buff, Color::Default);
 
                 if (vi == v_zero) {
-                    writeDataToBuff(&buff, 0.0, v_alignment, v_precision_);
+                    _header.writeDataToBuff(&buff, 0.0, v_alignment, _precision.verticalPrecision());
                 } else {
-                    writeDataToBuff(&buff, vs, v_alignment, v_precision_);
+                    _header.writeDataToBuff(&buff, vs, v_alignment, _precision.verticalPrecision());
                 }
             }
 
@@ -191,7 +158,7 @@ public:
                         ++data_iterator;
                     }
                 } else if (hi == h_zero) {
-                    Console::writeColorToBuff(&buff, axis_color_);
+                    Console::writeColorToBuff(&buff, _grid.axisColor());
 
                     if (vi == v_zero) {
                         buff += static_cast<wchar_t>(GridCode::Cross_);
@@ -200,31 +167,31 @@ public:
                     }
                 } else {
                     if (vi == v_zero) {
-                        Console::writeColorToBuff(&buff, axis_color_);
+                        Console::writeColorToBuff(&buff, _grid.axisColor());
                         buff += static_cast<wchar_t>(GridCode::HLine_);
                     } else {
-                        if (is_grid_) {
-                            Console::writeColorToBuff(&buff, grid_color_);
+                        if (_grid.isGrid()) {
+                            Console::writeColorToBuff(&buff, _grid.gridColor());
                         }
-                        buff += grid_;
+                        buff += _grid.grid();
                     }
                 }
             }
 
             // Right arrow
-            if (vi == v_zero && is_arrow_) {
-                Console::writeColorToBuff(&buff, axis_color_);
-                buff += static_cast<wchar_t>(arrow_ == Arrow::Big ? GridCode::BigRArrow_ : GridCode::SmallRArrow_);
+            if (vi == v_zero && _grid.isArrow()) {
+                Console::writeColorToBuff(&buff, _grid.axisColor());
+                buff += static_cast<wchar_t>(_grid.arrow() == Arrow::Big ? GridCode::BigRArrow_ : GridCode::SmallRArrow_);
             }
 
             buff += L'\n';
         }
 
-        //        uint h_pos        = (horizontal_size_ + ((is_data_header_) ? v_alignment : 0) + ((is_arrow_) ? 1 : 0));
+        //        uint h_pos        = (horizontal_size_ + ((_header.isDataHeader()) ? v_alignment : 0) + ((_grid.isArrow()) ? 1 : 0));
         uint h_pos_header = 0;
 
         // Horizontal data header
-        if (is_data_header_) {
+        if (_header.isDataHeader()) {
             if (Console::globalHPos() > 0) {
                 Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
             }
@@ -235,12 +202,13 @@ public:
 
             int count = 0;
             for (uint hi = 0; hi < horizontal_size_; ++hi) {
-                const double hs = hi * h_step + h_min_;
+                const double hs = hi * h_step + _range.horizontalMin();
 
                 const uint h_alignment = static_cast<uint>(std::to_string(std::abs(static_cast<int>(hs))).size() + ((hs < 0) ? 1 : 0)
-                                                           + ((h_precision_ > 0) ? (h_precision_ + 1) : 0) + 1); // for one space
+                                                           + ((_precision.horizontalPrecision() > 0) ? (_precision.horizontalPrecision() + 1) : 0)
+                                                           + 1); // for one space
                 if (count % h_alignment == 0) {
-                    writeDataToBuff(&buff, hs, h_alignment, h_precision_);
+                    _header.writeDataToBuff(&buff, hs, h_alignment, _precision.horizontalPrecision());
                     h_pos_header += h_alignment;
                     count = 0;
                 }
@@ -249,15 +217,15 @@ public:
             }
         }
 
-        const uint h_pos_exp = horizontal_size_ + (is_arrow_ ? 1 : 0) + (is_data_header_ ? v_alignment : 0);
+        const uint h_pos_exp = horizontal_size_ + (_grid.isArrow() ? 1 : 0) + (_header.isDataHeader() ? v_alignment : 0);
 
-        if (is_data_header_ && h_pos_header > h_pos_exp) {
+        if (_header.isDataHeader() && h_pos_header > h_pos_exp) {
             Console::globalHPos(Console::globalHPos() + h_pos_header);
         } else {
             Console::globalHPos(Console::globalHPos() + h_pos_exp);
         }
 
-        Console::globalVPos(vertical_size_ + ((is_arrow_) ? 1 : 0) + ((is_data_header_) ? 1 : 0));
+        Console::globalVPos(vertical_size_ + ((_grid.isArrow()) ? 1 : 0) + ((_header.isDataHeader()) ? 1 : 0));
 
         Console::writeColorToBuff(&buff, Color::Default);
         buff += L'\n';
@@ -265,10 +233,15 @@ public:
     }
 
 private:
-    wchar_t point_;
-    Color   point_color_;
+    Grid        _grid {};
+    Header      _header {};
+    Precision2D _precision {};
+    Range       _range {};
 
-    [[nodiscard]] uint headerSize() const noexcept override { return IHeader::headerSize(); }
+    wchar_t point_ { static_cast<wchar_t>(Point::Dot) };
+    Color   point_color_ { Color::BrightRed };
+
+    [[nodiscard]] uint headerSize() const noexcept override { return _header.headerSize(); }
 };
 
 } // namespace WConsole

@@ -10,9 +10,9 @@ BUILD_DIR_REL=$BUILD_PREFIX-release
 SOURCE_DIR="include src"
 TEST_DIR="test"
 FILES_REGEX='.*\.\(c\|cc\|cpp\|cxx\|h\|hh\|hpp\|hxx\)$'
-SOURCE_FILES=$(find $SOURCE_DIR -regex $FILES_REGEX)
-TEST_FILES=$(find $TEST_DIR -regex $FILES_REGEX)
-CMAKE_FILES=$(find \( -type f -iname CMakeLists.txt -o -iname *.cmake \) -not -path './$BUILD_PREFIX-*')
+SOURCE_FILES=`find $SOURCE_DIR -regex $FILES_REGEX`
+TEST_FILES=`find $TEST_DIR -regex $FILES_REGEX`
+CMAKE_FILES=`find \( -type f -iname CMakeLists.txt -o -iname *.cmake \) -not -path './$BUILD_PREFIX-*'`
 
 CPPCHECK_SOURCE_DIR=$SOURCE_DIR
 
