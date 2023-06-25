@@ -3,7 +3,7 @@ name: Develop
 on: [push, pull_request]
 
 jobs:
-  Main-Pipeline:
+  linux-all-steps:
     if:       github.ref != 'refs/heads/release'
     runs-on:  ubuntu-latest
 
@@ -43,3 +43,13 @@ jobs:
 
       - name: Unit Tests Coverage
         run:  ${{github.workspace}}/unit-tests-coverage.sh
+
+  macos-only-build:
+    if:       github.ref != 'refs/heads/release'
+    runs-on:  macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Release
+        run:  ${{github.workspace}}/build.sh rel
