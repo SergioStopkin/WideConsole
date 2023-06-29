@@ -5,7 +5,7 @@ scale 1920 width
 
 hide empty members
 
-namespace WConsole #EAFAF1 {
+namespace WideConsole #EAFAF1 {
 
 abstract class IGrid
 abstract class IHeader

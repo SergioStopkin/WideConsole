@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
 project(
-    WConsole
+    WideConsole
     VERSION 0.0.1
     LANGUAGES CXX
 )

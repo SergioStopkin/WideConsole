@@ -10,19 +10,19 @@
 
 | | Name | File |
 |-| ---- | ---- |
-| class | [Chart](#chart) | [chart.h](../src/wconsole/chart.h) |
-| class | [Graph](#graph) | [graph.h](../src/wconsole/graph.h) |
-| class | [Text](#text) | [text.h](../src/wconsole/text.h) |
-| class | [Font](#font) | [font.h](../src/wconsole/font.h) |
-| abstract class | [*IWConsole*](#iwconsole) | [iwconsole.h](../src/wconsole/iwconsole.h) |
-| abstract class | [*IHeader*](#iheader) | [iheader.h](../src/wconsole/iheader.h) |
-| abstract class | [*IRange*](#irange) | [irange.h](../src/wconsole/irange.h) |
-| abstract class | [*IGrid*](#igrid) | [igrid.h](../src/wconsole/igrid.h) |
-| abstract class | [*IPrecisionP1*](#iprecision-p1) | [iprecision.h](../src/wconsole/iprecision.h) |
-| abstract class | [*IPrecisionP2*](#iprecision-p2) | [iprecision.h](../src/wconsole/iprecision.h) |
+| class | [Chart](#chart) | [chart.h](../src/wideconsole/chart.h) |
+| class | [Graph](#graph) | [graph.h](../src/wideconsole/graph.h) |
+| class | [Text](#text) | [text.h](../src/wideconsole/text.h) |
+| class | [Font](#font) | [font.h](../src/wideconsole/font.h) |
+| abstract class | [*IWConsole*](#iwconsole) | [iwconsole.h](../src/wideconsole/iwconsole.h) |
+| abstract class | [*IHeader*](#iheader) | [iheader.h](../src/wideconsole/iheader.h) |
+| abstract class | [*IRange*](#irange) | [irange.h](../src/wideconsole/irange.h) |
+| abstract class | [*IGrid*](#igrid) | [igrid.h](../src/wideconsole/igrid.h) |
+| abstract class | [*IPrecisionP1*](#iprecision-p1) | [iprecision.h](../src/wideconsole/iprecision.h) |
+| abstract class | [*IPrecisionP2*](#iprecision-p2) | [iprecision.h](../src/wideconsole/iprecision.h) |
 
 #### UML Class diagram:
-![uml class](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/SergioStopkin/WConsole/master/doc/UMLClass.md)
+![uml class](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/SergioStopkin/WideConsole/develop/doc/UMLClass.md)
 
 <h1 id="chart">Chart</h1>
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGET_SRC=wconsole
+TARGET_SRC=wideconsole
 TARGET_TEST="unit-tests component-tests"
 
 BUILD_PREFIX=cmake-build
