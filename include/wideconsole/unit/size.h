@@ -17,25 +17,28 @@
 
 #pragma once
 
-#include "wideconsole/interface/igrid.h"
-#include "wideconsole/interface/iheader.h"
-#include "wideconsole/interface/interface.h"
-#include "wideconsole/interface/iprecision2d.h"
-#include "wideconsole/interface/irange.h"
 #include "wideconsole/interface/isize.h"
-#include "wideconsole/type/point.h"
+#include "wideconsole/unit/console.h"
+
+#include <utility>
+#include <vector>
 
 namespace WideConsole {
 
-class IGraph : public Interface {
+class Size final : public ISize {
 public:
-    virtual IGrid &        grid() noexcept                     = 0;
-    virtual IHeader &      header() noexcept                   = 0;
-    virtual IPrecision2D & precision() noexcept                = 0;
-    virtual IRange &       range() noexcept                    = 0;
-    virtual ISize &        size() noexcept                     = 0;
-    virtual void           setPoint(Point point) noexcept      = 0;
-    virtual void           setPointColor(Color color) noexcept = 0;
+    void setSize(const uint horizontal, const uint vertical) noexcept override
+    {
+        _horizontal = horizontal;
+        _vertical   = vertical;
+    }
+
+    [[nodiscard]] uint horizontal() const noexcept { return _horizontal; }
+    [[nodiscard]] uint vertical() const noexcept { return _vertical; }
+
+private:
+    uint _horizontal { 22 };
+    uint _vertical { 11 };
 };
 
 } // namespace WideConsole

@@ -24,6 +24,7 @@
 #include "wideconsole/unit/header.h"
 #include "wideconsole/unit/precision1d.h"
 #include "wideconsole/unit/range.h"
+#include "wideconsole/unit/size.h"
 
 #include <cmath>
 #include <utility>
@@ -44,6 +45,7 @@ public:
     IHeader &      header() noexcept override { return _header; }
     IPrecision1D & precision() noexcept override { return _precision; }
     IRange &       range() noexcept override { return _range; }
+    ISize &        size() noexcept override { return _size; }
 
     void setChartType(const ChartType type) noexcept override { chart_type_ = type; }
 
@@ -64,7 +66,7 @@ public:
     void printObject(const std::vector<T> & data)
     {
         // Pre-processing
-        Console::preProcessing(horizontal_size_, headerSize());
+        Console::preProcessing(_size.horizontal(), headerSize());
 
         switch (chart_type_) {
         // clang-format off
@@ -81,6 +83,7 @@ private:
     Header      _header {};
     Precision1D _precision {};
     Range       _range {};
+    Size        _size {};
 
     const double       PiRad = (4.0 * std::atan(1.0));
     const double       PiDeg = 180.0;
@@ -225,11 +228,11 @@ private:
         const T data_max = *std::max_element(std::begin(data), std::end(data));
         //        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
         const double step = (_range.verticalMax() - _range.verticalMin())
-                          / static_cast<double>(vertical_size_); //(data_max - data_min) / static_cast<T>(vertical_size_);
+                          / static_cast<double>(_size.vertical()); //(data_max - data_min) / static_cast<T>(_size.vertical());
         const uint over = ((_header.isDataHeader() && (data_max > _range.verticalMax())) ? 1 : 0);
-        //        const uint   clst          = vertical_size_ / static_cast<uint>(colors_.size());
+        //        const uint   clst          = _size.vertical() / static_cast<uint>(colors_.size());
         //        const bool   is_data_empty = (data.begin() == data.end());
-        const uint one_h_size = horizontal_size_ / data.size();
+        const uint one_h_size = _size.horizontal() / data.size();
 
         std::wstring buff;
 
@@ -251,7 +254,7 @@ private:
         }
 
         // Vertical loop
-        for (int vi = vertical_size_ + over; vi > 0; --vi) {
+        for (int vi = _size.vertical() + over; vi > 0; --vi) {
             uint space_diff = 0;
 
             if (Console::globalHPos() > 0) {
@@ -342,7 +345,7 @@ private:
             write_over = true;
         }
 
-        Console::globalVPos(vertical_size_ + over);
+        Console::globalVPos(_size.vertical() + over);
         Console::globalHPos(Console::globalHPos()
                             + (one_h_size * data.size() + (_grid.isGrid() ? grid_alignment : 0)
                                + ((data_alignment > one_h_size) ? (data_alignment - one_h_size) : 0)));
@@ -357,13 +360,13 @@ private:
         //        const T      data_max      = * std::max_element(std::begin(data), std::end(data));
         //        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
         const double step = (_range.horizontalMax() - _range.horizontalMin())
-                          / static_cast<double>(horizontal_size_); //(data_max - data_min) / static_cast<T>(horizontal_size_);
+                          / static_cast<double>(_size.horizontal()); //(data_max - data_min) / static_cast<T>(_size.horizontal());
         const uint over = ((_header.isDataHeader() ? static_cast<uint>(std::max(std::to_string(static_cast<int>(_range.verticalMax())).size(),
                                                                                 std::to_string(static_cast<int>(_range.verticalMin())).size()))
                                                    : 0)
                            + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0));
         //        const bool is_data_empty = (data.begin() == data.end());
-        const uint one_v_size = vertical_size_ / data.size();
+        const uint one_v_size = _size.vertical() / data.size();
 
         std::wstring buff;
 
@@ -381,7 +384,7 @@ private:
             if (data[di] >= _range.horizontalMin() && data[di] <= _range.horizontalMax()) {
                 num_bricks = (data[di] - _range.horizontalMin()) / step;
             } else if (data[di] > _range.horizontalMax()) {
-                num_bricks = horizontal_size_;
+                num_bricks = _size.horizontal();
             }
 
             for (uint i = 0; i < one_v_size - 1; ++i) {
@@ -422,7 +425,7 @@ private:
             T            grid_value = _range.horizontalMin();
 
             _header.setDataPosition(DataPosition::Left);
-            for (uint i = 0; i <= horizontal_size_;) {
+            for (uint i = 0; i <= _size.horizontal();) {
                 uint alignment = static_cast<uint>(std::to_string(static_cast<int>(grid_value)).size() + 1); // for one space
 
                 if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
@@ -442,7 +445,7 @@ private:
         }
 
         Console::globalVPos(one_v_size * static_cast<uint>(data.size()) + (_grid.isGrid() ? 1 : 0));
-        Console::globalHPos(Console::globalHPos() + horizontal_size_ + over);
+        Console::globalHPos(Console::globalHPos() + _size.horizontal() + over);
 
         Console::writeColorToBuff(&buff, Color::Default);
         Console::print(buff);
@@ -485,16 +488,16 @@ private:
             is_data_empty = (work_data.begin() == work_data.end());
         }
 
-        const uint h_over   = (((horizontal_size_ % 2 == 0) ? 1 : 0) + ((_header.isDataHeader()) ? (2 * alignment) : 0));
-        const uint v_over   = (((vertical_size_ % 2 == 0) ? 1 : 0) + ((_header.isDataHeader()) ? 2 : 0));
-        const uint h_center = horizontal_size_ / 2 + 1 + ((_header.isDataHeader()) ? alignment : 0);
-        const uint v_center = vertical_size_ / 2 + 1 + ((_header.isDataHeader()) ? 1 : 0);
+        const uint h_over   = (((_size.horizontal() % 2 == 0) ? 1 : 0) + ((_header.isDataHeader()) ? (2 * alignment) : 0));
+        const uint v_over   = (((_size.vertical() % 2 == 0) ? 1 : 0) + ((_header.isDataHeader()) ? 2 : 0));
+        const uint h_center = _size.horizontal() / 2 + 1 + ((_header.isDataHeader()) ? alignment : 0);
+        const uint v_center = _size.vertical() / 2 + 1 + ((_header.isDataHeader()) ? 1 : 0);
 
         // Ellipse
-        // const auto a = static_cast<double>(horizontal_size_ / 2); // semi-major axis
-        // const auto b = static_cast<double>(vertical_size_ / 2);   // semi-minor axis
-        const size_t a = horizontal_size_ / 2; // semi-major axis
-        const size_t b = vertical_size_ / 2;   // semi-minor axis
+        // const auto a = static_cast<double>(_size.horizontal() / 2); // semi-major axis
+        // const auto b = static_cast<double>(_size.vertical() / 2);   // semi-minor axis
+        const size_t a = _size.horizontal() / 2; // semi-major axis
+        const size_t b = _size.vertical() / 2;   // semi-minor axis
 
         std::vector<std::pair<double, double>> coord;
         std::vector<std::pair<double, double>> header_coord;
@@ -588,7 +591,7 @@ private:
         auto header_iterator = sort_header.cbegin();
 
         std::wstring buff;
-        buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
+        buff.reserve(_size.vertical() * _size.horizontal() * 8); // magic eight (hateful :)
 
         if (Console::globalVPos() > 0) {
             Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());
@@ -601,17 +604,17 @@ private:
         // Vertical loop
         std::vector<int> write_header_indexes;
 
-        for (uint vi = vertical_size_ + v_over; vi > 0; --vi) {
+        for (uint vi = _size.vertical() + v_over; vi > 0; --vi) {
             if (Console::globalHPos() > 0) {
                 Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
             }
 
             // Horizontal loop
-            double h_first = horizontal_size_ + h_over;
+            double h_first = _size.horizontal() + h_over;
             double v_prev  = 0;
             int    index   = -1;
 
-            for (uint hi = 1; hi <= horizontal_size_ + h_over; ++hi) {
+            for (uint hi = 1; hi <= _size.horizontal() + h_over; ++hi) {
                 // Data header
                 if (_header.isDataHeader() && !is_data_empty && header_iterator != sort_header.end() && hi == header_iterator->first.first
                     && vi == header_iterator->first.second) {
@@ -635,11 +638,11 @@ private:
                                    && vi == (coord_iterator - 1)->first.second) {
                             const uint diff = static_cast<uint>(header_iterator->first.first - (coord_iterator - 1)->first.first - 1);
 
-                            if ((horizontal_size_ + h_over - hi) < alignment) {
-                                if ((horizontal_size_ + h_over - hi) == (alignment - 1)) {
+                            if ((_size.horizontal() + h_over - hi) < alignment) {
+                                if ((_size.horizontal() + h_over - hi) == (alignment - 1)) {
                                     buff += L' ';
                                 }
-                                shift     = alignment - (horizontal_size_ + h_over - hi) - 2;
+                                shift     = alignment - (_size.horizontal() + h_over - hi) - 2;
                                 end_space = false;
                             } else if (diff == 0) {
                                 buff += L' ';
@@ -692,8 +695,8 @@ private:
             buff += L'\n';
         }
 
-        Console::globalHPos(Console::globalHPos() + horizontal_size_ + h_over);
-        Console::globalVPos(vertical_size_ + v_over + 1);
+        Console::globalHPos(Console::globalHPos() + _size.horizontal() + h_over);
+        Console::globalVPos(_size.vertical() + v_over + 1);
 
         Console::writeColorToBuff(&buff, Color::Default);
         buff += L'\n';

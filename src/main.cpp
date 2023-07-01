@@ -33,7 +33,7 @@ int main()
 
     // GRAPH
     WideConsole::Graph graph;
-    graph.setSize(33, 17);
+    graph.size().setSize(33, 17);
     graph.range().setHorizontalRange(-1.5, 1.5);
     graph.range().setVerticalRange(-1.5, 1.5);
     graph.header().setDataPosition(WideConsole::DataPosition::Left);
@@ -98,17 +98,17 @@ int main()
 
             // Column chart
             chart.setChartType(WideConsole::ChartType::Column);
-            chart.setSize(40, 16);
+            chart.size().setSize(40, 16);
             chart.printObject(data);
 
             // Bar chart
             chart.setChartType(WideConsole::ChartType::Bar);
-            chart.setSize(40, 16);
+            chart.size().setSize(40, 16);
             chart.printObject(data);
 
             // Pie chart
             chart.setChartType(WideConsole::ChartType::Pie);
-            chart.setSize(35, 17);
+            chart.size().setSize(35, 17);
             chart.printObject(data);
 
             ++count;

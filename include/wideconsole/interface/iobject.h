@@ -17,28 +17,14 @@
 
 #pragma once
 
+#include "wideconsole/interface/interface.h"
 #include "wideconsole/unit/console.h"
-
-#include <utility>
-#include <vector>
 
 namespace WideConsole {
 
-class IObject { // TODO(sergio): Maybe derived from class Interface
-public:
-    void setSize(const uint horizontal_size, const uint vertical_size) noexcept
-    {
-        horizontal_size_ = horizontal_size;
-        vertical_size_   = vertical_size;
-    }
-
+class IObject : public Interface {
 protected:
-    uint horizontal_size_;
-    uint vertical_size_;
-
-    explicit IObject(const uint horizontal_size = 22, const uint vertical_size = 11)
-        : horizontal_size_(horizontal_size)
-        , vertical_size_(vertical_size)
+    IObject()
     {
         if (object_counter_ == 0) {
             Console::start();
@@ -47,7 +33,7 @@ protected:
         ++object_counter_;
     }
 
-    virtual ~IObject()
+    ~IObject() override
     {
         if (object_counter_ == 1) {
             Console::end();

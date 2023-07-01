@@ -23,6 +23,7 @@
 #include "wideconsole/unit/header.h"
 #include "wideconsole/unit/precision2d.h"
 #include "wideconsole/unit/range.h"
+#include "wideconsole/unit/size.h"
 
 #include <string>
 #include <utility>
@@ -42,23 +43,25 @@ public:
     IHeader &      header() noexcept override { return _header; }
     IPrecision2D & precision() noexcept override { return _precision; }
     IRange &       range() noexcept override { return _range; }
-    void           setPoint(const Point point) noexcept override { point_ = static_cast<wchar_t>(point); }
-    void           setPointColor(const Color color) noexcept override { point_color_ = color; }
+    ISize &        size() noexcept override { return _size; }
+
+    void setPoint(const Point point) noexcept override { point_ = static_cast<wchar_t>(point); }
+    void setPointColor(const Color color) noexcept override { point_color_ = color; }
 
     template <typename T>
     void printObject(const std::vector<std::pair<T, T>> & data)
     {
         // Pre-processing
-        Console::preProcessing(horizontal_size_, headerSize());
+        Console::preProcessing(_size.horizontal(), headerSize());
 
-        const double h_step      = (_range.horizontalMax() - _range.horizontalMin()) / static_cast<double>(horizontal_size_ - 1);
-        const double v_step      = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(vertical_size_ - 1);
+        const double h_step      = (_range.horizontalMax() - _range.horizontalMin()) / static_cast<double>(_size.horizontal() - 1);
+        const double v_step      = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(_size.vertical() - 1);
         const auto   v_alignment = static_cast<uint>(
             std::max(std::to_string(static_cast<int>(_range.verticalMin())).size(), std::to_string(static_cast<int>(_range.verticalMax())).size())
             + ((_precision.verticalPrecision() > 0) ? (_precision.verticalPrecision() + 1) : 0));
         const bool is_data_empty = (data.begin() == data.end());
-        const uint h_zero        = horizontal_size_ / 2;
-        const uint v_zero        = vertical_size_ / 2;
+        const uint h_zero        = _size.horizontal() / 2;
+        const uint v_zero        = _size.vertical() / 2;
 
         std::vector<std::pair<uint, uint>> sort_data;
 
@@ -96,7 +99,7 @@ public:
         auto data_iterator = sort_data.cbegin();
 
         std::wstring buff;
-        buff.reserve(vertical_size_ * horizontal_size_ * 8); // magic eight (hateful :)
+        buff.reserve(_size.vertical() * _size.horizontal() * 8); // magic eight (hateful :)
 
         if (Console::globalVPos() > 0) {
             Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());
@@ -118,7 +121,7 @@ public:
                 buff.append(v_alignment, ' ');
             }
 
-            for (uint hi = 0; hi < horizontal_size_; ++hi) {
+            for (uint hi = 0; hi < _size.horizontal(); ++hi) {
                 if (hi == h_zero) {
                     buff += static_cast<wchar_t>(_grid.arrow() == Arrow::Big ? GridCode::BigUArrow_ : GridCode::SmallUArrow_);
                 } else {
@@ -130,7 +133,7 @@ public:
         }
 
         // Vertical loop
-        for (uint vi = vertical_size_ - 1; static_cast<int>(vi) >= 0; --vi) {
+        for (uint vi = _size.vertical() - 1; static_cast<int>(vi) >= 0; --vi) {
             const double vs = vi * v_step + _range.verticalMin();
 
             if (Console::globalHPos() > 0) {
@@ -149,7 +152,7 @@ public:
             }
 
             // Horizontal loop
-            for (uint hi = 0; hi < horizontal_size_; ++hi) {
+            for (uint hi = 0; hi < _size.horizontal(); ++hi) {
                 if (data_iterator != sort_data.end() && vi == data_iterator->second && hi == data_iterator->first) {
                     Console::writeColorToBuff(&buff, point_color_);
                     buff += point_;
@@ -187,7 +190,7 @@ public:
             buff += L'\n';
         }
 
-        //        uint h_pos        = (horizontal_size_ + ((_header.isDataHeader()) ? v_alignment : 0) + ((_grid.isArrow()) ? 1 : 0));
+        //        uint h_pos        = (_size.horizontal() + ((_header.isDataHeader()) ? v_alignment : 0) + ((_grid.isArrow()) ? 1 : 0));
         uint h_pos_header = 0;
 
         // Horizontal data header
@@ -201,7 +204,7 @@ public:
             h_pos_header += v_alignment;
 
             int count = 0;
-            for (uint hi = 0; hi < horizontal_size_; ++hi) {
+            for (uint hi = 0; hi < _size.horizontal(); ++hi) {
                 const double hs = hi * h_step + _range.horizontalMin();
 
                 const uint h_alignment = static_cast<uint>(std::to_string(std::abs(static_cast<int>(hs))).size() + ((hs < 0) ? 1 : 0)
@@ -217,7 +220,7 @@ public:
             }
         }
 
-        const uint h_pos_exp = horizontal_size_ + (_grid.isArrow() ? 1 : 0) + (_header.isDataHeader() ? v_alignment : 0);
+        const uint h_pos_exp = _size.horizontal() + (_grid.isArrow() ? 1 : 0) + (_header.isDataHeader() ? v_alignment : 0);
 
         if (_header.isDataHeader() && h_pos_header > h_pos_exp) {
             Console::globalHPos(Console::globalHPos() + h_pos_header);
@@ -225,7 +228,7 @@ public:
             Console::globalHPos(Console::globalHPos() + h_pos_exp);
         }
 
-        Console::globalVPos(vertical_size_ + ((_grid.isArrow()) ? 1 : 0) + ((_header.isDataHeader()) ? 1 : 0));
+        Console::globalVPos(_size.vertical() + ((_grid.isArrow()) ? 1 : 0) + ((_header.isDataHeader()) ? 1 : 0));
 
         Console::writeColorToBuff(&buff, Color::Default);
         buff += L'\n';
@@ -237,6 +240,7 @@ private:
     Header      _header {};
     Precision2D _precision {};
     Range       _range {};
+    Size        _size {};
 
     wchar_t point_ { static_cast<wchar_t>(Point::Dot) };
     Color   point_color_ { Color::BrightRed };
