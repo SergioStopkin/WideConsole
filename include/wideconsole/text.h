@@ -17,14 +17,14 @@
 
 #pragma once
 
-#include "wideconsole/interface/iobject.h"
 #include "wideconsole/interface/itext.h"
+#include "wideconsole/unit/object.h"
 
 #include <cstring>
 
 namespace WideConsole {
 
-class Text final : public IObject, public IText {
+class Text final : public IText, public Object {
 public:
     void setFont(const Font font) noexcept override { _font = font; }
     void setConsoleView(const ConsoleView & view) noexcept override { _view = view; }
@@ -149,8 +149,6 @@ public:
 private:
     Font        _font { Font::Monospace };
     ConsoleView _view {};
-
-    [[nodiscard]] uint headerSize() const noexcept override { return 0; }
 };
 
 } // namespace WideConsole

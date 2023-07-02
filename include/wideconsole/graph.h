@@ -18,9 +18,9 @@
 #pragma once
 
 #include "wideconsole/interface/igraph.h"
-#include "wideconsole/interface/iobject.h"
 #include "wideconsole/unit/grid.h"
 #include "wideconsole/unit/header.h"
+#include "wideconsole/unit/object.h"
 #include "wideconsole/unit/precision2d.h"
 #include "wideconsole/unit/range.h"
 #include "wideconsole/unit/size.h"
@@ -31,14 +31,8 @@
 
 namespace WideConsole {
 
-class Graph final : public IObject, public IGraph {
+class Graph final : public IGraph, public Object {
 public:
-    // explicit Graph()
-    // : IHeader(true, DataPosition::Left)
-    // , IRange(-10, 10, -10, 10)
-    // {
-    // }
-
     IGrid &        grid() noexcept override { return _grid; }
     IHeader &      header() noexcept override { return _header; }
     IPrecision2D & precision() noexcept override { return _precision; }
@@ -52,7 +46,7 @@ public:
     void printObject(const std::vector<std::pair<T, T>> & data)
     {
         // Pre-processing
-        Console::preProcessing(_size.horizontal(), headerSize());
+        Console::preProcessing(_size.horizontal(), _header.size());
 
         const double h_step      = (_range.horizontalMax() - _range.horizontalMin()) / static_cast<double>(_size.horizontal() - 1);
         const double v_step      = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(_size.vertical() - 1);
@@ -244,8 +238,6 @@ private:
 
     wchar_t point_ { static_cast<wchar_t>(Point::Dot) };
     Color   point_color_ { Color::BrightRed };
-
-    [[nodiscard]] uint headerSize() const noexcept override { return _header.headerSize(); }
 };
 
 } // namespace WideConsole

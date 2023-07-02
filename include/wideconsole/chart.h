@@ -18,10 +18,10 @@
 #pragma once
 
 #include "wideconsole/interface/ichart.h"
-#include "wideconsole/interface/iobject.h"
 #include "wideconsole/type/brickcode.h"
 #include "wideconsole/unit/grid.h"
 #include "wideconsole/unit/header.h"
+#include "wideconsole/unit/object.h"
 #include "wideconsole/unit/precision1d.h"
 #include "wideconsole/unit/range.h"
 #include "wideconsole/unit/size.h"
@@ -32,15 +32,8 @@
 
 namespace WideConsole {
 
-class Chart final : public IObject, public IChart {
+class Chart final : public IChart, public Object {
 public:
-    // Chart()
-    // : IObject(4, 6)
-    // {
-    // Default colors
-    // setChartColors({ Color::Red, Color::Yellow, Color::Black });
-    // }
-
     IGrid &        grid() noexcept override { return _grid; }
     IHeader &      header() noexcept override { return _header; }
     IPrecision1D & precision() noexcept override { return _precision; }
@@ -66,7 +59,7 @@ public:
     void printObject(const std::vector<T> & data)
     {
         // Pre-processing
-        Console::preProcessing(_size.horizontal(), headerSize());
+        Console::preProcessing(_size.horizontal(), (chart_type_ == ChartType::Pie ? (2 * _header.size()) : _header.size()));
 
         switch (chart_type_) {
         // clang-format off
@@ -90,11 +83,6 @@ private:
     ChartType          chart_type_ { ChartType::Column };
     std::vector<Color> colors_ { Color::Red, Color::Yellow, Color::Black };
     BrickCode          brick_ { BrickCode::FF_OP100_ };
-
-    [[nodiscard]] uint headerSize() const noexcept override
-    {
-        return (chart_type_ == ChartType::Pie ? (2 * _header.headerSize()) : _header.headerSize());
-    }
 
     static void writeBricksToBuff(std::wstring * buff, const BrickCode brick, const uint number = 1)
     {

@@ -22,9 +22,9 @@
 
 namespace WideConsole {
 
-class IObject : public Interface {
+class Object : public Interface {
 protected:
-    IObject()
+    Object()
     {
         if (object_counter_ == 0) {
             Console::start();
@@ -33,7 +33,7 @@ protected:
         ++object_counter_;
     }
 
-    ~IObject() override
+    ~Object() override
     {
         if (object_counter_ == 1) {
             Console::end();
@@ -44,8 +44,6 @@ protected:
 
 private:
     inline static int object_counter_ = 0;
-
-    [[nodiscard]] virtual uint headerSize() const noexcept = 0;
 };
 
 } // namespace WideConsole

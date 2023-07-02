@@ -28,20 +28,18 @@ namespace WideConsole {
 
 class Header final : public IHeader {
 public:
-    void setDataPosition(const DataPosition pos) noexcept override { data_pos_ = pos; }
-    void showDataHeader(const bool show) noexcept override { is_data_header_ = show; }
+    void setDataPosition(const DataPosition pos) noexcept override { _dataPos = pos; }
+    void showDataHeader(const bool show) noexcept override { _isDataHeader = show; }
 
-    void                       setHeaderSize(const uint header_size) noexcept { header_size_ = header_size; }
-    [[nodiscard]] bool         isDataHeader() const noexcept { return is_data_header_; }
-    [[nodiscard]] DataPosition dataPosition() const noexcept { return data_pos_; }
-
-    [[nodiscard]] uint headerSize() const noexcept { return header_size_; }
+    [[nodiscard]] bool         isDataHeader() const noexcept { return _isDataHeader; }
+    [[nodiscard]] DataPosition dataPosition() const noexcept { return _dataPos; }
+    [[nodiscard]] uint         size() const noexcept { return _headerSize; }
 
     template <typename T>
     void writeDataToBuff(std::wstring * buff, T value, uint alignment, int precision) noexcept
     {
         std::wstring wvalue;
-        header_size_ = alignment;
+        _headerSize = alignment;
 
         if (typeid(value) == typeid(float) || typeid(value) == typeid(double) || typeid(value) == typeid(long double)) {
             std::wstringstream wsstream;
@@ -55,7 +53,7 @@ public:
         uint       diff    = 0;
 
         if (alignment > str_len) {
-            switch (data_pos_) {
+            switch (_dataPos) {
             case DataPosition::Left: diff = alignment - str_len; break;
             case DataPosition::Right:
                 diff = 0; // alignment - str_len - (alignment - str_len);
@@ -76,9 +74,9 @@ public:
     }
 
 private:
-    bool         is_data_header_ { true };
-    DataPosition data_pos_ { DataPosition::Center };
-    uint         header_size_ { 0 };
+    bool         _isDataHeader { true };
+    DataPosition _dataPos { DataPosition::Center };
+    uint         _headerSize { 0 };
 };
 
 } // namespace WideConsole
