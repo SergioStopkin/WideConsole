@@ -17,21 +17,20 @@
 
 #pragma once
 
-#include "wideconsole/interface/idraw.h"
-#include "wideconsole/interface/iprecision1d.h"
-#include "wideconsole/type/charttype.h"
-#include "wideconsole/type/opacity.h"
-
-#include <vector>
+#include "wideconsole/interface/igrid.h"
+#include "wideconsole/interface/iheader.h"
+#include "wideconsole/interface/interface.h"
+#include "wideconsole/interface/irange.h"
+#include "wideconsole/interface/isize.h"
 
 namespace WideConsole {
 
-class IChart : public IDraw {
+class IDraw : public Interface {
 public:
-    virtual IPrecision1D & precision() noexcept                                       = 0;
-    virtual void           setChartType(ChartType type) noexcept                      = 0;
-    virtual void           setOpacity(Opacity opacity) noexcept                       = 0;
-    virtual void           setChartColors(const std::vector<Color> & colors) noexcept = 0;
+    virtual IGrid &   grid() noexcept   = 0;
+    virtual IHeader & header() noexcept = 0;
+    virtual IRange &  range() noexcept  = 0;
+    virtual ISize &   size() noexcept   = 0;
 };
 
 } // namespace WideConsole

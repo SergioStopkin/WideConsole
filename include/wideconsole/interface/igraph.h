@@ -17,23 +17,15 @@
 
 #pragma once
 
-#include "wideconsole/interface/igrid.h"
-#include "wideconsole/interface/iheader.h"
-#include "wideconsole/interface/interface.h"
+#include "wideconsole/interface/idraw.h"
 #include "wideconsole/interface/iprecision2d.h"
-#include "wideconsole/interface/irange.h"
-#include "wideconsole/interface/isize.h"
 #include "wideconsole/type/point.h"
 
 namespace WideConsole {
 
-class IGraph : public Interface {
+class IGraph : public IDraw {
 public:
-    virtual IGrid &        grid() noexcept                     = 0;
-    virtual IHeader &      header() noexcept                   = 0;
     virtual IPrecision2D & precision() noexcept                = 0;
-    virtual IRange &       range() noexcept                    = 0;
-    virtual ISize &        size() noexcept                     = 0;
     virtual void           setPoint(Point point) noexcept      = 0;
     virtual void           setPointColor(Color color) noexcept = 0;
 };
