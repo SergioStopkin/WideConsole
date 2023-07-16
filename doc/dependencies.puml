@@ -1,0 +1,110 @@
+@startuml
+
+scale 3840 width
+hide empty members
+skinparam linetype ortho
+
+skinparam package<<Clear>> {
+  borderColor Transparent
+  fontColor   Transparent
+}
+
+namespace WideConsole #EAFAF1 {
+  package /wideconsole <<Rectangle>> #B5EAAA {
+    package /interface <<Rectangle>> #FFDFDD {
+      package "" as packIOthers <<Rectangle>> {
+        package "" as pcl1 <<Clear>> {
+          abstract IChart
+          abstract IGraph
+          abstract IText
+        }
+        abstract IDraw
+        package "" as pcl2 <<Clear>> {
+          abstract IPrecision1D
+          abstract IPrecision2D
+        }
+        package "" as pcl3 <<Clear>> {
+          package "" as packIUnits <<Rectangle>> {
+            abstract IGrid
+            abstract IHeader
+            abstract IRange
+            abstract ISize
+          }
+          abstract IConsoleState
+          abstract IConsoleView
+        }
+      }
+    }
+
+    package /unit <<Rectangle>> #FFFFCC {
+      package "" as pcl4 <<Clear>> {
+        package "" as packUnits <<Rectangle>> {
+          class Grid <<final>>
+          class Header <<final>>
+          class Range <<final>>
+          class Size <<final>>
+        }
+        class ConsoleState <<final>>
+        class ConsoleView <<final>>
+        class Console <<(S,#FFFF00)static final>>
+        class Object
+      }
+      package "" as pcl5 <<Clear>> {
+        class Precision1D <<final>>
+        class Precision2D <<final>>
+      }
+    }
+
+    package "" as packObjs <<Rectangle>> {
+      class Chart <<final>>
+      class Graph <<final>>
+      class Text <<final>>
+    }
+  }
+
+' Skeleton
+  IChart        -[hidden]d- IGraph
+  IGraph        -[hidden]d- IText
+  IPrecision1D  -[hidden]d- IPrecision2D
+  IPrecision2D  -[hidden]d- IConsoleView
+  packIUnits    -[hidden]r- IConsoleState
+  IConsoleState -[hidden]r- IConsoleView
+  IGrid         -[hidden]r- IHeader
+  IHeader       -[hidden]r- IRange
+  IRange        -[hidden]r- ISize
+
+  IText -[hidden]d- Chart
+  IGrid -[hidden]d- Precision1D
+
+  Chart        -[hidden]d- Graph
+  Graph        -[hidden]d- Text
+  Precision1D  -[hidden]d- Precision2D
+  Grid         -[hidden]d- Object
+  Precision1D  -[hidden]r- packUnits
+  Precision2D  -[hidden]r- Object
+  packUnits    -[hidden]r- ConsoleState
+  ConsoleState -[hidden]r- ConsoleView
+  Grid         -[hidden]r- Header
+  Header       -[hidden]r- Range
+  Range        -[hidden]r- Size
+
+' Dependencies
+  IDraw  .d.> packIUnits
+  IChart .l.> IPrecision1D
+  IGraph .l.> IPrecision2D
+  IText  .l.> IConsoleView
+
+  Object   .r.>  Console
+  packObjs .r.>  Console
+
+  Console *-u-> ConsoleState
+  Console *-u-> ConsoleView
+  Text    *-u-> ConsoleView
+
+  Chart *-r-> packUnits
+  Graph *-u-> packUnits
+  Chart *-r-> Precision1D
+  Graph *-r-> Precision2D
+}
+
+@enduml

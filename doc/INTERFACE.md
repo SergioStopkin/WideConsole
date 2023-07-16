@@ -21,8 +21,11 @@
 | abstract class | [*IPrecisionP1*](#iprecision-p1) | [iprecision.h](../src/wideconsole/iprecision.h) |
 | abstract class | [*IPrecisionP2*](#iprecision-p2) | [iprecision.h](../src/wideconsole/iprecision.h) |
 
-#### UML Class diagram:
-![uml class](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/SergioStopkin/WideConsole/develop/doc/UMLClass.md)
+### Inheritances & implementations class diagram:
+![uml class](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/SergioStopkin/WideConsole/develop/doc/interfaces.puml)
+
+### Dependencies class diagram:
+![uml class](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/SergioStopkin/WideConsole/develop/doc/dependencies.puml)
 
 <h1 id="chart">Chart</h1>
 
