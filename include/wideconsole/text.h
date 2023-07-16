@@ -26,16 +26,15 @@ namespace WideConsole {
 
 class Text final : public IText, public Object {
 public:
-    void setFont(const Font font) noexcept override { _font = font; }
-    void setConsoleView(const ConsoleView & view) noexcept override { _view = view; }
+    IConsoleView & consoleView() noexcept override { return _view; }
+    void           setFont(const Font font) noexcept override { _font = font; }
+    void           setConsoleView(const ConsoleView & view) noexcept override { _view = view; }
 
     void reset() noexcept override
     {
         _font = Font {};
         _view = ConsoleView {};
     }
-
-    [[nodiscard]] IConsoleView & consoleView() noexcept override { return _view; }
 
     void printObject(const char * s) noexcept override
     {

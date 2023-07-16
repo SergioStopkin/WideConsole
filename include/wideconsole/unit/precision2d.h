@@ -23,8 +23,9 @@ namespace WideConsole {
 
 class Precision2D final : public IPrecision2D {
 public:
-    void              setVerticalPrecision(const int v_precision) noexcept override { v_precision_ = v_precision; }
-    void              setHorizontalPrecision(const int h_precision) noexcept override { h_precision_ = h_precision; }
+    void setVerticalPrecision(const int v_precision) noexcept override { v_precision_ = v_precision; }
+    void setHorizontalPrecision(const int h_precision) noexcept override { h_precision_ = h_precision; }
+
     [[nodiscard]] int verticalPrecision() const noexcept { return v_precision_; }
     [[nodiscard]] int horizontalPrecision() const noexcept { return h_precision_; }
 

@@ -41,7 +41,7 @@ public:
     ISize &        size() noexcept override { return _size; }
 
     void setChartType(const ChartType type) noexcept override { chart_type_ = type; }
-
+    void setChartColors(const std::vector<Color> & colors) noexcept override { colors_ = colors; }
     void setOpacity(const Opacity opacity) noexcept override
     {
         switch (opacity) {
@@ -52,8 +52,6 @@ public:
         case Opacity::OP_25:  brick_ = BrickCode::FF_OP25_;  break;
         } // clang-format on
     }
-
-    void setChartColors(const std::vector<Color> & colors) noexcept override { colors_ = colors; }
 
     template <typename T>
     void printObject(const std::vector<T> & data)

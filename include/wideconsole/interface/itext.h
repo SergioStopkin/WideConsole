@@ -27,13 +27,12 @@ namespace WideConsole {
 
 class IText : public Interface {
 public:
-    virtual void setFont(Font font) noexcept                       = 0;
-    virtual void setConsoleView(const ConsoleView & view) noexcept = 0;
-    virtual void reset() noexcept                                  = 0;
-    virtual void printObject(const char * s) noexcept              = 0;
-    virtual void printObject(const std::string & str) noexcept     = 0;
-
-    [[nodiscard]] virtual IConsoleView & consoleView() noexcept = 0;
+    virtual IConsoleView & consoleView() noexcept                            = 0;
+    virtual void           setFont(Font font) noexcept                       = 0;
+    virtual void           setConsoleView(const ConsoleView & view) noexcept = 0;
+    virtual void           reset() noexcept                                  = 0;
+    virtual void           printObject(const char * s) noexcept              = 0;
+    virtual void           printObject(const std::string & str) noexcept     = 0;
 };
 
 } // namespace WideConsole

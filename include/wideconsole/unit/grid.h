@@ -25,13 +25,9 @@ namespace WideConsole {
 class Grid final : public IGrid {
 public:
     void setAxisColor(const Color color) noexcept override { axis_color_ = color; }
-
     void setGridColor(const Color color) noexcept override { grid_color_ = color; }
-
     void setArrow(const Arrow arrow) noexcept override { arrow_ = arrow; }
-
     void showArrow(const bool show) noexcept override { is_arrow_ = show; }
-
     void showGrid(const bool show) noexcept override
     {
         is_grid_ = show;
@@ -44,21 +40,6 @@ public:
     [[nodiscard]] wchar_t grid() const noexcept { return grid_; }
     [[nodiscard]] bool    isArrow() const noexcept { return is_arrow_; }
     [[nodiscard]] bool    isGrid() const noexcept { return is_grid_; }
-
-    // explicit Grid(const Color axis_color = Color::Default, // NOLINT(cppcoreguidelines-pro-type-member-init, hicpp-member-init)
-    //                const Color grid_color = Color::White,
-    //                const Arrow arrow      = Arrow::Small,
-    //                const bool  show_arrow = true,
-    //                const bool  show_grid  = true)
-    //     : axis_color_(axis_color)
-    //     , grid_color_(grid_color)
-    //     , arrow_(arrow)
-    //     , is_arrow_(show_arrow)
-    // {
-    //     showGrid(show_grid);
-    // }
-
-    // ~Grid() override = default;
 
 private:
     Color   axis_color_ { Color::Default };

@@ -23,7 +23,8 @@ namespace WideConsole {
 
 class Precision1D final : public IPrecision1D {
 public:
-    void              setPrecision(const int precision) noexcept override { precision_ = precision; }
+    void setPrecision(const int precision) noexcept override { precision_ = precision; }
+
     [[nodiscard]] int precision() const noexcept { return precision_; }
 
 private:
