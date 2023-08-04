@@ -42,4 +42,6 @@ enum class GridCode : wchar_t {
     SmallDot_    = 0x00b7, // 0x0387
 };
 
+inline wchar_t wchar(const GridCode gridCode) { return static_cast<wchar_t>(gridCode); }
+
 } // namespace WideConsole

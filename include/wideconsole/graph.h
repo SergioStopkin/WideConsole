@@ -39,7 +39,7 @@ public:
     IRange &       range() noexcept override { return _range; }
     ISize &        size() noexcept override { return _size; }
 
-    void setPoint(const Point point) noexcept override { point_ = static_cast<wchar_t>(point); }
+    void setPoint(const Point point) noexcept override { point_ = wchar(point); }
     void setPointColor(const Color color) noexcept override { point_color_ = color; }
 
     template <typename T>
@@ -117,7 +117,7 @@ public:
 
             for (uint hi = 0; hi < _size.horizontal(); ++hi) {
                 if (hi == h_zero) {
-                    buff += static_cast<wchar_t>(_grid.arrow() == Arrow::Big ? GridCode::BigUArrow_ : GridCode::SmallUArrow_);
+                    buff += wchar(_grid.arrow() == Arrow::Big ? GridCode::BigUArrow_ : GridCode::SmallUArrow_);
                 } else {
                     buff += L' ';
                 }
@@ -158,14 +158,14 @@ public:
                     Console::writeColorToBuff(&buff, _grid.axisColor());
 
                     if (vi == v_zero) {
-                        buff += static_cast<wchar_t>(GridCode::Cross_);
+                        buff += wchar(GridCode::Cross_);
                     } else {
-                        buff += static_cast<wchar_t>(GridCode::VLine_);
+                        buff += wchar(GridCode::VLine_);
                     }
                 } else {
                     if (vi == v_zero) {
                         Console::writeColorToBuff(&buff, _grid.axisColor());
-                        buff += static_cast<wchar_t>(GridCode::HLine_);
+                        buff += wchar(GridCode::HLine_);
                     } else {
                         if (_grid.isGrid()) {
                             Console::writeColorToBuff(&buff, _grid.gridColor());
@@ -178,7 +178,7 @@ public:
             // Right arrow
             if (vi == v_zero && _grid.isArrow()) {
                 Console::writeColorToBuff(&buff, _grid.axisColor());
-                buff += static_cast<wchar_t>(_grid.arrow() == Arrow::Big ? GridCode::BigRArrow_ : GridCode::SmallRArrow_);
+                buff += wchar(_grid.arrow() == Arrow::Big ? GridCode::BigRArrow_ : GridCode::SmallRArrow_);
             }
 
             buff += L'\n';
@@ -236,7 +236,7 @@ private:
     Range       _range {};
     Size        _size {};
 
-    wchar_t point_ { static_cast<wchar_t>(Point::Dot) };
+    wchar_t point_ { wchar(Point::Dot) };
     Color   point_color_ { Color::BrightRed };
 };
 

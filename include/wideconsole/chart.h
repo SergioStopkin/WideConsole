@@ -85,9 +85,9 @@ private:
     static void writeBricksToBuff(std::wstring * buff, const BrickCode brick, const uint number = 1)
     {
         // for (uint i = 0; i < number; ++i) {
-        //     *buff += static_cast<wchar_t>(brick);
+        //     *buff += wchar(brick);
         // }
-        buff->append(number, static_cast<wchar_t>(brick));
+        buff->append(number, wchar(brick));
     }
 
     static wchar_t outerBrick([[maybe_unused]] const double hs,
@@ -123,7 +123,7 @@ private:
             }
         }
 
-        return static_cast<wchar_t>(brick);
+        return wchar(brick);
     }
 
     [[nodiscard]] int

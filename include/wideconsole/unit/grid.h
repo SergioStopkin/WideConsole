@@ -31,7 +31,7 @@ public:
     void showGrid(const bool show) noexcept override
     {
         is_grid_ = show;
-        grid_    = (show ? static_cast<wchar_t>(GridCode::SmallDot_) : ' ');
+        grid_    = (show ? wchar(GridCode::SmallDot_) : ' ');
     }
 
     [[nodiscard]] Color   axisColor() const noexcept { return axis_color_; }
@@ -45,7 +45,7 @@ private:
     Color   axis_color_ { Color::Default };
     Color   grid_color_ { Color::White };
     Arrow   arrow_ { Arrow::Small };
-    wchar_t grid_ { static_cast<wchar_t>(GridCode::SmallDot_) };
+    wchar_t grid_ { wchar(GridCode::SmallDot_) };
     bool    is_arrow_ { true };
     bool    is_grid_ { true };
 };
