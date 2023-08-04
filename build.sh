@@ -1,7 +1,7 @@
 . .cicd-config
 
 if [[ $# -eq 0 ]]; then
-    echo "Use ./build.sh <dev/rel/test>"
+    echo "Usage ./build.sh <dev/rel/test>"
     exit 1
 elif [[ $1 == "dev" ]]; then
     BUILD_DIR=$BUILD_DIR_DEV
@@ -14,7 +14,7 @@ elif [[ $1 == "test" ]]; then
     BUILD_DIR=$BUILD_DIR_DEV
     TARGET=$TARGET_TEST
 else
-    echo "Use ./build.sh <dev/rel/test>"
+    echo "Usage ./build.sh <dev/rel/test>"
     exit 1
 fi
 
