@@ -28,7 +28,7 @@
 
 ## Standard
 
-C++ 14
+C++ 17
 
 ## Platforms
 
