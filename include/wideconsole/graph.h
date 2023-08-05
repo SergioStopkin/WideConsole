@@ -50,9 +50,9 @@ public:
 
         const double h_step      = (_range.horizontalMax() - _range.horizontalMin()) / static_cast<double>(_size.horizontal() - 1);
         const double v_step      = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(_size.vertical() - 1);
-        const auto   v_alignment = static_cast<uint>(
-            std::max(std::to_string(static_cast<int>(_range.verticalMin())).size(), std::to_string(static_cast<int>(_range.verticalMax())).size())
-            + ((_precision.verticalPrecision() > 0) ? (_precision.verticalPrecision() + 1) : 0));
+        const auto   v_alignment = std::max(std::to_string(static_cast<int>(_range.verticalMin())).size(),
+                                          std::to_string(static_cast<int>(_range.verticalMax())).size())
+                               + ((_precision.verticalPrecision() > 0) ? (_precision.verticalPrecision() + 1) : 0);
         const bool is_data_empty = (data.begin() == data.end());
         const uint h_zero        = _size.horizontal() / 2;
         const uint v_zero        = _size.vertical() / 2;
@@ -66,8 +66,8 @@ public:
                     continue;
                 }
 
-                const auto h = static_cast<uint>((pair.first - _range.horizontalMin()) / h_step + 0.5);
-                const auto v = static_cast<uint>((pair.second - _range.verticalMin()) / v_step + 0.5);
+                const auto h = (pair.first - _range.horizontalMin()) / h_step + 0.5;
+                const auto v = (pair.second - _range.verticalMin()) / v_step + 0.5;
 
                 /// todo: optimize
                 bool duplicate = false;
@@ -201,9 +201,8 @@ public:
             for (uint hi = 0; hi < _size.horizontal(); ++hi) {
                 const double hs = hi * h_step + _range.horizontalMin();
 
-                const uint h_alignment = static_cast<uint>(std::to_string(std::abs(static_cast<int>(hs))).size() + ((hs < 0) ? 1 : 0)
-                                                           + ((_precision.horizontalPrecision() > 0) ? (_precision.horizontalPrecision() + 1) : 0)
-                                                           + 1); // for one space
+                const uint h_alignment = std::to_string(std::abs(static_cast<int>(hs))).size() + ((hs < 0) ? 1 : 0)
+                                       + ((_precision.horizontalPrecision() > 0) ? (_precision.horizontalPrecision() + 1) : 0) + 1; // for one space
                 if (count % h_alignment == 0) {
                     _header.writeDataToBuff(&buff, hs, h_alignment, _precision.horizontalPrecision());
                     h_pos_header += h_alignment;

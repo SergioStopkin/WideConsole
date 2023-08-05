@@ -49,7 +49,7 @@ public:
             wvalue = std::to_wstring(value);
         }
 
-        const auto str_len = static_cast<uint>(wvalue.length());
+        const uint str_len = wvalue.length();
         uint       diff    = 0;
 
         if (alignment > str_len) {

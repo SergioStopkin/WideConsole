@@ -216,8 +216,8 @@ private:
         const double step = (_range.verticalMax() - _range.verticalMin())
                           / static_cast<double>(_size.vertical()); //(data_max - data_min) / static_cast<T>(_size.vertical());
         const uint over = ((_header.isDataHeader() && (data_max > _range.verticalMax())) ? 1 : 0);
-        //        const uint   clst          = _size.vertical() / static_cast<uint>(colors_.size());
-        //        const bool   is_data_empty = (data.begin() == data.end());
+        // const uint clst = _size.vertical() / colors_.size();
+        // const bool is_data_empty = (data.begin() == data.end());
         const uint one_h_size = _size.horizontal() / data.size();
 
         std::wstring buff;
@@ -231,8 +231,8 @@ private:
         //        size_t cs             = colors_.size();
         bool write_over     = (over == 0);
         T    grid_value     = _range.verticalMax();
-        uint grid_alignment = static_cast<uint>(
-            std::max(std::to_string(static_cast<int>(_range.verticalMax())).size(), std::to_string(static_cast<int>(_range.verticalMin())).size()));
+        uint grid_alignment = std::max(std::to_string(static_cast<int>(_range.verticalMax())).size(),
+                                       std::to_string(static_cast<int>(_range.verticalMin())).size());
         uint data_alignment = 0;
 
         if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
@@ -269,7 +269,7 @@ private:
                 Color v_color = colors_[di % colors_.size()];
                 Console::writeColorToBuff(&buff, v_color);
 
-                data_alignment = static_cast<uint>(std::to_string(static_cast<int>(data[di])).size());
+                data_alignment = std::to_string(static_cast<int>(data[di])).size();
 
                 if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
                     data_alignment += ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0);
@@ -347,8 +347,8 @@ private:
         //        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
         const double step = (_range.horizontalMax() - _range.horizontalMin())
                           / static_cast<double>(_size.horizontal()); //(data_max - data_min) / static_cast<T>(_size.horizontal());
-        const uint over = ((_header.isDataHeader() ? static_cast<uint>(std::max(std::to_string(static_cast<int>(_range.verticalMax())).size(),
-                                                                                std::to_string(static_cast<int>(_range.verticalMin())).size()))
+        const uint over = ((_header.isDataHeader() ? std::max(std::to_string(static_cast<int>(_range.verticalMax())).size(),
+                                                              std::to_string(static_cast<int>(_range.verticalMin())).size())
                                                    : 0)
                            + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0));
         //        const bool is_data_empty = (data.begin() == data.end());
@@ -412,7 +412,7 @@ private:
 
             _header.setDataPosition(DataPosition::Left);
             for (uint i = 0; i <= _size.horizontal();) {
-                uint alignment = static_cast<uint>(std::to_string(static_cast<int>(grid_value)).size() + 1); // for one space
+                uint alignment = std::to_string(static_cast<int>(grid_value)).size() + 1; // for one space
 
                 if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
                     alignment += ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0);
@@ -430,7 +430,7 @@ private:
             buff += L'\n';
         }
 
-        Console::globalVPos(one_v_size * static_cast<uint>(data.size()) + (_grid.isGrid() ? 1 : 0));
+        Console::globalVPos(one_v_size * data.size() + (_grid.isGrid() ? 1 : 0));
         Console::globalHPos(Console::globalHPos() + _size.horizontal() + over);
 
         Console::writeColorToBuff(&buff, Color::Default);
@@ -449,10 +449,9 @@ private:
 
         if (!is_data_empty) {
             if (_header.isDataHeader()) {
-                alignment = static_cast<uint>(std::max(std::to_string(static_cast<int>(*std::max_element(data.begin(), data.end()))).size(),
-                                                       std::to_string(static_cast<int>(*std::min_element(data.begin(), data.end()))).size())
-                                              + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0)
-                                              + 2); // one space + more ellipse axis
+                alignment = std::max(std::to_string(static_cast<int>(*std::max_element(data.begin(), data.end()))).size(),
+                                     std::to_string(static_cast<int>(*std::min_element(data.begin(), data.end()))).size())
+                          + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0) + 2; // one space + more ellipse axis
             }
 
             for (const auto & value : data) {
@@ -528,8 +527,8 @@ private:
 
         if (!is_data_empty) {
             for (const auto & coord_pair : coord) {
-                const uint x         = static_cast<uint>(coord_pair.first);
-                const uint y         = static_cast<uint>(coord_pair.second);
+                const uint x         = coord_pair.first;
+                const uint y         = coord_pair.second;
                 bool       duplicate = false;
 
                 /// todo: optimize
@@ -550,8 +549,8 @@ private:
 
             if (_header.isDataHeader()) {
                 for (const auto & coord_pair : header_coord) {
-                    const uint x         = static_cast<uint>(coord_pair.first);
-                    const uint y         = static_cast<uint>(coord_pair.second);
+                    const uint x         = coord_pair.first;
+                    const uint y         = coord_pair.second;
                     bool       duplicate = false;
 
                     /// todo: optimize
@@ -612,7 +611,7 @@ private:
                         bool end_space = true;
                         int  shift     = 0;
                         if (coord_iterator != sort_coord.end() && vi == coord_iterator->first.second) {
-                            const uint diff = static_cast<uint>(coord_iterator->first.first - header_iterator->first.first);
+                            const uint diff = coord_iterator->first.first - header_iterator->first.first;
 
                             if (diff < alignment) {
                                 shift = alignment - diff;
@@ -622,7 +621,7 @@ private:
                             }
                         } else if ((coord_iterator - 1) != sort_coord.end() && (coord_iterator - 1) >= sort_coord.begin()
                                    && vi == (coord_iterator - 1)->first.second) {
-                            const uint diff = static_cast<uint>(header_iterator->first.first - (coord_iterator - 1)->first.first - 1);
+                            const uint diff = header_iterator->first.first - (coord_iterator - 1)->first.first - 1;
 
                             if ((_size.horizontal() + h_over - hi) < alignment) {
                                 if ((_size.horizontal() + h_over - hi) == (alignment - 1)) {

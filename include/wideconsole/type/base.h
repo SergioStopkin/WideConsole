@@ -17,9 +17,12 @@
 
 #pragma once
 
+#include <cstddef>
+
 namespace WideConsole {
 
 using uchar = unsigned char;
 using uint  = unsigned int;
+// using uint  = size_t;
 
 } // namespace WideConsole
