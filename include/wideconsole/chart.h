@@ -18,6 +18,7 @@
 #pragma once
 
 #include "wideconsole/interface/ichart.h"
+#include "wideconsole/tool/intsize.h"
 #include "wideconsole/type/brickcode.h"
 #include "wideconsole/unit/grid.h"
 #include "wideconsole/unit/header.h"
@@ -231,8 +232,7 @@ private:
         //        size_t cs             = colors_.size();
         bool write_over     = (over == 0);
         T    grid_value     = _range.verticalMax();
-        uint grid_alignment = std::max(std::to_string(static_cast<int>(_range.verticalMax())).size(),
-                                       std::to_string(static_cast<int>(_range.verticalMin())).size());
+        uint grid_alignment = std::max(intSize(_range.verticalMax()), intSize(_range.verticalMin()));
         uint data_alignment = 0;
 
         if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
@@ -269,7 +269,7 @@ private:
                 Color v_color = colors_[di % colors_.size()];
                 Console::writeColorToBuff(&buff, v_color);
 
-                data_alignment = std::to_string(static_cast<int>(data[di])).size();
+                data_alignment = intSize(data[di]);
 
                 if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
                     data_alignment += ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0);
@@ -347,9 +347,7 @@ private:
         //        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
         const double step = (_range.horizontalMax() - _range.horizontalMin())
                           / static_cast<double>(_size.horizontal()); //(data_max - data_min) / static_cast<T>(_size.horizontal());
-        const uint over = ((_header.isDataHeader() ? std::max(std::to_string(static_cast<int>(_range.verticalMax())).size(),
-                                                              std::to_string(static_cast<int>(_range.verticalMin())).size())
-                                                   : 0)
+        const uint over = ((_header.isDataHeader() ? std::max(intSize(_range.verticalMax()), intSize(_range.verticalMin())) : 0)
                            + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0));
         //        const bool is_data_empty = (data.begin() == data.end());
         const uint one_v_size = _size.vertical() / data.size();
@@ -412,7 +410,7 @@ private:
 
             _header.setDataPosition(DataPosition::Left);
             for (uint i = 0; i <= _size.horizontal();) {
-                uint alignment = std::to_string(static_cast<int>(grid_value)).size() + 1; // for one space
+                uint alignment = intSize(grid_value) + 1; // for one space
 
                 if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
                     alignment += ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0);
@@ -449,8 +447,7 @@ private:
 
         if (!is_data_empty) {
             if (_header.isDataHeader()) {
-                alignment = std::max(std::to_string(static_cast<int>(*std::max_element(data.begin(), data.end()))).size(),
-                                     std::to_string(static_cast<int>(*std::min_element(data.begin(), data.end()))).size())
+                alignment = std::max(intSize(*std::max_element(data.begin(), data.end())), intSize(*std::min_element(data.begin(), data.end())))
                           + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0) + 2; // one space + more ellipse axis
             }
 

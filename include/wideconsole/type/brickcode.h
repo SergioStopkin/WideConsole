@@ -30,6 +30,6 @@ enum class BrickCode : wchar_t {
     SFI_      = 0x2580, // upper small, last full,  inverse
 };
 
-inline wchar_t wchar(const BrickCode brick) { return static_cast<wchar_t>(brick); }
+[[nodiscard]] inline wchar_t wchar(const BrickCode brick) { return static_cast<wchar_t>(brick); }
 
 } // namespace WideConsole

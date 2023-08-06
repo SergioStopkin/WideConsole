@@ -18,6 +18,7 @@
 #pragma once
 
 #include "wideconsole/interface/igraph.h"
+#include "wideconsole/tool/intsize.h"
 #include "wideconsole/unit/grid.h"
 #include "wideconsole/unit/header.h"
 #include "wideconsole/unit/object.h"
@@ -50,8 +51,7 @@ public:
 
         const double h_step      = (_range.horizontalMax() - _range.horizontalMin()) / static_cast<double>(_size.horizontal() - 1);
         const double v_step      = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(_size.vertical() - 1);
-        const auto   v_alignment = std::max(std::to_string(static_cast<int>(_range.verticalMin())).size(),
-                                          std::to_string(static_cast<int>(_range.verticalMax())).size())
+        const auto   v_alignment = std::max(intSize(_range.verticalMin()), intSize(_range.verticalMax()))
                                + ((_precision.verticalPrecision() > 0) ? (_precision.verticalPrecision() + 1) : 0);
         const bool is_data_empty = (data.begin() == data.end());
         const uint h_zero        = _size.horizontal() / 2;

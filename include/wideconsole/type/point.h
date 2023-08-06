@@ -53,6 +53,6 @@ enum class Point : wchar_t {
     Beaver        = 0xF800,
 };
 
-inline wchar_t wchar(const Point point) { return static_cast<wchar_t>(point); }
+[[nodiscard]] inline wchar_t wchar(const Point point) { return static_cast<wchar_t>(point); }
 
 } // namespace WideConsole
