@@ -96,7 +96,8 @@ public:
 
     static void changeColor(const Color color, const bool is_foreground = true) noexcept
     {
-        if ((is_foreground && color != _globalView.foreground()) || (!is_foreground && color != _globalView.background())) {
+        if ((is_foreground && color != _globalView.foreground())
+            || (!is_foreground && color != _globalView.background())) {
 #ifdef WINDOWS
             switch (color) { // clang-format off
             // case Color::Normal:  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);                                                          break;
@@ -130,8 +131,7 @@ public:
             case Color::BrightDefault: SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color_); break;
             } // clang-format on
 #else
-            switch (color) {
-            // clang-format off
+            switch (color) { // clang-format off
             case Color::Black:         print("\e[0;30m"); break;
             case Color::Red:           print("\e[0;31m"); break;
             case Color::Green:         print("\e[0;32m"); break;
@@ -162,14 +162,14 @@ public:
 
     static void writeColorToBuff(std::wstring * buff, const Color color, const bool is_foreground = true) noexcept
     {
-        if ((is_foreground && color != _globalView.foreground()) || (!is_foreground && color != _globalView.background())) {
+        if ((is_foreground && color != _globalView.foreground())
+            || (!is_foreground && color != _globalView.background())) {
 #ifdef WINDOWS
             print(*buff);
             changeColor(color);
             *buff = L"";
 #else
-            switch (color) {
-            // clang-format off
+            switch (color) { // clang-format off
             case Color::Black:         *buff += L"\e[0m\e[30m";   break;
             case Color::Red:           *buff += L"\e[0;31m";      break;
             case Color::Green:         *buff += L"\e[0m\e[32m";   break;
@@ -209,8 +209,7 @@ public:
         pos.X = info.dwCursorPosition.X;
         pos.Y = info.dwCursorPosition.Y;
 
-        switch (position) {
-        // clang-format off
+        switch (position) { // clang-format off
         case Position::Up    : pos.Y -= number; break;
         case Position::Down  : pos.Y += number; break;
         case Position::Right : pos.X += number; break;
@@ -220,13 +219,12 @@ public:
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 #else
         //        printf( "%s%d;%dH", CSI, fila + 1, columna + 1 );
-        switch (position) {
-        // clang-format off
+        switch (position) { // clang-format off
         case Position::Up    : print("\e[" + std::to_string(number) + "A"); break;
         case Position::Down  : print("\e[" + std::to_string(number) + "B"); break;
         case Position::Right : print("\e[" + std::to_string(number) + "C"); break;
         case Position::Left  : print("\e[" + std::to_string(number) + "D"); break;
-        } // clang-format on
+        }     // clang-format on
 #endif
     }
 
@@ -238,8 +236,7 @@ public:
             changePosition(position, number);
             *buff = L"";
 #else
-            switch (position) {
-            // clang-format off
+            switch (position) { // clang-format off
             case Position::Up    : *buff += L"\e[" + std::to_wstring(number) + L'A'; break;
             case Position::Down  : *buff += L"\e[" + std::to_wstring(number) + L'B'; break;
             case Position::Right : *buff += L"\e[" + std::to_wstring(number) + L'C'; break;
@@ -304,7 +301,8 @@ public:
 
     static void preProcessing(const uint horizontal_size, const uint header_size) noexcept
     {
-        if (_globalState.colNum() > 0 && (_globalState.hPos() + horizontal_size + header_size) > _globalState.colNum()) {
+        if (_globalState.colNum() > 0
+            && (_globalState.hPos() + horizontal_size + header_size) > _globalState.colNum()) {
             newLine();
         }
     }

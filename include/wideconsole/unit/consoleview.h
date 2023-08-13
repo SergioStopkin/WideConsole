@@ -43,8 +43,7 @@ public:
             *buff += L"0;";
         }
 
-        switch (_foreground) {
-        // clang-format off
+        switch (_foreground) { // clang-format off
         case Color::Black:         *buff += L"21;30"; break;
         case Color::Red:           *buff += L"21;31"; break;
         case Color::Green:         *buff += L"21;32"; break;
@@ -65,8 +64,7 @@ public:
         default: break;
         } // clang-format on
 
-        switch (_background) {
-        // clang-format off
+        switch (_background) { // clang-format off
         case Color::Black:         *buff += L";40"; break;
         case Color::Red:           *buff += L";41"; break;
         case Color::Green:         *buff += L";42"; break;

@@ -11,4 +11,10 @@ TEST(TestIntSize, TestIntSize)
     EXPECT_EQ(intSize(33), 2);
     EXPECT_EQ(intSize(33.3), 2);
     EXPECT_EQ(intSize(33333.3), 5);
+
+    EXPECT_EQ(intSize(-3.3), 2);
+    EXPECT_EQ(intSize(-0.3), 2);
+    EXPECT_EQ(intSize(-33), 3);
+    EXPECT_EQ(intSize(-33.3), 3);
+    EXPECT_EQ(intSize(-33333.3), 6);
 }

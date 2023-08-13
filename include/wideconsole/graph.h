@@ -19,6 +19,7 @@
 
 #include "wideconsole/interface/igraph.h"
 #include "wideconsole/tool/intsize.h"
+#include "wideconsole/type/data_t.h"
 #include "wideconsole/unit/grid.h"
 #include "wideconsole/unit/header.h"
 #include "wideconsole/unit/object.h"
@@ -27,8 +28,6 @@
 #include "wideconsole/unit/size.h"
 
 #include <string>
-#include <utility>
-#include <vector>
 
 namespace WideConsole {
 
@@ -43,14 +42,14 @@ public:
     void setPoint(const Point point) noexcept override { point_ = wchar(point); }
     void setPointColor(const Color color) noexcept override { point_color_ = color; }
 
-    template <typename T>
-    void printObject(const std::vector<std::pair<T, T>> & data)
+    void printObject(const Data2D_t & data)
     {
         // Pre-processing
         Console::preProcessing(_size.horizontal(), _header.size());
 
-        const double h_step      = (_range.horizontalMax() - _range.horizontalMin()) / static_cast<double>(_size.horizontal() - 1);
-        const double v_step      = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(_size.vertical() - 1);
+        const double h_step = (_range.horizontalMax() - _range.horizontalMin())
+                            / static_cast<double>(_size.horizontal() - 1);
+        const double v_step = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(_size.vertical() - 1);
         const auto   v_alignment = std::max(intSize(_range.verticalMin()), intSize(_range.verticalMax()))
                                + ((_precision.verticalPrecision() > 0) ? (_precision.verticalPrecision() + 1) : 0);
         const bool is_data_empty = (data.begin() == data.end());
@@ -151,7 +150,8 @@ public:
                     Console::writeColorToBuff(&buff, point_color_);
                     buff += point_;
 
-                    while (data_iterator != sort_data.end() && hi == data_iterator->first && vi == data_iterator->second) {
+                    while (data_iterator != sort_data.end() && hi == data_iterator->first
+                           && vi == data_iterator->second) {
                         ++data_iterator;
                     }
                 } else if (hi == h_zero) {
@@ -184,7 +184,8 @@ public:
             buff += L'\n';
         }
 
-        //        uint h_pos        = (_size.horizontal() + ((_header.isDataHeader()) ? v_alignment : 0) + ((_grid.isArrow()) ? 1 : 0));
+        //        uint h_pos        = (_size.horizontal() + ((_header.isDataHeader()) ? v_alignment : 0) +
+        //        ((_grid.isArrow()) ? 1 : 0));
         uint h_pos_header = 0;
 
         // Horizontal data header
@@ -202,7 +203,10 @@ public:
                 const double hs = hi * h_step + _range.horizontalMin();
 
                 const uint h_alignment = std::to_string(std::abs(static_cast<int>(hs))).size() + ((hs < 0) ? 1 : 0)
-                                       + ((_precision.horizontalPrecision() > 0) ? (_precision.horizontalPrecision() + 1) : 0) + 1; // for one space
+                                       + ((_precision.horizontalPrecision() > 0)
+                                          ? (_precision.horizontalPrecision() + 1)
+                                          : 0)
+                                       + 1; // for one space
                 if (count % h_alignment == 0) {
                     _header.writeDataToBuff(&buff, hs, h_alignment, _precision.horizontalPrecision());
                     h_pos_header += h_alignment;
@@ -213,7 +217,151 @@ public:
             }
         }
 
-        const uint h_pos_exp = _size.horizontal() + (_grid.isArrow() ? 1 : 0) + (_header.isDataHeader() ? v_alignment : 0);
+        const uint h_pos_exp = _size.horizontal() + (_grid.isArrow() ? 1 : 0)
+                             + (_header.isDataHeader() ? v_alignment : 0);
+
+        if (_header.isDataHeader() && h_pos_header > h_pos_exp) {
+            Console::globalHPos(Console::globalHPos() + h_pos_header);
+        } else {
+            Console::globalHPos(Console::globalHPos() + h_pos_exp);
+        }
+
+        Console::globalVPos(_size.vertical() + ((_grid.isArrow()) ? 1 : 0) + ((_header.isDataHeader()) ? 1 : 0));
+
+        Console::writeColorToBuff(&buff, Color::Default);
+        buff += L'\n';
+        Console::print(buff);
+    }
+
+    void printBuff()
+    {
+        // Pre-processing
+        Console::preProcessing(_size.horizontal(), _header.size());
+
+        const double h_step = (_range.horizontalMax() - _range.horizontalMin())
+                            / static_cast<double>(_size.horizontal() - 1);
+        const double v_step = (_range.verticalMax() - _range.verticalMin()) / static_cast<double>(_size.vertical() - 1);
+        const auto   v_alignment = std::max(intSize(_range.verticalMin()), intSize(_range.verticalMax()))
+                               + ((_precision.verticalPrecision() > 0) ? (_precision.verticalPrecision() + 1) : 0);
+        const uint h_zero = _size.horizontal() / 2;
+        const uint v_zero = _size.vertical() / 2;
+
+        std::wstring buff;
+        buff.reserve(_size.vertical() * _size.horizontal() * 8); // magic eight (hateful :)
+
+        if (Console::globalVPos() > 0) {
+            Console::writePositionToBuff(&buff, Position::Up, Console::globalVPos());
+        }
+
+        // Upper arrow
+        if (_grid.isArrow()) {
+            Console::writeColorToBuff(&buff, _grid.axisColor());
+
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
+            }
+
+            if (_header.isDataHeader()) {
+                buff.append(v_alignment, ' ');
+            }
+
+            for (uint hi = 0; hi < _size.horizontal(); ++hi) {
+                if (hi == h_zero) {
+                    buff += wchar(_grid.arrow() == Arrow::Big ? GridCode::BigUArrow_ : GridCode::SmallUArrow_);
+                } else {
+                    buff += L' ';
+                }
+            }
+
+            buff += L'\n';
+        }
+
+        // Vertical loop
+        for (uint vi = _size.vertical() - 1; static_cast<int>(vi) >= 0; --vi) {
+            const double vs = vi * v_step + _range.verticalMin();
+
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
+            }
+
+            // Vertical data header
+            if (_header.isDataHeader()) {
+                Console::writeColorToBuff(&buff, Color::Default);
+
+                if (vi == v_zero) {
+                    _header.writeDataToBuff(&buff, 0.0, v_alignment, _precision.verticalPrecision());
+                } else {
+                    _header.writeDataToBuff(&buff, vs, v_alignment, _precision.verticalPrecision());
+                }
+            }
+
+            // Horizontal loop
+            for (uint hi = 0; hi < _size.horizontal(); ++hi) {
+                if (hi == h_zero) {
+                    Console::writeColorToBuff(&buff, _grid.axisColor());
+
+                    if (vi == v_zero) {
+                        buff += wchar(GridCode::Cross_);
+                    } else {
+                        buff += wchar(GridCode::VLine_);
+                    }
+                } else {
+                    if (vi == v_zero) {
+                        Console::writeColorToBuff(&buff, _grid.axisColor());
+                        buff += wchar(GridCode::HLine_);
+                    } else {
+                        if (_grid.isGrid()) {
+                            Console::writeColorToBuff(&buff, _grid.gridColor());
+                        }
+                        buff += _grid.grid();
+                    }
+                }
+            }
+
+            // Right arrow
+            if (vi == v_zero && _grid.isArrow()) {
+                Console::writeColorToBuff(&buff, _grid.axisColor());
+                buff += wchar(_grid.arrow() == Arrow::Big ? GridCode::BigRArrow_ : GridCode::SmallRArrow_);
+            }
+
+            buff += L'\n';
+        }
+
+        //        uint h_pos        = (_size.horizontal() + ((_header.isDataHeader()) ? v_alignment : 0) +
+        //        ((_grid.isArrow()) ? 1 : 0));
+        uint h_pos_header = 0;
+
+        // Horizontal data header
+        if (_header.isDataHeader()) {
+            if (Console::globalHPos() > 0) {
+                Console::writePositionToBuff(&buff, Position::Right, Console::globalHPos());
+            }
+
+            Console::writeColorToBuff(&buff, Color::Default);
+            buff.append(v_alignment, ' ');
+            h_pos_header += v_alignment;
+
+            int count = 0;
+            for (uint hi = 0; hi < _size.horizontal(); ++hi) {
+                const double hs = hi * h_step + _range.horizontalMin();
+
+                const uint h_alignment = std::to_string(std::abs(static_cast<int>(hs))).size() + ((hs < 0) ? 1 : 0)
+                                       + ((_precision.horizontalPrecision() > 0)
+                                          ? (_precision.horizontalPrecision() + 1)
+                                          : 0)
+                                       + 1; // for one space
+                if (count % h_alignment == 0) {
+                    _header.writeDataToBuff(&buff, hs, h_alignment, _precision.horizontalPrecision());
+                    h_pos_header += h_alignment;
+                    count = 0;
+                }
+
+                ++count;
+            }
+        }
+
+        const uint h_pos_exp = _size.horizontal() + (_grid.isArrow() ? 1 : 0)
+                             + (_header.isDataHeader() ? v_alignment : 0);
 
         if (_header.isDataHeader() && h_pos_header > h_pos_exp) {
             Console::globalHPos(Console::globalHPos() + h_pos_header);

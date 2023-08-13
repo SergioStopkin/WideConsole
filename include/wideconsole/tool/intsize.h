@@ -17,14 +17,16 @@
 
 #pragma once
 
+#include "wideconsole/type/data_t.h"
+
 #include <string>
 
 namespace WideConsole {
 
-template <typename T>
-[[nodiscard]] inline size_t intSize(const T value)
+[[nodiscard]] inline size_t intSize(Data_t auto value)
 {
-    return std::to_string(static_cast<int>(value)).size();
+    const size_t sign = (value < 0 ? 1 : 0);
+    return std::to_string(static_cast<int>(std::abs(value))).size() + sign;
 }
 
 } // namespace WideConsole

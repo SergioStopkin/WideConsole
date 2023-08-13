@@ -60,7 +60,8 @@ public:
         //        h_global_pos_ += std::strlen(s);
     }
 
-    void printObject(const std::string & str) noexcept override // NOLINT(readability-convert-member-functions-to-static)
+    void
+    printObject(const std::string & str) noexcept override // NOLINT(readability-convert-member-functions-to-static)
     {
         std::wstring buff;
 
@@ -86,8 +87,7 @@ public:
                 if (_font == Font::FullWidth && wc >= 0x21 && wc <= 0x7E) {
                     buff += (wc + 0xFF01 - 0x21);
                 } else if (wc >= 'A' && wc <= 'Z') {
-                    switch (_font) {
-                    // clang-format off
+                    switch (_font) { // clang-format off
                     case Font::Serif:             buff += wc;                   break;
                     case Font::SerifItal:         buff += (wc + 0x1D434 - 'A'); break;
                     case Font::SerifBold:         buff += (wc + 0x1D400 - 'A'); break;
@@ -102,8 +102,7 @@ public:
                     default: break;
                     } // clang-format on
                 } else if (wc >= 'a' && wc <= 'z') {
-                    switch (_font) {
-                    // clang-format off
+                    switch (_font) { // clang-format off
                     case Font::Serif:             buff += wc;                   break;
                     case Font::SerifItal:         buff += ((wc == 'h') ? 0x1D489 : (wc + 0x1D44E - 'a')); break;
                     case Font::SerifBold:         buff += (wc + 0x1D41A - 'a'); break;
@@ -118,8 +117,7 @@ public:
                     default: break;
                     } // clang-format on
                 } else if (wc >= '0' && wc <= '9') {
-                    switch (_font) {
-                    // clang-format off
+                    switch (_font) { // clang-format off
                     case Font::Serif:
                     case Font::SerifItal:
                     case Font::SerifBoldItal:

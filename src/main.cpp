@@ -39,9 +39,10 @@ int main()
     graph.header().setDataPosition(WideConsole::DataPosition::Left);
 
     // Colors
-    const std::vector<WideConsole::Color> colors { WideConsole::Color::Green,        WideConsole::Color::BrightGreen,  WideConsole::Color::Yellow,
-                                                   WideConsole::Color::BrightYellow, WideConsole::Color::Red,          WideConsole::Color::BrightRed,
-                                                   WideConsole::Color::Magenta,      WideConsole::Color::BrightMagenta };
+    const std::vector<WideConsole::Color> colors { WideConsole::Color::Green,   WideConsole::Color::BrightGreen,
+                                                   WideConsole::Color::Yellow,  WideConsole::Color::BrightYellow,
+                                                   WideConsole::Color::Red,     WideConsole::Color::BrightRed,
+                                                   WideConsole::Color::Magenta, WideConsole::Color::BrightMagenta };
     // CHART
     const int max = 100;
 

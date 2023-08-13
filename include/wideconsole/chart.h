@@ -20,6 +20,7 @@
 #include "wideconsole/interface/ichart.h"
 #include "wideconsole/tool/intsize.h"
 #include "wideconsole/type/brickcode.h"
+#include "wideconsole/type/data_t.h"
 #include "wideconsole/unit/grid.h"
 #include "wideconsole/unit/header.h"
 #include "wideconsole/unit/object.h"
@@ -28,8 +29,6 @@
 #include "wideconsole/unit/size.h"
 
 #include <cmath>
-#include <utility>
-#include <vector>
 
 namespace WideConsole {
 
@@ -45,8 +44,7 @@ public:
     void setChartColors(const std::vector<Color> & colors) noexcept override { colors_ = colors; }
     void setOpacity(const Opacity opacity) noexcept override
     {
-        switch (opacity) {
-        // clang-format off
+        switch (opacity) { // clang-format off
         case Opacity::OP_100: brick_ = BrickCode::FF_OP100_; break;
         case Opacity::OP_75:  brick_ = BrickCode::FF_OP75_;  break;
         case Opacity::OP_50:  brick_ = BrickCode::FF_OP50_;  break;
@@ -54,14 +52,13 @@ public:
         } // clang-format on
     }
 
-    template <typename T>
-    void printObject(const std::vector<T> & data)
+    void printObject(const Data1D_t & data)
     {
         // Pre-processing
-        Console::preProcessing(_size.horizontal(), (chart_type_ == ChartType::Pie ? (2 * _header.size()) : _header.size()));
+        Console::preProcessing(_size.horizontal(),
+                               (chart_type_ == ChartType::Pie ? (2 * _header.size()) : _header.size()));
 
-        switch (chart_type_) {
-        // clang-format off
+        switch (chart_type_) { // clang-format off
         case ChartType::Column: printColumnChart(data); break;
         case ChartType::Bar:    printBarChart(data);    break;
         case ChartType::Pie:    printPieChart(data);    break;
@@ -127,8 +124,11 @@ private:
         return wchar(brick);
     }
 
-    [[nodiscard]] int
-    pieIndex(const double hs, const double vs, const double h_center, const double v_center, const std::vector<double> & angles) const
+    [[nodiscard]] int pieIndex(const double                hs,
+                               const double                vs,
+                               const double                h_center,
+                               const double                v_center,
+                               const std::vector<double> & angles) const
     {
         if (hs == h_center && vs == v_center) {
             return 0;
@@ -170,8 +170,11 @@ private:
         return -1;
     }
 
-    [[nodiscard]] int
-    pieIndexHeader(const double hs, const double vs, const double h_center, const double v_center, const std::vector<double> & angle) const
+    [[nodiscard]] int pieIndexHeader(const double                hs,
+                                     const double                vs,
+                                     const double                h_center,
+                                     const double                v_center,
+                                     const std::vector<double> & angle) const
     {
         const double x     = (vs - v_center) / (hs - h_center);
         double       alpha = PiDeg * std::acos(x / std::sqrt(1 + x * x)) / PiRad;
@@ -215,7 +218,8 @@ private:
         const T data_max = *std::max_element(std::begin(data), std::end(data));
         //        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
         const double step = (_range.verticalMax() - _range.verticalMin())
-                          / static_cast<double>(_size.vertical()); //(data_max - data_min) / static_cast<T>(_size.vertical());
+                          / static_cast<double>(
+                            _size.vertical()); //(data_max - data_min) / static_cast<T>(_size.vertical());
         const uint over = ((_header.isDataHeader() && (data_max > _range.verticalMax())) ? 1 : 0);
         // const uint clst = _size.vertical() / colors_.size();
         // const bool is_data_empty = (data.begin() == data.end());
@@ -235,7 +239,8 @@ private:
         uint grid_alignment = std::max(intSize(_range.verticalMax()), intSize(_range.verticalMin()));
         uint data_alignment = 0;
 
-        if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
+        if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double)
+            || typeid(grid_value) == typeid(long double)) {
             grid_alignment += ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0);
         }
 
@@ -271,7 +276,8 @@ private:
 
                 data_alignment = intSize(data[di]);
 
-                if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
+                if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double)
+                    || typeid(grid_value) == typeid(long double)) {
                     data_alignment += ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0);
                 }
 
@@ -346,8 +352,11 @@ private:
         //        const T      data_max      = * std::max_element(std::begin(data), std::end(data));
         //        const T      data_min      = * std::min_element(std::begin(data), std::end(data));
         const double step = (_range.horizontalMax() - _range.horizontalMin())
-                          / static_cast<double>(_size.horizontal()); //(data_max - data_min) / static_cast<T>(_size.horizontal());
-        const uint over = ((_header.isDataHeader() ? std::max(intSize(_range.verticalMax()), intSize(_range.verticalMin())) : 0)
+                          / static_cast<double>(
+                            _size.horizontal()); //(data_max - data_min) / static_cast<T>(_size.horizontal());
+        const uint over = ((_header.isDataHeader()
+                            ? std::max(intSize(_range.verticalMax()), intSize(_range.verticalMin()))
+                            : 0)
                            + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0));
         //        const bool is_data_empty = (data.begin() == data.end());
         const uint one_v_size = _size.vertical() / data.size();
@@ -412,7 +421,8 @@ private:
             for (uint i = 0; i <= _size.horizontal();) {
                 uint alignment = intSize(grid_value) + 1; // for one space
 
-                if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double) || typeid(grid_value) == typeid(long double)) {
+                if (typeid(grid_value) == typeid(float) || typeid(grid_value) == typeid(double)
+                    || typeid(grid_value) == typeid(long double)) {
                     alignment += ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0);
                 }
 
@@ -447,8 +457,10 @@ private:
 
         if (!is_data_empty) {
             if (_header.isDataHeader()) {
-                alignment = std::max(intSize(*std::max_element(data.begin(), data.end())), intSize(*std::min_element(data.begin(), data.end())))
-                          + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0) + 2; // one space + more ellipse axis
+                alignment = std::max(intSize(*std::max_element(data.begin(), data.end())),
+                                     intSize(*std::min_element(data.begin(), data.end())))
+                          + ((_precision.precision() > 0) ? (_precision.precision() + 1) : 0)
+                          + 2; // one space + more ellipse axis
             }
 
             for (const auto & value : data) {
@@ -470,7 +482,8 @@ private:
             is_data_empty = (work_data.begin() == work_data.end());
         }
 
-        const uint h_over   = (((_size.horizontal() % 2 == 0) ? 1 : 0) + ((_header.isDataHeader()) ? (2 * alignment) : 0));
+        const uint h_over   = (((_size.horizontal() % 2 == 0) ? 1 : 0)
+                             + ((_header.isDataHeader()) ? (2 * alignment) : 0));
         const uint v_over   = (((_size.vertical() % 2 == 0) ? 1 : 0) + ((_header.isDataHeader()) ? 2 : 0));
         const uint h_center = _size.horizontal() / 2 + 1 + ((_header.isDataHeader()) ? alignment : 0);
         const uint v_center = _size.vertical() / 2 + 1 + ((_header.isDataHeader()) ? 1 : 0);
@@ -598,11 +611,12 @@ private:
 
             for (uint hi = 1; hi <= _size.horizontal() + h_over; ++hi) {
                 // Data header
-                if (_header.isDataHeader() && !is_data_empty && header_iterator != sort_header.end() && hi == header_iterator->first.first
-                    && vi == header_iterator->first.second) {
+                if (_header.isDataHeader() && !is_data_empty && header_iterator != sort_header.end()
+                    && hi == header_iterator->first.first && vi == header_iterator->first.second) {
                     if (((index = pieIndexHeader(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1)
                         && (write_header_indexes.begin() == write_header_indexes.end()
-                            || std::find(write_header_indexes.begin(), write_header_indexes.end(), index) == write_header_indexes.end())) {
+                            || std::find(write_header_indexes.begin(), write_header_indexes.end(), index)
+                               == write_header_indexes.end())) {
                         Console::writeColorToBuff(&buff, colors_[index % colors_.size()]);
 
                         bool end_space = true;
@@ -616,7 +630,8 @@ private:
                             } else {
                                 hi += (alignment - 1);
                             }
-                        } else if ((coord_iterator - 1) != sort_coord.end() && (coord_iterator - 1) >= sort_coord.begin()
+                        } else if ((coord_iterator - 1) != sort_coord.end()
+                                   && (coord_iterator - 1) >= sort_coord.begin()
                                    && vi == (coord_iterator - 1)->first.second) {
                             const uint diff = header_iterator->first.first - (coord_iterator - 1)->first.first - 1;
 
@@ -652,7 +667,8 @@ private:
                     while (header_iterator->first.second == vi && header_iterator->first.first <= hi) {
                         ++header_iterator;
                     }
-                } else if (coord_iterator != sort_coord.end() && hi == coord_iterator->first.first && vi == coord_iterator->first.second) {
+                } else if (coord_iterator != sort_coord.end() && hi == coord_iterator->first.first
+                           && vi == coord_iterator->first.second) {
                     if (vi != v_prev) {
                         h_first = hi;
                     }
@@ -661,14 +677,30 @@ private:
                         Console::writeColorToBuff(&buff, colors_[index % colors_.size()]);
                     }
 
-                    buff += outerBrick(hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
+                    buff += outerBrick(hi,
+                                       vi,
+                                       h_center,
+                                       v_center,
+                                       1,
+                                       1,
+                                       coord_iterator->second.first,
+                                       coord_iterator->second.second);
                     v_prev = vi;
                     ++coord_iterator;
-                } else if (coord_iterator != sort_coord.end() && hi == coord_iterator->first.first && vi == coord_iterator->first.second) {
-                } else if ((coord_iterator != sort_coord.end() && vi == v_prev && hi >= h_first && hi <= coord_iterator->first.first)
+                } else if (coord_iterator != sort_coord.end() && hi == coord_iterator->first.first
+                           && vi == coord_iterator->first.second) {
+                } else if ((coord_iterator != sort_coord.end() && vi == v_prev && hi >= h_first
+                            && hi <= coord_iterator->first.first)
                            && (index = pieIndex(hi, 2 * vi, h_center, 2.0 * v_center, angles)) != -1) {
                     Console::writeColorToBuff(&buff, colors_[index % colors_.size()]);
-                    buff += outerBrick(hi, vi, h_center, v_center, 1, 1, coord_iterator->second.first, coord_iterator->second.second);
+                    buff += outerBrick(hi,
+                                       vi,
+                                       h_center,
+                                       v_center,
+                                       1,
+                                       1,
+                                       coord_iterator->second.first,
+                                       coord_iterator->second.second);
                 } else {
                     buff += L' ';
                 }
@@ -688,7 +720,8 @@ private:
     static void sort(sort_t * data) noexcept
     {
         std::sort(data->begin(), data->end(), [](const auto & left, const auto & right) {
-            return (left.first.second > right.first.second || (left.first.second == right.first.second && left.first.first < right.first.first));
+            return (left.first.second > right.first.second
+                    || (left.first.second == right.first.second && left.first.first < right.first.first));
         });
     }
 };
