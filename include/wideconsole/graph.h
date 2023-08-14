@@ -19,7 +19,7 @@
 
 #include "wideconsole/interface/igraph.h"
 #include "wideconsole/tool/intsize.h"
-#include "wideconsole/type/data_t.h"
+#include "wideconsole/type/datatype.h"
 #include "wideconsole/unit/grid.h"
 #include "wideconsole/unit/header.h"
 #include "wideconsole/unit/object.h"
@@ -28,6 +28,8 @@
 #include "wideconsole/unit/size.h"
 
 #include <string>
+#include <utility>
+#include <vector>
 
 namespace WideConsole {
 
@@ -42,7 +44,8 @@ public:
     void setPoint(const Point point) noexcept override { point_ = wchar(point); }
     void setPointColor(const Color color) noexcept override { point_color_ = color; }
 
-    void printObject(const Data2D_t & data)
+    template <DataType T>
+    void printObject(const std::vector<std::pair<T, T>> & data)
     {
         // Pre-processing
         Console::preProcessing(_size.horizontal(), _header.size());

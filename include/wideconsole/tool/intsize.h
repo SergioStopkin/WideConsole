@@ -17,13 +17,13 @@
 
 #pragma once
 
-#include "wideconsole/type/data_t.h"
+#include "wideconsole/type/datatype.h"
 
 #include <string>
 
 namespace WideConsole {
 
-[[nodiscard]] inline size_t intSize(Data_t auto value)
+[[nodiscard]] inline size_t intSize(DataType auto value)
 {
     const size_t sign = (value < 0 ? 1 : 0);
     return std::to_string(static_cast<int>(std::abs(value))).size() + sign;

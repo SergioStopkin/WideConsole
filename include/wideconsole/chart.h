@@ -20,7 +20,7 @@
 #include "wideconsole/interface/ichart.h"
 #include "wideconsole/tool/intsize.h"
 #include "wideconsole/type/brickcode.h"
-#include "wideconsole/type/data_t.h"
+#include "wideconsole/type/datatype.h"
 #include "wideconsole/unit/grid.h"
 #include "wideconsole/unit/header.h"
 #include "wideconsole/unit/object.h"
@@ -29,6 +29,7 @@
 #include "wideconsole/unit/size.h"
 
 #include <cmath>
+#include <vector>
 
 namespace WideConsole {
 
@@ -52,7 +53,8 @@ public:
         } // clang-format on
     }
 
-    void printObject(const Data1D_t & data)
+    template <DataType T>
+    void printObject(const std::vector<T> & data)
     {
         // Pre-processing
         Console::preProcessing(_size.horizontal(),

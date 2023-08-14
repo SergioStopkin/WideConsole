@@ -18,8 +18,6 @@
 #pragma once
 
 #include <concepts>
-#include <utility>
-#include <vector>
 
 namespace WideConsole {
 
@@ -35,9 +33,6 @@ struct is_character : std::integral_constant<bool,
 };
 
 template <typename T>
-concept Data_t = !is_character<T>::value && !std::is_same<bool, T>::value && std::is_arithmetic<T>::value;
-
-#define Data1D_t std::vector<Data_t auto>
-#define Data2D_t std::vector<std::pair<Data_t auto, Data_t auto>>
+concept DataType = !is_character<T>::value && !std::is_same<bool, T>::value && std::is_arithmetic<T>::value;
 
 } // namespace WideConsole
