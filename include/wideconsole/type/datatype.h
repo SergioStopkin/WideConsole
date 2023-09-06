@@ -22,6 +22,10 @@
 namespace WideConsole {
 
 template <typename T>
+struct is_boolean : std::integral_constant<bool, std::is_same<bool, typename std::remove_cv<T>::type>::value> {
+};
+
+template <typename T>
 struct is_character : std::integral_constant<bool,
                                              std::is_same<char, typename std::remove_cv<T>::type>::value
                                              || std::is_same<signed char, typename std::remove_cv<T>::type>::value
@@ -33,6 +37,6 @@ struct is_character : std::integral_constant<bool,
 };
 
 template <typename T>
-concept DataType = !is_character<T>::value && !std::is_same<bool, T>::value && std::is_arithmetic<T>::value;
+concept DataType = !is_boolean<T>::value && !is_character<T>::value && std::is_arithmetic<T>::value;
 
 } // namespace WideConsole
