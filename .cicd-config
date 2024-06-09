@@ -20,3 +20,11 @@ RESULT_PREFIX=result
 COV_MIN_LIMIT=50.0%
 COV_SOURCE_DIR=test/unit
 COV_RESULT_DIR=$RESULT_PREFIX-coverage
+
+
+USAGE_TEXT="This is standard usage text. Please specify the required one."
+PrintUsageAndExit()
+{
+    echo $USAGE_TEXT
+    exit 1
+}

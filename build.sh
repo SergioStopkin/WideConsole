@@ -1,8 +1,8 @@
 . .cicd-config
 
+USAGE_TEXT="Usage ./build.sh <dev/rel/test>"
 if [[ $# -eq 0 ]]; then
-    echo "Usage ./build.sh <dev/rel/test>"
-    exit 1
+    PrintUsageAndExit
 elif [[ $1 == "dev" ]]; then
     BUILD_DIR=$BUILD_DIR_DEV
     CMAKE_PARAMS="-DASAN=ON"
@@ -14,8 +14,7 @@ elif [[ $1 == "test" ]]; then
     BUILD_DIR=$BUILD_DIR_DEV
     TARGET=$TARGET_TEST
 else
-    echo "Usage ./build.sh <dev/rel/test>"
-    exit 1
+    PrintUsageAndExit
 fi
 
 cmake -H. -B$BUILD_DIR $CMAKE_PARAMS
