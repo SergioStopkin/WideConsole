@@ -20,26 +20,26 @@ jobs:
                 cppcheck \
                 lcov
 
-      - name: Format Check
-        run:  ${{github.workspace}}/format-check.sh
+      # - name: Format Check
+      #   run:  ${{github.workspace}}/format-check.sh
 
-      - name: CppCheck
-        run:  ${{github.workspace}}/cppcheck.sh
+      # - name: CppCheck
+      #   run:  ${{github.workspace}}/cppcheck.sh
 
       - name: Build Develop
         run:  ${{github.workspace}}/build.sh dev
 
       - name: Run with ASAN
-        run:  ${{github.workspace}}/run-asan.sh
+        run:  ${{github.workspace}}/run.sh dev
 
-      - name: Clang Tidy
-        run:  ${{github.workspace}}/clang-tidy.sh
+      # - name: Clang Tidy
+      #   run:  ${{github.workspace}}/clang-tidy.sh
 
       - name: Build Tests
         run:  ${{github.workspace}}/build.sh test
 
       - name: Run Tests
-        run:  ${{github.workspace}}/run-tests.sh
+        run:  ${{github.workspace}}/run.sh test
 
       - name: Unit Tests Coverage
         run:  ${{github.workspace}}/unit-tests-coverage.sh

@@ -17,12 +17,12 @@
 
 #pragma once
 
-#include "wideconsole/interface/interface.h"
+#include "wideconsole/interface/isize.h"
 #include "wideconsole/unit/console.h"
 
 namespace WideConsole {
 
-class Object : public Interface {
+class Object {
 protected:
     Object()
     {
@@ -33,7 +33,7 @@ protected:
         ++object_counter_;
     }
 
-    ~Object() override
+    virtual ~Object()
     {
         if (object_counter_ == 1) {
             Console::end();
@@ -41,6 +41,8 @@ protected:
 
         --object_counter_;
     }
+
+    virtual ISize & frame() noexcept = 0;
 
 private:
     inline static int object_counter_ = 0;
