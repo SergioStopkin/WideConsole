@@ -7,16 +7,16 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/sergiostopkin/wideconsole/actions/workflows/actions-develop.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/sergiostopkin/wideconsole/actions-develop.yml?style=flat-square&label=develop">
+    <a href="https://github.com/sergiostopkin/wideconsole/actions/workflows/actions-develop.yml" style="text-decoration: none">
+        <img src="https://img.shields.io/github/actions/workflow/status/sergiostopkin/wideconsole/actions-develop.yml?style=flat-square&label=develop" style="text-decoration: none"/>
     </a>
     &nbsp;
-    <a href="https://github.com/sergiostopkin/wideconsole/blob/release/COPYING">
-        <img src="https://img.shields.io/github/license/sergiostopkin/wideconsole?style=flat-square"/>
+    <a href="https://github.com/sergiostopkin/wideconsole/blob/release/COPYING" style="text-decoration: none">
+        <img src="https://img.shields.io/github/license/sergiostopkin/wideconsole?style=flat-square" style="text-decoration: none"/>
     </a>
     &nbsp;
-    <a href="https://github.com/SergioStopkin/WideConsole/archive/develop.zip">
-        <img src="https://img.shields.io/github/repo-size/sergiostopkin/wideconsole?style=flat-square&label=download"/>
+    <a href="https://github.com/SergioStopkin/WideConsole/archive/develop.zip" style="text-decoration: none">
+        <img src="https://img.shields.io/github/repo-size/sergiostopkin/wideconsole?style=flat-square&label=download" style="text-decoration: none"/>
     </a>
 </p>
 
