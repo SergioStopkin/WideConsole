@@ -10,9 +10,11 @@
     <a href="https://github.com/sergiostopkin/wideconsole/actions/workflows/actions-develop.yml">
         <img src="https://img.shields.io/github/actions/workflow/status/sergiostopkin/wideconsole/actions-develop.yml?style=flat-square&label=develop">
     </a>
+    &nbsp;
     <a href="https://github.com/sergiostopkin/wideconsole/blob/release/COPYING">
         <img src="https://img.shields.io/github/license/sergiostopkin/wideconsole?style=flat-square"/>
     </a>
+    &nbsp;
     <a href="https://github.com/SergioStopkin/WideConsole/archive/develop.zip">
         <img src="https://img.shields.io/github/repo-size/sergiostopkin/wideconsole?style=flat-square&label=download"/>
     </a>
@@ -21,7 +23,7 @@
 <h1 align="center">WideConsole</h1>
 
 <p align="center">
-    WideConsole is a simple program for building graphs, charts and text output to the console.
+    WideConsole is a simple program for plotting graphs, charts and outputting text to the terminal console.
 </p>
 
 ![](./doc/img/img-readme.png?raw=true)
